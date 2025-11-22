@@ -1,6 +1,9 @@
 # Output Artifacts (Legacy)
 /models
 /summaries
+# Output Artifacts
+/results/*
+!/results/firstSoccerRun/SoccerTwos
 
 # Training environments
 /envs
