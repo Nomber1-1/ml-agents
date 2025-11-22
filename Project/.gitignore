@@ -3,7 +3,8 @@
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
-/[Bb]uilds/
+/[Bb]uilds/*
+![Bb]uilds/OG
 /Assets/AssetStoreTools*
 /Assets/Plugins*
 /Assets/Demonstrations*
