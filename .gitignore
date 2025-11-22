@@ -3,7 +3,7 @@
 /summaries
 # Output Artifacts
 /results/*
-!/results/firstSoccerRun/SoccerTwos
+!results/firstSoccerRun/SoccerTwos
 
 # Training environments
 /envs
