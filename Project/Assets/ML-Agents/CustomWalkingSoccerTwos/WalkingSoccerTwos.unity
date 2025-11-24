@@ -218,7 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 796832878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a2688ef4a36349f9aa010020c32d198, type: 3}
+  m_Script: {fileID: 11500000, guid: 9437a8275717fb841b8665aaa3f0533f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
@@ -248,19 +248,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4935240531098310, guid: 9bfef6168940323448f0148e4cf16d52, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5.8358326
+      value: 3.69185
       objectReference: {fileID: 0}
     - target: {fileID: 4935240531098310, guid: 9bfef6168940323448f0148e4cf16d52, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5.8358326
+      value: 3.69185
       objectReference: {fileID: 0}
     - target: {fileID: 4935240531098310, guid: 9bfef6168940323448f0148e4cf16d52, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5.8358326
+      value: 3.69185
       objectReference: {fileID: 0}
     - target: {fileID: 4935240531098310, guid: 9bfef6168940323448f0148e4cf16d52, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.4033508
+      value: -3.93
       objectReference: {fileID: 0}
     - target: {fileID: 4935240531098310, guid: 9bfef6168940323448f0148e4cf16d52, type: 3}
       propertyPath: m_LocalPosition.y
@@ -268,7 +268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4935240531098310, guid: 9bfef6168940323448f0148e4cf16d52, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.07087183
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4935240531098310, guid: 9bfef6168940323448f0148e4cf16d52, type: 3}
       propertyPath: m_LocalRotation.w
@@ -346,7 +346,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3033160400366964158}
-  - component: {fileID: 6539161538415361820}
+  - component: {fileID: 3033160400366964159}
   m_Layer: 0
   m_Name: SoccerFieldTwos
   m_TagString: Untagged
@@ -2401,6 +2401,26 @@ Transform:
   - {fileID: 3028601993394665406}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3033160400366964159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3027488415505903160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a464a8dce5ddc6408b778e4bc4319d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxEnvironmentSteps: 5000
+  ball: {fileID: 773311299}
+  ballRb: {fileID: 0}
+  AgentsList:
+  - Agent: {fileID: 796832885}
+    StartingPos: {x: 0, y: 0, z: 0}
+    StartingRot: {x: 0, y: 0, z: 0, w: 0}
+    Rb: {fileID: 0}
 --- !u!1001 &3599283674193084263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2490,6 +2510,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WalkerRagdoll
       objectReference: {fileID: 0}
+    - target: {fileID: 4409675767907316506, guid: dd62a2a5a838943fba3d2cbb377a75b3,
+        type: 3}
+      propertyPath: m_TagString
+      value: agent
+      objectReference: {fileID: 0}
     - target: {fileID: 5498727688956813661, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: targetToLookAt
@@ -2509,38 +2534,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 796832885}
   m_SourcePrefab: {fileID: 100100000, guid: dd62a2a5a838943fba3d2cbb377a75b3, type: 3}
---- !u!114 &6539161538415361820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3027488415505903160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e397bc3ae78c466a8d44400f5b68e38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxEnvironmentSteps: 5000
-  ball: {fileID: 0}
-  ballRb: {fileID: 0}
-  AgentsList:
-  - Agent: {fileID: 0}
-    StartingPos: {x: 0, y: 0, z: 0}
-    StartingRot: {x: 0, y: 0, z: 0, w: 0}
-    Rb: {fileID: 0}
-  - Agent: {fileID: 0}
-    StartingPos: {x: 0, y: 0, z: 0}
-    StartingRot: {x: 0, y: 0, z: 0, w: 0}
-    Rb: {fileID: 0}
-  - Agent: {fileID: 0}
-    StartingPos: {x: 0, y: 0, z: 0}
-    StartingRot: {x: 0, y: 0, z: 0, w: 0}
-    Rb: {fileID: 0}
-  - Agent: {fileID: 0}
-    StartingPos: {x: 0, y: 0, z: 0}
-    StartingRot: {x: 0, y: 0, z: 0, w: 0}
-    Rb: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

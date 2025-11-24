@@ -204,7 +204,6 @@ public class AgentSoccer2 : Agent
 
     public override void OnEpisodeBegin()
     {
-        Debug.Log(m_ResetParams);
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
     }
 

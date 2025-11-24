@@ -7,7 +7,7 @@ public class SoccerEnvController2 : MonoBehaviour
     [System.Serializable]
     public class PlayerInfo
     {
-        public AgentSoccer Agent;
+        public AgentSoccer2 Agent;
         [HideInInspector]
         public Vector3 StartingPos;
         [HideInInspector]

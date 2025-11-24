@@ -4,13 +4,13 @@ public class SoccerBallController2 : MonoBehaviour
 {
     public GameObject area;
     [HideInInspector]
-    public SoccerEnvController envController;
+    public SoccerEnvController2 envController;
     public string purpleGoalTag; //will be used to check if collided with purple goal
     public string blueGoalTag; //will be used to check if collided with blue goal
 
     void Start()
     {
-        envController = area.GetComponent<SoccerEnvController>();
+        envController = area.GetComponent<SoccerEnvController2>();
     }
 
     void OnCollisionEnter(Collision col)
