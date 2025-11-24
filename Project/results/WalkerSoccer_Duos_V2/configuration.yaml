@@ -53,7 +53,7 @@ env_settings:
   env_path: C:\Documents\GitHub\ml-agents\Project\Builds\DuosV2\UnityEnvironment.exe
   env_args: null
   base_port: 5005
-  num_envs: 10
+  num_envs: 8
   num_areas: 1
   timeout_wait: 60
   seed: -1
@@ -75,7 +75,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8652
+          seed: 3583
           value: 0.0
       name: Lesson0_JustWalking
       completion_criteria:
@@ -88,7 +88,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8653
+          seed: 3584
           value: 0.3
       name: Lesson1_ChaseAndTouch
       completion_criteria:
@@ -101,7 +101,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8654
+          seed: 3585
           value: 0.5
       name: Lesson2_PlaySoccer
       completion_criteria:
@@ -114,7 +114,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8655
+          seed: 3586
           value: 1.0
       name: Lesson3_CompetitiveSoccer
       completion_criteria: null
@@ -123,7 +123,7 @@ checkpoint_settings:
   initialize_from: null
   load_model: false
   resume: false
-  force: false
+  force: true
   train_model: false
   inference: false
   results_dir: results
