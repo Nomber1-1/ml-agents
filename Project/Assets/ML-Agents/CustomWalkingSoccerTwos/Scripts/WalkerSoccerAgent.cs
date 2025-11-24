@@ -42,6 +42,10 @@ public class WalkerSoccerAgent : Agent
     [SerializeField] private float antiForwardTipPenalty = 0.02f;
     [SerializeField] private float uprightDotMin = 0.7f;
     [SerializeField] private int delayBallInfluenceSteps = 50;
+    [SerializeField] private float maxTargetSpeed = 3.0f;
+    [SerializeField] private int speedRampSteps = 400;
+    [SerializeField] private float angVelPenaltyCoef = 0.001f;
+    [SerializeField] private float sidewaysLeanPenalty = 0.02f;
     private int m_CurrentStepInEpisode;
 
     // ============================================
@@ -188,9 +192,8 @@ public class WalkerSoccerAgent : Agent
 
         UpdateOrientationObjects();
 
-        //Set our goal walking speed
-        MTargetWalkingSpeed =
-            randomizeWalkSpeedEachEpisode ? Random.Range(0.1f, m_maxWalkingSpeed) : MTargetWalkingSpeed;
+        //Set initial very low walking speed for balance acquisition
+        MTargetWalkingSpeed = 0.5f; // will ramp in FixedUpdate regardless of randomize flag
 
         if (m_SoccerSettings == null || m_SoccerSettings.enableStartStabilization)
         {
@@ -340,6 +343,11 @@ public class WalkerSoccerAgent : Agent
         UpdateOrientationObjects();
         m_CurrentStepInEpisode++;
 
+        // Progressive speed ramp
+        float rampT = Mathf.Clamp01(m_CurrentStepInEpisode / (float)speedRampSteps);
+        float currentTarget = Mathf.Lerp(0.5f, maxTargetSpeed, rampT);
+        MTargetWalkingSpeed = currentTarget;
+
         if (m_StabilizeSteps > 0)
         {
             ApplyStableStandPoseTargets(m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f);
@@ -348,12 +356,7 @@ public class WalkerSoccerAgent : Agent
 
         var cubeForward = m_OrientationCube.transform.forward;
 
-        // Set reward for this step according to mixture of the following elements.
-        // a. Match target speed
-        //This reward will approach 1 if it matches perfectly and approach zero as it deviates
         var matchSpeedReward = GetMatchingVelocityReward(cubeForward * MTargetWalkingSpeed, GetAvgVelocity());
-
-        //Check for NaNs
         if (float.IsNaN(matchSpeedReward))
         {
             throw new ArgumentException(
@@ -364,14 +367,8 @@ public class WalkerSoccerAgent : Agent
             );
         }
 
-        // b. Rotation alignment with target direction.
-        //This reward will approach 1 if it faces the target direction perfectly and approach zero as it deviates
-        var headForward = head.forward;
-        headForward.y = 0;
-        // var lookAtTargetReward = (Vector3.Dot(cubeForward, head.forward) + 1) * .5F;
-        var lookAtTargetReward = (Vector3.Dot(cubeForward, headForward) + 1) * .5F;
-
-        //Check for NaNs
+        var headForward = head.forward; headForward.y = 0;
+        var lookAtTargetReward = (Vector3.Dot(cubeForward, headForward) + 1) * .5f;
         if (float.IsNaN(lookAtTargetReward))
         {
             throw new ArgumentException(
@@ -381,43 +378,27 @@ public class WalkerSoccerAgent : Agent
             );
         }
 
-        // Standing height bonus - critical for early learning
         float hipsHeight = m_JdController.bodyPartsDict[hips].rb.position.y;
-        if (hipsHeight > 0.8f)
-        {
-            // Strong reward for staying upright
-            AddReward(uprightRewardPerStep);
-        }
-        else if (hipsHeight < 0.3f)
-        {
-            // Smaller penalty for being low (allow recovery)
-            AddReward(-0.005f);
-        }
+        if (hipsHeight > 0.8f) AddReward(uprightRewardPerStep);
+        else if (hipsHeight < 0.3f) AddReward(-0.005f);
 
-        // Anti-forward-tip penalty: penalize excessive forward pitch
         float uprightDot = Vector3.Dot(hips.up, Vector3.up);
-        if (uprightDot < uprightDotMin)
-        {
-            AddReward(-antiForwardTipPenalty);
-        }
+        if (uprightDot < uprightDotMin) AddReward(-antiForwardTipPenalty);
 
-        // Soccer-specific rewards (reduced weight during early learning)
-        // Delay ball influence for first N steps
-        float ballInfluenceFactor = (m_CurrentStepInEpisode < delayBallInfluenceSteps) ? 0.0f : 1.0f;
+        // Sideways tip penalty (simple heuristic)
+        float sidewaysTip = Mathf.Abs(Vector3.Dot(hips.right, Vector3.up));
+        if (sidewaysTip < 0.6f) AddReward(-sidewaysLeanPenalty * (0.6f - sidewaysTip));
 
-        if (position == Position.Goalie)
-        {
-            // Small existential bonus for Goalies
-            AddReward(m_Existential * 0.5f * ballInfluenceFactor);
-        }
-        else if (position == Position.Striker)
-        {
-            // Small existential penalty for Strikers
-            AddReward(-m_Existential * 0.5f * ballInfluenceFactor);
-        }
+        // Angular velocity penalty (hips)
+        float angMag = m_JdController.bodyPartsDict[hips].rb.angularVelocity.magnitude;
+        AddReward(-angMag * angVelPenaltyCoef);
 
-        // Combined locomotion reward - tunable via locomotionRewardScale
-        AddReward(locomotionRewardScale * matchSpeedReward * lookAtTargetReward);
+        float ballInfluenceFactor = (m_CurrentStepInEpisode < delayBallInfluenceSteps) ? 0f : 1f;
+        if (position == Position.Goalie) AddReward(m_Existential * 0.25f * ballInfluenceFactor);
+        else if (position == Position.Striker) AddReward(-m_Existential * 0.25f * ballInfluenceFactor);
+
+        float locomotionScaleDynamic = locomotionRewardScale * (0.5f + 0.5f * rampT);
+        AddReward(locomotionScaleDynamic * matchSpeedReward * lookAtTargetReward);
     }
 
     //Returns the average velocity of all of the body parts
