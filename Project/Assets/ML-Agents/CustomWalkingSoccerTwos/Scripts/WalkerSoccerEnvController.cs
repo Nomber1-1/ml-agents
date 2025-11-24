@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
+using Unity.MLAgentsExamples; // Added for JointDriveController
 
 public class WalkerSoccerEnvController : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class WalkerSoccerEnvController : MonoBehaviour
     //List of Agents On Platform
     public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
 
-    private SoccerSettings m_SoccerSettings;
+    private WalkerSoccerSettings m_SoccerSettings;
 
 
     private SimpleMultiAgentGroup m_BlueAgentGroup;
@@ -49,7 +50,7 @@ public class WalkerSoccerEnvController : MonoBehaviour
     void Start()
     {
 
-        m_SoccerSettings = FindFirstObjectByType<SoccerSettings>();
+        m_SoccerSettings = FindFirstObjectByType<WalkerSoccerSettings>();
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();

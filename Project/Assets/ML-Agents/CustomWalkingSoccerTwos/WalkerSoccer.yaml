@@ -32,15 +32,8 @@ behaviors:
         reward_signals:
             # Primary extrinsic rewards (goals, ball touches, locomotion)
             extrinsic:
-                gamma: 0.995 # Discount factor (long-term planning)
+                gamma: 0.99 # Discount factor (long-term planning)
                 strength: 1.0
-
-            # Curiosity-based intrinsic motivation (helps exploration)
-            curiosity:
-                gamma: 0.99
-                strength: 0.01 # Small curiosity bonus
-                encoding_size: 256
-                learning_rate: 0.0003
 
         # Multi-agent specific settings (POCA)
         self_play:
@@ -57,82 +50,3 @@ behaviors:
         summary_freq: 10000 # Log to TensorBoard every 10k steps
         keep_checkpoints: 10 # Keep last 10 model checkpoints
         checkpoint_interval: 500000 # Save checkpoint every 500k steps
-
-        # Behavioral cloning (optional - if you have demo data)
-        # behavioral_cloning:
-        #   demo_path: demonstrations/WalkerSoccer.demo
-        #   steps: 10000
-        #   strength: 0.5
-        #   batch_size: 512
-
-# Environment configuration
-env_settings:
-    # Environment parameters (accessible via Academy.Instance.EnvironmentParameters)
-    ball_touch: 0.0 # Initial ball touch reward (will be increased via curriculum)
-
-# Curriculum learning - gradually increase difficulty
-curriculum:
-    - name: BallTouchCurriculum
-      completion_criteria:
-          measure: progress
-          behavior: WalkerSoccer
-          signal_smoothing: true
-          min_lesson_length: 100
-          threshold: 0.3 # When reward reaches 0.3, move to next lesson
-      value:
-          ball_touch: 0.0 # Start with no ball touch reward
-      lessons:
-          - name: Lesson0_JustWalking
-            value:
-                ball_touch: 0.0 # Focus purely on walking
-            completion_criteria:
-                measure: progress
-                behavior: WalkerSoccer
-                threshold: 0.2
-
-          - name: Lesson1_ChaseAndTouch
-            value:
-                ball_touch: 0.3 # Small reward for touching ball
-            completion_criteria:
-                measure: progress
-                behavior: WalkerSoccer
-                threshold: 0.4
-
-          - name: Lesson2_PlaySoccer
-            value:
-                ball_touch: 0.5 # Moderate reward for ball interaction
-            completion_criteria:
-                measure: progress
-                behavior: WalkerSoccer
-                threshold: 0.6
-
-          - name: Lesson3_CompetitiveSoccer
-            value:
-                ball_touch: 1.0 # Full reward for ball touches
-
-# Parameter randomization for robust training
-# This helps agents generalize to variations
-parameter_randomization:
-    resampling-interval: 5000 # Resample every 5000 steps
-
-    # Randomize agent scale slightly
-    agent_scale:
-        sampler-type: uniform
-        min_value: 0.95
-        max_value: 1.05
-
-    # Randomize physics properties
-    ball_mass:
-        sampler-type: uniform
-        min_value: 0.4
-        max_value: 0.6
-
-    ball_drag:
-        sampler-type: uniform
-        min_value: 0.05
-        max_value: 0.15
-
-    gravity:
-        sampler-type: uniform
-        min_value: 9.5
-        max_value: 10.0

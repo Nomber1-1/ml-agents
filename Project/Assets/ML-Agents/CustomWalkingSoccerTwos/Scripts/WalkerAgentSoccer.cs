@@ -35,7 +35,7 @@ public class WalkerAgentSoccer : Agent
 
     [HideInInspector]
     public Rigidbody agentRb;
-    SoccerSettings m_SoccerSettings;
+    WalkerSoccerSettings m_SoccerSettings;
     BehaviorParameters m_BehaviorParameters;
     public Vector3 initialPos;
     public float rotSign;
@@ -82,7 +82,7 @@ public class WalkerAgentSoccer : Agent
             m_LateralSpeed = 0.3f;
             m_ForwardSpeed = 1.0f;
         }
-        m_SoccerSettings = FindFirstObjectByType<SoccerSettings>();
+        m_SoccerSettings = FindFirstObjectByType<WalkerSoccerSettings>();
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
         Debug.Log("Reset Params:" + m_ResetParams);

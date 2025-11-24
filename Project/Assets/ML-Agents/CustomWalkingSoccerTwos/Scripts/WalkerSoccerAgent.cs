@@ -32,7 +32,8 @@ public class WalkerSoccerAgent : Agent
     private const float k_KickPower = 2000f;
 
     private BehaviorParameters m_BehaviorParameters;
-    private SoccerSettings m_SoccerSettings;
+    private WalkerSoccerSettings m_SoccerSettings;
+    private int m_StabilizeSteps;
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -118,7 +119,7 @@ public class WalkerSoccerAgent : Agent
             rotSign = -1f;
         }
 
-        m_SoccerSettings = FindFirstObjectByType<SoccerSettings>();
+        m_SoccerSettings = FindFirstObjectByType<WalkerSoccerSettings>();
 
         // Walker initialization
         m_OrientationCube = GetComponentInChildren<OrientationCubeController>();
@@ -144,6 +145,8 @@ public class WalkerSoccerAgent : Agent
         m_JdController.SetupBodyPart(handR);
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
+
+        ConfigureRigidbodies();
     }
 
     /// <summary>
@@ -160,14 +163,27 @@ public class WalkerSoccerAgent : Agent
             bodyPart.Reset(bodyPart);
         }
 
-        //Random start rotation to help generalize
-        hips.rotation = Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0);
+        //Random start rotation to help generalize (but keep stable for Heuristic-only testing)
+        if (m_BehaviorParameters != null && m_BehaviorParameters.BehaviorType == BehaviorType.HeuristicOnly)
+        {
+            hips.rotation = Quaternion.identity;
+        }
+        else
+        {
+            hips.rotation = Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0);
+        }
 
         UpdateOrientationObjects();
 
         //Set our goal walking speed
         MTargetWalkingSpeed =
             randomizeWalkSpeedEachEpisode ? Random.Range(0.1f, m_maxWalkingSpeed) : MTargetWalkingSpeed;
+
+        if (m_SoccerSettings == null || m_SoccerSettings.enableStartStabilization)
+        {
+            m_StabilizeSteps = m_SoccerSettings != null ? m_SoccerSettings.stabilizeStepsOnReset : 10;
+            ApplyStableStandPoseTargets(m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f);
+        }
     }
 
     /// <summary>
@@ -310,6 +326,12 @@ public class WalkerSoccerAgent : Agent
     {
         UpdateOrientationObjects();
 
+        if (m_StabilizeSteps > 0)
+        {
+            ApplyStableStandPoseTargets(m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f);
+            m_StabilizeSteps--;
+        }
+
         var cubeForward = m_OrientationCube.transform.forward;
 
         // Set reward for this step according to mixture of the following elements.
@@ -427,24 +449,109 @@ public class WalkerSoccerAgent : Agent
     /// </summary>
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        var continuousActionsOut = actionsOut.ContinuousActions;
+        var a = actionsOut.ContinuousActions;
 
-        // Simple heuristic: slight forward motion
-        if (Input.GetKey(KeyCode.W))
+        // Ensure array is the expected size (39): 26 rotations + 13 strengths
+        // Default to a balanced standing pose with moderate strengths
+        for (int i = 0; i < a.Length; i++) a[i] = 0f;
+
+        // Indices mapping (must match OnActionReceived order)
+        int CHEST_X = 0, CHEST_Y = 1, CHEST_Z = 2;
+        int SPINE_X = 3, SPINE_Y = 4, SPINE_Z = 5;
+        int THIGH_L_X = 6, THIGH_L_Y = 7;
+        int THIGH_R_X = 8, THIGH_R_Y = 9;
+        int SHIN_L_X = 10;
+        int SHIN_R_X = 11;
+        int FOOT_R_X = 12, FOOT_R_Y = 13, FOOT_R_Z = 14;
+        int FOOT_L_X = 15, FOOT_L_Y = 16, FOOT_L_Z = 17;
+        int ARM_L_Y = 19;
+        int ARM_R_Y = 21;
+        int HEAD_X = 24, HEAD_Y = 25;
+        int STR_START = 26; // chest strength index
+
+        // Slightly bent-knee standing pose for better stability
+        a[THIGH_L_X] = 0.12f;
+        a[THIGH_R_X] = 0.12f;
+        a[THIGH_L_Y] = -0.15f; // toes slightly outward
+        a[THIGH_R_Y] = 0.15f;
+        a[SHIN_L_X] = -0.20f; // slight knee bend
+        a[SHIN_R_X] = -0.20f;
+        a[FOOT_L_X] = 0.06f;
+        a[FOOT_R_X] = 0.06f;
+        a[FOOT_L_Y] = -0.10f; // match outward stance
+        a[FOOT_R_Y] = 0.10f;
+        a[FOOT_L_Z] = -0.05f; // slight eversion/inversion to resist roll
+        a[FOOT_R_Z] = 0.05f;
+
+        // Keep torso upright
+        a[CHEST_X] = 0f; a[CHEST_Y] = 0f; a[CHEST_Z] = 0f;
+        a[SPINE_X] = 0f; a[SPINE_Y] = 0f; a[SPINE_Z] = 0f;
+        a[HEAD_X] = 0f; a[HEAD_Y] = 0f;
+
+        // Arms slightly out for balance (optional, small values)
+        a[ARM_L_Y] = 0.10f;
+        a[ARM_R_Y] = -0.10f;
+
+        // Map simple user input to torso orientation for quick tests
+        float turn = 0f;
+        float pitch = 0f;
+        if (Input.GetKey(KeyCode.A)) turn = -0.2f;
+        if (Input.GetKey(KeyCode.D)) turn = 0.2f;
+        if (Input.GetKey(KeyCode.W)) pitch = 0.2f;
+        if (Input.GetKey(KeyCode.S)) pitch = -0.2f;
+
+        a[CHEST_Y] = turn;
+        a[SPINE_Y] = turn * 0.5f;   // smaller twist on spine
+        a[CHEST_X] = pitch * 0.5f;  // gentle forward lean
+        a[SPINE_X] = pitch * 0.25f;
+
+        // Set joint strengths (26..38) to moderate-high so joints can hold pose
+        float standStrength = m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f;
+        for (int i = STR_START; i < STR_START + 13; i++) a[i] = standStrength;
+    }
+
+    void ConfigureRigidbodies()
+    {
+        int it = m_SoccerSettings != null ? m_SoccerSettings.solverIterations : 12;
+        int vit = m_SoccerSettings != null ? m_SoccerSettings.solverVelocityIterations : 12;
+        foreach (var bp in m_JdController.bodyPartsList)
         {
-            continuousActionsOut[0] = 1f; // chest rotation
+            var rb = bp.rb;
+            rb.maxAngularVelocity = 50f;
+            rb.solverIterations = it;
+            rb.solverVelocityIterations = vit;
         }
-        if (Input.GetKey(KeyCode.S))
-        {
-            continuousActionsOut[0] = -1f;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            continuousActionsOut[1] = -1f;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            continuousActionsOut[1] = 1f;
-        }
+    }
+
+    void ApplyStableStandPoseTargets(float strength)
+    {
+        var bp = m_JdController.bodyPartsDict;
+        bp[chest].SetJointTargetRotation(0f, 0f, 0f);
+        bp[spine].SetJointTargetRotation(0f, 0f, 0f);
+        bp[thighL].SetJointTargetRotation(0.12f, -0.15f, 0f);
+        bp[thighR].SetJointTargetRotation(0.12f, 0.15f, 0f);
+        bp[shinL].SetJointTargetRotation(-0.20f, 0f, 0f);
+        bp[shinR].SetJointTargetRotation(-0.20f, 0f, 0f);
+        bp[footR].SetJointTargetRotation(0.06f, 0.10f, 0.05f);
+        bp[footL].SetJointTargetRotation(0.06f, -0.10f, -0.05f);
+        bp[armL].SetJointTargetRotation(0f, 0.10f, 0f);
+        bp[armR].SetJointTargetRotation(0f, -0.10f, 0f);
+        bp[forearmL].SetJointTargetRotation(0f, 0f, 0f);
+        bp[forearmR].SetJointTargetRotation(0f, 0f, 0f);
+        bp[head].SetJointTargetRotation(0f, 0f, 0f);
+
+        bp[chest].SetJointStrength(strength);
+        bp[spine].SetJointStrength(strength);
+        bp[head].SetJointStrength(strength);
+        bp[thighL].SetJointStrength(strength);
+        bp[shinL].SetJointStrength(strength);
+        bp[footL].SetJointStrength(strength);
+        bp[thighR].SetJointStrength(strength);
+        bp[shinR].SetJointStrength(strength);
+        bp[footR].SetJointStrength(strength);
+        bp[armL].SetJointStrength(strength);
+        bp[forearmL].SetJointStrength(strength);
+        bp[armR].SetJointStrength(strength);
+        bp[forearmR].SetJointStrength(strength);
     }
 }
