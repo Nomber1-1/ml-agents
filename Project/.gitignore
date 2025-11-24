@@ -5,6 +5,7 @@
 /[Bb]uild/
 /[Bb]uilds/*
 ![Bb]uilds/OG
+![Bb]uilds/Custom
 /Assets/AssetStoreTools*
 /Assets/Plugins*
 /Assets/Demonstrations*
