@@ -76,8 +76,8 @@ Start training by pressing the Play button in the Unity Editor
 | `buffer_size` | 20480 | 10x batch size, standard ratio |
 | `hidden_units` | 512 | Large network for complex walker + soccer control |
 | `num_layers` | 3 | Deep enough for hierarchical behaviors |
-| `gamma` | 0.995 | High discount for long-term goal planning |
-| `max_steps` | 10M | Sufficient for learning complex behaviors |
+| `gamma` | 0.99 | Discount factor for long-term goal planning |
+| `max_steps` | 30M | Sufficient for learning complex behaviors |
 
 ### Why MA-POCA?
 
@@ -87,25 +87,25 @@ We use **Multi-Agent POsthumous Credit Assignment (MA-POCA)** because:
 - ✅ Assigns credit appropriately in team settings
 - ✅ Includes self-play for competitive learning
 
-### Curriculum Learning
+### Start Pose Stabilization
 
-Training progresses through 4 lessons:
+Agents use an initial stabilization window to prevent early collapse:
 
-1. **Lesson 0 - Just Walking** (`ball_touch: 0.0`)
-   - Agents learn basic locomotion
-   - Focus on stability and movement control
+1. **Stabilization Period** (configurable in `WalkerSoccerSettings`)
+   - First 10-20 physics steps hold a stable standing pose
+   - High joint strengths (0.9-1.0) enforce the pose
+   - Prevents ragdoll collapse during episode initialization
    
-2. **Lesson 1 - Chase and Touch** (`ball_touch: 0.3`)
-   - Introduce ball interaction
-   - Reward agents for touching the ball
+2. **Solver Iterations** (configurable)
+   - Increased to 12 for better joint stability
+   - Helps maintain balance during rapid movements
    
-3. **Lesson 2 - Play Soccer** (`ball_touch: 0.5`)
-   - Agents learn to intentionally kick ball
-   - Basic soccer strategy emerges
-   
-4. **Lesson 3 - Competitive Soccer** (`ball_touch: 1.0`)
-   - Full competitive gameplay
-   - Advanced strategies (passing, defending)
+3. **Configuration Options**:
+   - `enableStartStabilization`: Enable/disable pose hold
+   - `stabilizeStepsOnReset`: Number of steps to hold pose (10-30)
+   - `standStrength`: Joint strength during stabilization (0.9-1.0)
+   - `solverIterations`: Physics solver iterations (10-15)
+   - `solverVelocityIterations`: Velocity solver iterations (10-15)
 
 ---
 
@@ -177,6 +177,20 @@ Monitor training in real-time:
    - If you have NVIDIA GPU, install CUDA version of PyTorch
    - Significant speedup for large neural networks
 
+5. **Multi-GPU Training** (2+ GPUs)
+   - Run separate training sessions on each GPU:
+   ```powershell
+   # Terminal 1 (GPU 0)
+   $env:CUDA_VISIBLE_DEVICES="0"
+   mlagents-learn WalkerSoccer.yaml --run-id=WalkerSoccer_GPU0 --num-envs=12
+   
+   # Terminal 2 (GPU 1)
+   $env:CUDA_VISIBLE_DEVICES="1"
+   mlagents-learn WalkerSoccer.yaml --run-id=WalkerSoccer_GPU1 --num-envs=6
+   ```
+   - Each trains independently; compare results afterward
+   - Scale `--num-envs` based on GPU VRAM (12GB = 12-16 envs, 6GB = 4-8 envs)
+
 ### Common Training Issues
 
 #### Issue: Agents not learning to walk
@@ -188,7 +202,12 @@ Monitor training in real-time:
 
 #### Issue: Agents fall over constantly
 **Solutions:**
-- Reduce `max_joint_force_limit`
+- Enable start stabilization in `WalkerSoccerSettings`:
+  - `enableStartStabilization = true`
+  - `stabilizeStepsOnReset = 15-20`
+  - `standStrength = 0.95-1.0`
+- Increase solver iterations (12-15)
+- Reduce `max_joint_force_limit` if still unstable
 - Increase decision period (5-10 steps)
 - Check ConfigurableJoint drive settings
 - Ensure feet have ground contact sensors

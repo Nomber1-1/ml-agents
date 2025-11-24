@@ -52,8 +52,8 @@ CustomWalkingSoccerTwos/
 ### Advanced Training
 - **MA-POCA** (Multi-Agent POsthumous Credit Assignment) for team learning
 - **Self-play** for competitive skill development
-- **Curriculum learning** progressing from walking to advanced soccer
-- **Parameter randomization** for robust generalization
+- **Start pose stabilization** to prevent early episode collapse
+- **Multi-GPU support** for faster parallel training
 
 ### Soccer Gameplay
 - **Team-based rewards** for goals, ball touches, and positioning
@@ -97,15 +97,14 @@ learning_rate: 0.0003
 batch_size: 2048
 hidden_units: 512
 num_layers: 3
-gamma: 0.995
-max_steps: 10M
+gamma: 0.99
+max_steps: 30M
 ```
 
-### Curriculum Stages
-1. **Just Walking** - Learn locomotion (ball_touch: 0.0)
-2. **Chase and Touch** - Interact with ball (ball_touch: 0.3)
-3. **Play Soccer** - Basic soccer skills (ball_touch: 0.5)
-4. **Competitive Soccer** - Full gameplay (ball_touch: 1.0)
+### Stabilization Features
+- **Start pose hold**: Agents hold stable stance for first 10-20 steps
+- **Increased solver iterations**: Better joint constraint solving (12 iterations)
+- **Configurable via WalkerSoccerSettings**: Toggle and tune stabilization parameters
 
 ## 📖 Documentation
 
