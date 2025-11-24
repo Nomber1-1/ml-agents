@@ -382,20 +382,33 @@ public class WalkerSoccerAgent : Agent
             );
         }
 
-        // Soccer-specific rewards
+        // Standing height bonus - critical for early learning
+        float hipsHeight = m_JdController.bodyPartsDict[hips].rb.position.y;
+        if (hipsHeight > 0.8f)
+        {
+            // Strong reward for staying upright
+            AddReward(0.01f);
+        }
+        else if (hipsHeight < 0.3f)
+        {
+            // Smaller penalty for being low (allow recovery)
+            AddReward(-0.005f);
+        }
+
+        // Soccer-specific rewards (reduced weight during early learning)
         if (position == Position.Goalie)
         {
-            // Existential bonus for Goalies.
-            AddReward(m_Existential);
+            // Small existential bonus for Goalies
+            AddReward(m_Existential * 0.5f);
         }
         else if (position == Position.Striker)
         {
-            // Existential penalty for Strikers - encourages them to score quickly
-            AddReward(-m_Existential);
+            // Small existential penalty for Strikers
+            AddReward(-m_Existential * 0.5f);
         }
 
-        // Combined locomotion reward (scaled down to balance with soccer rewards)
-        AddReward(0.5f * matchSpeedReward * lookAtTargetReward);
+        // Combined locomotion reward - INCREASED to 2.0x for better learning signal
+        AddReward(2.0f * matchSpeedReward * lookAtTargetReward);
     }
 
     //Returns the average velocity of all of the body parts

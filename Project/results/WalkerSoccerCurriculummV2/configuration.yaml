@@ -53,7 +53,7 @@ env_settings:
   env_path: C:\Documents\GitHub\ml-agents\Project\Builds\Trios\UnityEnvironment.exe
   env_args: null
   base_port: 5005
-  num_envs: 14
+  num_envs: 12
   num_areas: 1
   timeout_wait: 60
   seed: -1
@@ -75,7 +75,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7825
+          seed: 782
           value: 0.0
       name: Lesson0_JustWalking
       completion_criteria:
@@ -88,7 +88,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7826
+          seed: 783
           value: 0.3
       name: Lesson1_ChaseAndTouch
       completion_criteria:
@@ -101,7 +101,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7827
+          seed: 784
           value: 0.5
       name: Lesson2_PlaySoccer
       completion_criteria:
@@ -114,7 +114,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7828
+          seed: 785
           value: 1.0
       name: Lesson3_CompetitiveSoccer
       completion_criteria: null
@@ -122,8 +122,8 @@ checkpoint_settings:
   run_id: WalkerSoccerCurriculummV2
   initialize_from: null
   load_model: false
-  resume: false
-  force: true
+  resume: true
+  force: false
   train_model: false
   inference: false
   results_dir: results
