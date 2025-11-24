@@ -46,11 +46,13 @@ public class WalkerSoccerEnvController : MonoBehaviour
     private SimpleMultiAgentGroup m_PurpleAgentGroup;
 
     private int m_ResetTimer;
+    private EnvironmentParameters m_EnvParams;
 
     void Start()
     {
 
         m_SoccerSettings = FindFirstObjectByType<WalkerSoccerSettings>();
+        m_EnvParams = Academy.Instance.EnvironmentParameters;
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
@@ -87,8 +89,15 @@ public class WalkerSoccerEnvController : MonoBehaviour
 
     public void ResetBall()
     {
-        var randomPosX = Random.Range(-2.5f, 2.5f);
-        var randomPosZ = Random.Range(-2.5f, 2.5f);
+        // Get curriculum-controlled spawn radius
+        float spawnRadius = m_EnvParams.GetWithDefault("ball_spawn_radius", 3.0f);
+
+        // Random angle in circle
+        float randomAngle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+        float randomDistance = Random.Range(0f, spawnRadius);
+
+        var randomPosX = Mathf.Cos(randomAngle) * randomDistance;
+        var randomPosZ = Mathf.Sin(randomAngle) * randomDistance;
 
         ball.transform.position = m_BallStartingPos + new Vector3(randomPosX, 0f, randomPosZ);
         ballRb.linearVelocity = Vector3.zero;

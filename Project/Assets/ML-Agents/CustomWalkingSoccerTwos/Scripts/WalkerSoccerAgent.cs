@@ -34,6 +34,15 @@ public class WalkerSoccerAgent : Agent
     private BehaviorParameters m_BehaviorParameters;
     private WalkerSoccerSettings m_SoccerSettings;
     private int m_StabilizeSteps;
+    private float m_BallSpawnRadius;
+
+    [Header("Reward Tuning")]
+    [SerializeField] private float uprightRewardPerStep = 0.01f;
+    [SerializeField] private float locomotionRewardScale = 2.0f;
+    [SerializeField] private float antiForwardTipPenalty = 0.02f;
+    [SerializeField] private float uprightDotMin = 0.7f;
+    [SerializeField] private int delayBallInfluenceSteps = 50;
+    private int m_CurrentStepInEpisode;
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -156,6 +165,8 @@ public class WalkerSoccerAgent : Agent
     {
         // Soccer-specific reset parameters
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
+        m_BallSpawnRadius = m_ResetParams.GetWithDefault("ball_spawn_radius", 3.0f);
+        m_CurrentStepInEpisode = 0;
 
         //Reset all of the body parts
         foreach (var bodyPart in m_JdController.bodyPartsDict.Values)
@@ -163,28 +174,15 @@ public class WalkerSoccerAgent : Agent
             bodyPart.Reset(bodyPart);
         }
 
-        // Face towards the ball (or forward if no ball) for consistent training
-        if (ball != null)
-        {
-            Vector3 directionToBall = ball.position - hips.position;
-            directionToBall.y = 0; // Keep rotation only on horizontal plane
-            if (directionToBall.sqrMagnitude > 0.01f)
-            {
-                hips.rotation = Quaternion.LookRotation(directionToBall);
-            }
-            else
-            {
-                hips.rotation = Quaternion.identity;
-            }
-        }
-        else if (m_BehaviorParameters != null && m_BehaviorParameters.BehaviorType == BehaviorType.HeuristicOnly)
+        // Start with neutral orientation to learn balance first
+        if (m_BehaviorParameters != null && m_BehaviorParameters.BehaviorType == BehaviorType.HeuristicOnly)
         {
             hips.rotation = Quaternion.identity;
         }
         else
         {
-            // Optional: small random variation (±15 degrees) for generalization
-            float randomYaw = Random.Range(-15f, 15f);
+            // Neutral forward or small random variation (±10 degrees)
+            float randomYaw = Random.Range(-10f, 10f);
             hips.rotation = Quaternion.Euler(0, randomYaw, 0);
         }
 
@@ -196,7 +194,7 @@ public class WalkerSoccerAgent : Agent
 
         if (m_SoccerSettings == null || m_SoccerSettings.enableStartStabilization)
         {
-            m_StabilizeSteps = m_SoccerSettings != null ? m_SoccerSettings.stabilizeStepsOnReset : 10;
+            m_StabilizeSteps = m_SoccerSettings != null ? m_SoccerSettings.stabilizeStepsOnReset : 50;
             ApplyStableStandPoseTargets(m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f);
         }
     }
@@ -340,6 +338,7 @@ public class WalkerSoccerAgent : Agent
     void FixedUpdate()
     {
         UpdateOrientationObjects();
+        m_CurrentStepInEpisode++;
 
         if (m_StabilizeSteps > 0)
         {
@@ -387,7 +386,7 @@ public class WalkerSoccerAgent : Agent
         if (hipsHeight > 0.8f)
         {
             // Strong reward for staying upright
-            AddReward(0.01f);
+            AddReward(uprightRewardPerStep);
         }
         else if (hipsHeight < 0.3f)
         {
@@ -395,20 +394,30 @@ public class WalkerSoccerAgent : Agent
             AddReward(-0.005f);
         }
 
+        // Anti-forward-tip penalty: penalize excessive forward pitch
+        float uprightDot = Vector3.Dot(hips.up, Vector3.up);
+        if (uprightDot < uprightDotMin)
+        {
+            AddReward(-antiForwardTipPenalty);
+        }
+
         // Soccer-specific rewards (reduced weight during early learning)
+        // Delay ball influence for first N steps
+        float ballInfluenceFactor = (m_CurrentStepInEpisode < delayBallInfluenceSteps) ? 0.0f : 1.0f;
+
         if (position == Position.Goalie)
         {
             // Small existential bonus for Goalies
-            AddReward(m_Existential * 0.5f);
+            AddReward(m_Existential * 0.5f * ballInfluenceFactor);
         }
         else if (position == Position.Striker)
         {
             // Small existential penalty for Strikers
-            AddReward(-m_Existential * 0.5f);
+            AddReward(-m_Existential * 0.5f * ballInfluenceFactor);
         }
 
-        // Combined locomotion reward - INCREASED to 2.0x for better learning signal
-        AddReward(2.0f * matchSpeedReward * lookAtTargetReward);
+        // Combined locomotion reward - tunable via locomotionRewardScale
+        AddReward(locomotionRewardScale * matchSpeedReward * lookAtTargetReward);
     }
 
     //Returns the average velocity of all of the body parts
@@ -456,8 +465,9 @@ public class WalkerSoccerAgent : Agent
     {
         if (collision.gameObject.CompareTag("ball"))
         {
-            // Reward for touching the ball
-            AddReward(0.2f * m_BallTouch);
+            // Reward for touching the ball (delayed influence)
+            float ballInfluenceFactor = (m_CurrentStepInEpisode < delayBallInfluenceSteps) ? 0.0f : 1.0f;
+            AddReward(0.2f * m_BallTouch * ballInfluenceFactor);
 
             // Apply kick force based on collision
             var force = k_KickPower;

@@ -95,12 +95,36 @@ environment_parameters:
     ball_spawn_radius:
         curriculum:
             - name: Lesson0_StandAndBalance
+              completion_criteria:
+                  measure: reward
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 1200
+                  threshold: 6.0
               value: 12.0
             - name: Lesson1_WalkFarBall
+              completion_criteria:
+                  measure: reward
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 1400
+                  threshold: 12.0
               value: 9.0
             - name: Lesson2_ApproachControl
+              completion_criteria:
+                  measure: reward
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 1500
+                  threshold: 18.0
               value: 6.0
             - name: Lesson3_PlaySoccer
+              completion_criteria:
+                  measure: reward
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 1600
+                  threshold: 24.0
               value: 4.0
             - name: Lesson4_Competitive
               value: 3.0
