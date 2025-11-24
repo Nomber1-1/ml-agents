@@ -17,10 +17,12 @@ public class SoccerBallController2 : MonoBehaviour
     {
         if (col.gameObject.CompareTag(purpleGoalTag)) //ball touched purple goal
         {
+            Debug.Log("Goal for Blue Team");
             envController.GoalTouched(Team.Blue);
         }
         if (col.gameObject.CompareTag(blueGoalTag)) //ball touched blue goal
         {
+            Debug.Log("Goal for Purple Team");
             envController.GoalTouched(Team.Purple);
         }
     }
