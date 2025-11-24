@@ -23,3 +23,9 @@ Begin MonoManager ReloadAssembly
 Microsoft Media Foundation video decoding to texture disabled: graphics device is Null, only Direct3D 11 and Direct3D 12 (only on desktop) are supported for hardware-accelerated video decoding.
 UnloadTime: 0.614400 ms
 Registered Communicator in Agent.
+Unable to save timers to file C:/Documents/GitHub/ml-agents/Project/Builds/TriosV2/UnityEnvironment_Data\ML-Agents\Timers\TrioTraining_timers.json
+[Physics::Module] Cleanup current backned.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.

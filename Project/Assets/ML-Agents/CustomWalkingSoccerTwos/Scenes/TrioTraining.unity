@@ -177,10 +177,106 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2538961368449734818, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 61c826b676c41254ab12f1e6b36a361f,
+        type: 3}
+    - target: {fileID: 2538961368449734818, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2538961368449734818, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3102129780577725866, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 61c826b676c41254ab12f1e6b36a361f,
+        type: 3}
+    - target: {fileID: 3102129780577725866, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3102129780577725866, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
         type: 3}
       propertyPath: m_Name
       value: WalkerScenes
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402268448655639074, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 61c826b676c41254ab12f1e6b36a361f,
+        type: 3}
+    - target: {fileID: 4402268448655639074, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402268448655639074, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626107788908882285, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 61c826b676c41254ab12f1e6b36a361f,
+        type: 3}
+    - target: {fileID: 7626107788908882285, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626107788908882285, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7910477200371392271, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 61c826b676c41254ab12f1e6b36a361f,
+        type: 3}
+    - target: {fileID: 7910477200371392271, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7910477200371392271, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8118395303848952247, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 61c826b676c41254ab12f1e6b36a361f,
+        type: 3}
+    - target: {fileID: 8118395303848952247, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8118395303848952247, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
