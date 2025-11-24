@@ -53,7 +53,7 @@ env_settings:
   env_path: C:\Documents\GitHub\ml-agents\Project\Builds\Custom\UnityEnvironment.exe
   env_args: null
   base_port: 5005
-  num_envs: 8
+  num_envs: 14
   num_areas: 1
   timeout_wait: 60
   seed: -1
@@ -74,8 +74,8 @@ checkpoint_settings:
   run_id: WalkerSoccer_v1
   initialize_from: null
   load_model: false
-  resume: false
-  force: true
+  resume: true
+  force: false
   train_model: false
   inference: false
   results_dir: results

@@ -45,7 +45,7 @@ behaviors:
             initial_elo: 1200.0
 
         # Training configuration
-        max_steps: 10000000 # 10M steps (adjust based on results)
+        max_steps: 30000000 # 30M steps (adjust based on results) (10M ~ 3 hours with 14 envs)
         time_horizon: 1000 # Steps before updating (matches episode length)
         summary_freq: 10000 # Log to TensorBoard every 10k steps
         keep_checkpoints: 10 # Keep last 10 model checkpoints
