@@ -3,7 +3,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
 
-public class AgentSoccer2 : Agent
+public class WalkerAgentSoccer : Agent
 {
     // Note that that the detectable tags are different for the blue and purple teams. The order is
     // * ball

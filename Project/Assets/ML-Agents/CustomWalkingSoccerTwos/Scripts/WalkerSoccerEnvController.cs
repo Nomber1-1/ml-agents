@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
 
-public class SoccerEnvController2 : MonoBehaviour
+public class WalkerSoccerEnvController : MonoBehaviour
 {
     [System.Serializable]
     public class PlayerInfo
     {
-        public AgentSoccer2 Agent;
+        public WalkerSoccerAgent Agent;
         [HideInInspector]
         public Vector3 StartingPos;
         [HideInInspector]
@@ -126,6 +126,16 @@ public class SoccerEnvController2 : MonoBehaviour
             var rot = item.Agent.rotSign * Random.Range(80.0f, 100.0f);
             var newRot = Quaternion.Euler(0, rot, 0);
             item.Agent.transform.SetPositionAndRotation(newStartPos, newRot);
+
+            // Reset body parts for walker agents
+            var bodyParts = item.Agent.GetComponent<JointDriveController>();
+            if (bodyParts != null)
+            {
+                foreach (var bodyPart in bodyParts.bodyPartsDict.Values)
+                {
+                    bodyPart.Reset(bodyPart);
+                }
+            }
         }
 
         //Reset Ball

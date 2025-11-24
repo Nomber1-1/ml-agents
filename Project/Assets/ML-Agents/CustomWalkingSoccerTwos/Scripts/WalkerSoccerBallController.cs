@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class SoccerBallController2 : MonoBehaviour
+public class WalkerSoccerBallController : MonoBehaviour
 {
     public GameObject area;
     [HideInInspector]
-    public SoccerEnvController2 envController;
+    public WalkerSoccerEnvController envController;
     public string purpleGoalTag; //will be used to check if collided with purple goal
     public string blueGoalTag; //will be used to check if collided with blue goal
 
     void Start()
     {
-        envController = area.GetComponent<SoccerEnvController2>();
+        envController = area.GetComponent<WalkerSoccerEnvController>();
     }
 
     void OnCollisionEnter(Collision col)
