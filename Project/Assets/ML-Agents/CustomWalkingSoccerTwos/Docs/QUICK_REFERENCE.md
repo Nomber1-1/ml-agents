@@ -53,9 +53,10 @@ WASD - Basic movement control
 
 ### If agents fall over at episode start:
 1. Enable start stabilization in WalkerSoccerSettings
-2. Set stabilizeStepsOnReset = 15-20
-3. Set standStrength = 0.95-1.0
-4. Increase solver iterations to 12-15
+2. Set stabilizeStepsOnReset = 50 (V5 default)
+3. Set standStrength = 0.9
+4. Set maxTargetSpeed = 3.0 (lower speeds help balance)
+5. Increase solver iterations to 12
 
 ### If training isn't working:
 1. Check network_settings > normalize: true
@@ -101,21 +102,34 @@ Joint Force Limit: 300-500
 ### WalkerSoccerSettings (Scene Object)
 ```
 enableStartStabilization: true
-stabilizeStepsOnReset: 15
+stabilizeStepsOnReset: 50
 standStrength: 0.9
 solverIterations: 12
 solverVelocityIterations: 12
 ```
 
-## 🚦 Training Progress Stages
+### WalkerSoccerAgent Reward Tuning (Inspector)
+```
+maxTargetSpeed: 3.0
+speedRampSteps: 400
+uprightRewardPerStep: 0.01
+locomotionRewardScale: 2.0
+antiForwardTipPenalty: 0.02
+uprightDotMin: 0.7
+angVelPenaltyCoef: 0.001
+sidewaysLeanPenalty: 0.02
+delayBallInfluenceSteps: 50
+```
 
-| Steps | Behavior |
-|-------|----------|
-| 100k | Standing/balancing |
-| 500k | Walking, occasional ball touches |
-| 1M | Ball chasing, basic kicking |
-| 3M | Team coordination, strategy |
-| 5M+ | Advanced tactics, passing |
+## 🚦 Training Progress Stages (V5)
+
+| Steps | Lesson | Behavior |
+|-------|--------|----------|
+| 0-150k | L0 | Standing, balancing (ball far) |
+| 150k-400k | L1 | Stable walking (9m ball) |
+| 400k-800k | L2 | Controlled approach (6m ball) |
+| 800k-1.5M | L3 | Active play (4m ball) |
+| 1.5M+ | L4 | Team strategy (3m ball) |
 
 ## 🔗 Quick Links
 

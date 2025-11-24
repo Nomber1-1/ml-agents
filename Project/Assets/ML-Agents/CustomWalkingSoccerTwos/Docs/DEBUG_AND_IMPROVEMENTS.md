@@ -145,11 +145,12 @@ This document provides troubleshooting tips, debugging strategies, and suggestio
    - Verify physics, collisions, and rewards work
 
 **Solutions:**
-1. Simplify the task (curriculum)
+1. Verify curriculum is working (V5 uses dual parameters)
    ```yaml
-   # Start with just walking
-   curriculum:
-     - ball_touch: 0.0  # Ignore ball initially
+   # Early lessons focus on balance
+   environment_parameters:
+     ball_touch:  # 0.0 in L0, ramps to 1.0 in L4
+     ball_spawn_radius:  # 12m in L0, decreases to 3m in L4
    ```
 
 2. Increase learning rate
@@ -158,16 +159,16 @@ This document provides troubleshooting tips, debugging strategies, and suggestio
      learning_rate: 0.0005  # Up from 0.0003
    ```
 
-3. Add reward shaping
+3. Adjust V5 reward tuning (already implemented, tune via Inspector)
    ```csharp
-   // In FixedUpdate()
-   // Reward for being upright
-   float uprightBonus = Vector3.Dot(hips.up, Vector3.up);
-   AddReward(0.01f * uprightBonus);
+   // V5 includes multiple stability mechanisms:
+   // - Speed ramp (0.5 → maxTargetSpeed over speedRampSteps)
+   // - Anti-forward-tip penalty (when uprightDot < uprightDotMin)
+   // - Sideways lean penalty (lateral tilt damping)
+   // - Angular velocity penalty (damps flailing limbs)
+   // - Delayed ball influence (first delayBallInfluenceSteps)
    
-   // Reward for moving toward ball
-   float distanceToBall = Vector3.Distance(hips.position, ball.position);
-   AddReward(-0.0001f * distanceToBall);
+   // Tune via Inspector serialized fields or modify defaults in code
    ```
 
 #### Problem: Training crashes with NaN

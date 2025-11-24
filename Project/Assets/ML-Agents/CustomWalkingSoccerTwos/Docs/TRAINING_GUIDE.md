@@ -87,25 +87,46 @@ We use **Multi-Agent POsthumous Credit Assignment (MA-POCA)** because:
 - ✅ Assigns credit appropriately in team settings
 - ✅ Includes self-play for competitive learning
 
-### Start Pose Stabilization
+### V5 Stabilization System
 
-Agents use an initial stabilization window to prevent early collapse:
+Agents use multiple stability mechanisms:
 
-1. **Stabilization Period** (configurable in `WalkerSoccerSettings`)
-   - First 10-20 physics steps hold a stable standing pose
-   - High joint strengths (0.9-1.0) enforce the pose
+1. **Start Pose Hold** (configurable in `WalkerSoccerSettings`)
+   - First 50 physics steps hold a stable standing pose (increased from 10)
+   - High joint strengths (0.9) enforce the pose
    - Prevents ragdoll collapse during episode initialization
    
-2. **Solver Iterations** (configurable)
-   - Increased to 12 for better joint stability
+2. **Progressive Speed Ramp**
+   - Walking speed starts at 0.5 m/s and ramps to 3.0 m/s over 400 steps
+   - Prevents high-momentum instability before balance is learned
+   - Dynamically adjusts locomotion reward scaling with ramp progress
+   
+3. **Neutral Orientation Start**
+   - Agents start facing forward (±10° random) instead of toward ball
+   - Prevents immediate uncontrolled lunging toward ball
+   - Ball influence delayed for first 50 steps
+
+4. **Solver Iterations** (configurable)
+   - Set to 12 for better joint stability
    - Helps maintain balance during rapid movements
    
-3. **Configuration Options**:
+5. **Configuration Options** in `WalkerSoccerSettings`:
    - `enableStartStabilization`: Enable/disable pose hold
-   - `stabilizeStepsOnReset`: Number of steps to hold pose (10-30)
-   - `standStrength`: Joint strength during stabilization (0.9-1.0)
-   - `solverIterations`: Physics solver iterations (10-15)
-   - `solverVelocityIterations`: Velocity solver iterations (10-15)
+   - `stabilizeStepsOnReset`: Number of steps to hold pose (default: 50)
+   - `standStrength`: Joint strength during stabilization (0.9)
+   - `solverIterations`: Physics solver iterations (12)
+   - `solverVelocityIterations`: Velocity solver iterations (12)
+
+6. **Tunable Reward Fields** in Agent Inspector:
+   - `maxTargetSpeed`: Max walking speed after ramp (3.0)
+   - `speedRampSteps`: Steps to reach max speed (400)
+   - `uprightRewardPerStep`: Height-based stability bonus (0.01)
+   - `locomotionRewardScale`: Base locomotion reward multiplier (2.0)
+   - `antiForwardTipPenalty`: Forward pitch penalty (0.02)
+   - `uprightDotMin`: Threshold for tip penalty (0.7)
+   - `angVelPenaltyCoef`: Angular velocity damping (0.001)
+   - `sidewaysLeanPenalty`: Lateral tilt penalty (0.02)
+   - `delayBallInfluenceSteps`: Delay ball rewards (50)
 
 ---
 
@@ -214,10 +235,13 @@ Monitor training in real-time:
 
 #### Issue: Agents ignore the ball
 **Solutions:**
-- Increase `ball_touch` reward in curriculum
+- Wait for curriculum progression - early lessons intentionally delay ball influence
 - Verify ball reference is assigned in WalkerSoccerAgent
 - Check ball collision layer settings
-- Reduce locomotion reward weight (currently 0.5x)
+- Ensure `delayBallInfluenceSteps` (50) has passed in episode
+- Current curriculum uses dual parameters:
+  - `ball_touch`: scales ball collision reward (0.0 → 1.0)
+  - `ball_spawn_radius`: ball distance from center (12m → 3m)
 
 #### Issue: Training is unstable (NaN errors)
 **Solutions:**
@@ -289,16 +313,20 @@ AddReward(0.1f * facingReward);
 
 ## Training Benchmarks
 
-Expected performance timeline:
+Expected performance timeline (V5 with dual curriculum):
 
-| Steps | Expected Behavior |
-|-------|------------------|
-| 0-100k | Agents learning to stand/balance |
-| 100k-500k | Basic walking, occasional ball touches |
-| 500k-1M | Consistent walking, chasing ball |
-| 1M-3M | Kicking ball toward goals, basic strategy |
-| 3M-5M | Coordinated team play, passing attempts |
-| 5M-10M | Advanced strategy, defending, goal scoring |
+| Steps | Lesson | Expected Behavior | Mean Reward |
+|-------|--------|-------------------|-------------|
+| 0-150k | Lesson0: StandAndBalance | Learning upright posture, slow controlled walking | -0.8 → +0.5 |
+| 150k-400k | Lesson1: WalkFarBall | Stable walking, ball far away (9m radius) | +0.5 → +1.5 |
+| 400k-800k | Lesson2: ApproachControl | Ball closer (6m), light ball rewards active | +1.5 → +3.0 |
+| 800k-1.5M | Lesson3: PlaySoccer | Ball near (4m), moderate soccer engagement | +3.0 → +5.0 |
+| 1.5M+ | Lesson4: Competitive | Full game (3m spawn), all rewards active | +5.0+ |
+
+**Curriculum Thresholds:**
+- Lesson progression based on smoothed mean reward
+- Min lesson length: 1200-1600 steps to ensure stability
+- Both `ball_touch` and `ball_spawn_radius` advance together
 
 **Hardware:**
 - **CPU Training**: ~500-1000 steps/sec (4-8 environments)

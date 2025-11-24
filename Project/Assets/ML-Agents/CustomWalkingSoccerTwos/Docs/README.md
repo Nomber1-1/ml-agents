@@ -74,18 +74,22 @@ CustomWalkingSoccerTwos/
 
 ### Reward Structure
 - **Goals**: +1.0 (team reward), -1.0 (opponent penalty)
-- **Ball touches**: +0.2 (scaled by curriculum)
-- **Locomotion**: Speed matching + direction alignment (0.5x weight)
-- **Existential**: +/- based on role (goalies/strikers)
+- **Ball touches**: +0.2 (scaled by curriculum, delayed first 50 steps)
+- **Locomotion**: Speed matching + direction alignment (dynamic 1.0x-2.0x weight with speed ramp)
+- **Upright bonus**: +0.01 per step when hips > 0.8m height
+- **Anti-forward-tip penalty**: -0.02 when tilting forward (upright dot < 0.7)
+- **Sideways lean penalty**: -0.02 scaled by lateral tilt
+- **Angular velocity penalty**: -0.001 per rad/s (damps flailing)
+- **Existential**: ±0.25 based on role (reduced, delayed first 50 steps)
 
 ## 📊 Training Results
 
-Expected progression:
-- **100k steps**: Basic standing and balance
-- **500k steps**: Consistent walking, occasional ball contact
-- **1M steps**: Chasing ball, intentional kicking
-- **3M steps**: Coordinated team play, basic strategy
-- **5M+ steps**: Advanced tactics, passing, defending
+Expected progression (V5 with curriculum):
+- **0-150k steps**: Learning to stand upright and balance (Lesson0: ball far, no ball rewards)
+- **150k-400k steps**: Stable walking, exploring with far ball (Lesson1: 9m spawn radius)
+- **400k-800k steps**: Controlled approach to ball (Lesson2: 6m radius, light ball influence)
+- **800k-1.5M steps**: Active ball chasing and kicking (Lesson3: 4m radius, moderate rewards)
+- **1.5M+ steps**: Coordinated team play and strategy (Lesson4: 3m radius, full rewards)
 
 Training time: 8-48 hours depending on hardware and parallel environments.
 
@@ -102,9 +106,11 @@ max_steps: 30M
 ```
 
 ### Stabilization Features
-- **Start pose hold**: Agents hold stable stance for first 10-20 steps
+- **Start pose hold**: Agents hold stable stance for first 50 steps (increased from 10)
+- **Progressive speed ramp**: Speed increases from 0.5 → 3.0 m/s over 400 steps
+- **Neutral orientation**: Agents start facing forward (±10°) instead of toward ball
 - **Increased solver iterations**: Better joint constraint solving (12 iterations)
-- **Configurable via WalkerSoccerSettings**: Toggle and tune stabilization parameters
+- **Configurable via WalkerSoccerSettings**: Toggle and tune all stabilization parameters
 
 ## 📖 Documentation
 
