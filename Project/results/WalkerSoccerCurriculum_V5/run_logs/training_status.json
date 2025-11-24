@@ -1,0 +1,36 @@
+{
+    "ball_touch": {
+        "lesson_num": 0
+    },
+    "ball_spawn_radius": {
+        "lesson_num": 0
+    },
+    "WalkerSoccer": {
+        "elo": 1196.0040306709357,
+        "checkpoints": [
+            {
+                "steps": 49295,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-49295.onnx",
+                "reward": -0.8526734757423401,
+                "creation_time": 1764025785.9064894,
+                "auxillary_file_paths": [
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-49295.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 49295,
+            "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer.onnx",
+            "reward": -0.8526734757423401,
+            "creation_time": 1764025785.9064894,
+            "auxillary_file_paths": [
+                "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-49295.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.8.0+cu129"
+    }
+}
