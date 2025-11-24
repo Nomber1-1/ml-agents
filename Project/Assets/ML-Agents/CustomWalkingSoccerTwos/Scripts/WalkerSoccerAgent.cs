@@ -163,14 +163,29 @@ public class WalkerSoccerAgent : Agent
             bodyPart.Reset(bodyPart);
         }
 
-        //Random start rotation to help generalize (but keep stable for Heuristic-only testing)
-        if (m_BehaviorParameters != null && m_BehaviorParameters.BehaviorType == BehaviorType.HeuristicOnly)
+        // Face towards the ball (or forward if no ball) for consistent training
+        if (ball != null)
+        {
+            Vector3 directionToBall = ball.position - hips.position;
+            directionToBall.y = 0; // Keep rotation only on horizontal plane
+            if (directionToBall.sqrMagnitude > 0.01f)
+            {
+                hips.rotation = Quaternion.LookRotation(directionToBall);
+            }
+            else
+            {
+                hips.rotation = Quaternion.identity;
+            }
+        }
+        else if (m_BehaviorParameters != null && m_BehaviorParameters.BehaviorType == BehaviorType.HeuristicOnly)
         {
             hips.rotation = Quaternion.identity;
         }
         else
         {
-            hips.rotation = Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0);
+            // Optional: small random variation (±15 degrees) for generalization
+            float randomYaw = Random.Range(-15f, 15f);
+            hips.rotation = Quaternion.Euler(0, randomYaw, 0);
         }
 
         UpdateOrientationObjects();

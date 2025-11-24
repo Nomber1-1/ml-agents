@@ -57,27 +57,27 @@ environment_parameters:
         curriculum:
             - name: Lesson0_JustWalking
               completion_criteria:
-                  measure: progress
+                  measure: reward
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 100
-                  threshold: 0.2
+                  min_lesson_length: 200
+                  threshold: 1.5
               value: 0.0
             - name: Lesson1_ChaseAndTouch
               completion_criteria:
-                  measure: progress
+                  measure: reward
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 100
-                  threshold: 0.4
+                  min_lesson_length: 200
+                  threshold: 3.0
               value: 0.3
             - name: Lesson2_PlaySoccer
               completion_criteria:
-                  measure: progress
+                  measure: reward
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 100
-                  threshold: 0.6
+                  min_lesson_length: 200
+                  threshold: 5.0
               value: 0.5
             - name: Lesson3_CompetitiveSoccer
               value: 1.0
