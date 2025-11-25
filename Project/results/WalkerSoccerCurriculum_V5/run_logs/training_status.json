@@ -1,30 +1,48 @@
 {
     "ball_touch": {
-        "lesson_num": 0
+        "lesson_num": 2
     },
     "ball_spawn_radius": {
-        "lesson_num": 0
+        "lesson_num": 2
     },
     "WalkerSoccer": {
-        "elo": 1169.0338003552622,
         "checkpoints": [
             {
-                "steps": 450420,
-                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-450420.onnx",
-                "reward": 1.755545477927059,
-                "creation_time": 1764026886.9105582,
+                "steps": 499997,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-499997.onnx",
+                "reward": 2.5500171062296735,
+                "creation_time": 1764028454.957999,
                 "auxillary_file_paths": [
-                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-450420.pt"
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-499997.pt"
+                ]
+            },
+            {
+                "steps": 999993,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-999993.onnx",
+                "reward": 10.155967280915105,
+                "creation_time": 1764029430.650748,
+                "auxillary_file_paths": [
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-999993.pt"
+                ]
+            },
+            {
+                "steps": 1331968,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-1331968.onnx",
+                "reward": 13.811048438368925,
+                "creation_time": 1764029995.3679018,
+                "auxillary_file_paths": [
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-1331968.pt"
                 ]
             }
         ],
+        "elo": 1162.08598637391,
         "final_checkpoint": {
-            "steps": 450420,
+            "steps": 1331968,
             "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer.onnx",
-            "reward": 1.755545477927059,
-            "creation_time": 1764026886.9105582,
+            "reward": 13.811048438368925,
+            "creation_time": 1764029995.3679018,
             "auxillary_file_paths": [
-                "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-450420.pt"
+                "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-1331968.pt"
             ]
         }
     },

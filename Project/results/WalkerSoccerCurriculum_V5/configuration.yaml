@@ -75,7 +75,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8766
+          seed: 4446
           value: 0.0
       name: Lesson0_StandAndBalance
       completion_criteria:
@@ -88,7 +88,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8767
+          seed: 4447
           value: 0.2
       name: Lesson1_WalkFarBall
       completion_criteria:
@@ -101,7 +101,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8768
+          seed: 4448
           value: 0.4
       name: Lesson2_ApproachControl
       completion_criteria:
@@ -114,7 +114,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8769
+          seed: 4449
           value: 0.7
       name: Lesson3_PlaySoccer
       completion_criteria:
@@ -127,7 +127,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8770
+          seed: 4450
           value: 1.0
       name: Lesson4_Competitive
       completion_criteria: null
@@ -136,7 +136,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8771
+          seed: 4451
           value: 12.0
       name: Lesson0_StandAndBalance
       completion_criteria:
@@ -149,7 +149,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8772
+          seed: 4452
           value: 9.0
       name: Lesson1_WalkFarBall
       completion_criteria:
@@ -162,7 +162,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8773
+          seed: 4453
           value: 6.0
       name: Lesson2_ApproachControl
       completion_criteria:
@@ -175,7 +175,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8774
+          seed: 4454
           value: 4.0
       name: Lesson3_PlaySoccer
       completion_criteria:
@@ -188,7 +188,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8775
+          seed: 4455
           value: 3.0
       name: Lesson4_Competitive
       completion_criteria: null
