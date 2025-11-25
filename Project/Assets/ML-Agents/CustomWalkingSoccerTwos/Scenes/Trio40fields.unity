@@ -1,0 +1,2885 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!29 &1
+OcclusionCullingSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_OcclusionBakeSettings:
+    smallestOccluder: 5
+    smallestHole: 0.25
+    backfaceThreshold: 100
+  m_SceneGUID: 00000000000000000000000000000000
+  m_OcclusionCullingData: {fileID: 0}
+--- !u!104 &2
+RenderSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 10
+  m_Fog: 0
+  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogMode: 3
+  m_FogDensity: 0.01
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 300
+  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientIntensity: 1
+  m_AmbientMode: 0
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_HaloStrength: 0.5
+  m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
+  m_HaloTexture: {fileID: 0}
+  m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
+  m_DefaultReflectionMode: 0
+  m_DefaultReflectionResolution: 128
+  m_ReflectionBounces: 1
+  m_ReflectionIntensity: 1
+  m_CustomReflection: {fileID: 0}
+  m_Sun: {fileID: 0}
+  m_UseRadianceAmbientProbe: 0
+--- !u!157 &3
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
+  m_GISettings:
+    serializedVersion: 2
+    m_BounceScale: 1
+    m_IndirectOutputScale: 1
+    m_AlbedoBoost: 1
+    m_EnvironmentLightingMode: 0
+    m_EnableBakedLightmaps: 1
+    m_EnableRealtimeLightmaps: 0
+  m_LightmapEditorSettings:
+    serializedVersion: 12
+    m_Resolution: 2
+    m_BakeResolution: 40
+    m_AtlasSize: 1024
+    m_AO: 0
+    m_AOMaxDistance: 1
+    m_CompAOExponent: 1
+    m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
+    m_Padding: 2
+    m_LightmapParameters: {fileID: 0}
+    m_LightmapsBakeMode: 1
+    m_TextureCompression: 1
+    m_ReflectionCompression: 2
+    m_MixedBakeMode: 2
+    m_BakeBackend: 1
+    m_PVRSampling: 1
+    m_PVRDirectSampleCount: 32
+    m_PVRSampleCount: 512
+    m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 256
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 1
+    m_PVRDenoiserTypeDirect: 1
+    m_PVRDenoiserTypeIndirect: 1
+    m_PVRDenoiserTypeAO: 1
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
+    m_PVREnvironmentMIS: 1
+    m_PVRCulling: 1
+    m_PVRFilteringGaussRadiusDirect: 1
+    m_PVRFilteringGaussRadiusIndirect: 1
+    m_PVRFilteringGaussRadiusAO: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
+  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingSettings: {fileID: 0}
+--- !u!196 &4
+NavMeshSettings:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_BuildSettings:
+    serializedVersion: 3
+    agentTypeID: 0
+    agentRadius: 0.5
+    agentHeight: 2
+    agentSlope: 45
+    agentClimb: 0.4
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    minRegionArea: 2
+    manualCellSize: 0
+    cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
+    buildHeightMesh: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
+    debug:
+      m_Flags: 0
+  m_NavMeshData: {fileID: 0}
+--- !u!1001 &115762060
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 24.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (12)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &323237360
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.346886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -45.676407
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (20)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &386327332
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.566883
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.033592
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (39)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &386453193
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.346886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &445253352
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.189999
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.1235924
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (38)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &455947795
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.346886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -35.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (21)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &497639523
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.436886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (15)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &534336772
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (5)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &555906846
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -35.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (25)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &606433461
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.346886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 34.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &632224861
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.956886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -16.063591
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (37)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &677819299
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.78689
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 34.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (17)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &735624434
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.346886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (22)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &781895916
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.346886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 44.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (8)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &785155630
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -45.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (30)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &786949261
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.536884
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -45.873592
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (34)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &804273112
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (11)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &973796530
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -15.829998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (27)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1110233853
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.346886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 24.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1229602964
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.396885
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 44.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (19)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1271858476
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 34.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (13)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1352311115
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.71689
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 24.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (16)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1445551197
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.5335913
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (10)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1546908964
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 34.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (7)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1559037575
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.886887
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25.713593
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (36)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1638875687
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (26)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1667673879
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.366886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (14)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1709825060
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.606884
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -36.193592
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (35)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1718868681
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 44.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (18)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1722875817
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.346886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.8899994
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (28)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1744581563
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1883103597
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (29)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &1916928846
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 44.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (9)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &2010049702
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.189999
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25.873592
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (32)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &2094187005
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.189999
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -15.983593
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (33)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &2105927400
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.189999
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -36.033592
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (31)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &2106930246
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -45.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (24)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &2112053637
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 24.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (6)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &2122768886
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.346886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -15.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes (23)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1001 &2978736183501792368
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35.346886
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0457776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.5335913
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2027490614052567464, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730878564240605091, guid: 99a0448d50c68ee4f89b52768e591824,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerScenes
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99a0448d50c68ee4f89b52768e591824, type: 3}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 2978736183501792368}
+  - {fileID: 386453193}
+  - {fileID: 1110233853}
+  - {fileID: 606433461}
+  - {fileID: 1744581563}
+  - {fileID: 534336772}
+  - {fileID: 2112053637}
+  - {fileID: 1546908964}
+  - {fileID: 781895916}
+  - {fileID: 1916928846}
+  - {fileID: 1718868681}
+  - {fileID: 1667673879}
+  - {fileID: 1445551197}
+  - {fileID: 1271858476}
+  - {fileID: 1352311115}
+  - {fileID: 115762060}
+  - {fileID: 677819299}
+  - {fileID: 1229602964}
+  - {fileID: 497639523}
+  - {fileID: 804273112}
+  - {fileID: 1722875817}
+  - {fileID: 2106930246}
+  - {fileID: 323237360}
+  - {fileID: 2122768886}
+  - {fileID: 1638875687}
+  - {fileID: 735624434}
+  - {fileID: 973796530}
+  - {fileID: 1883103597}
+  - {fileID: 445253352}
+  - {fileID: 786949261}
+  - {fileID: 785155630}
+  - {fileID: 2094187005}
+  - {fileID: 1559037575}
+  - {fileID: 2010049702}
+  - {fileID: 632224861}
+  - {fileID: 386327332}
+  - {fileID: 1709825060}
+  - {fileID: 2105927400}
+  - {fileID: 555906846}
+  - {fileID: 455947795}

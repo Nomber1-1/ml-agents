@@ -37,7 +37,7 @@ behaviors:
     init_path: null
     keep_checkpoints: 10
     even_checkpoints: false
-    max_steps: 30000000
+    max_steps: 50000000
     time_horizon: 1000
     summary_freq: 10000
     threaded: false
@@ -50,10 +50,10 @@ behaviors:
       initial_elo: 1200.0
     behavioral_cloning: null
 env_settings:
-  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\Custom\UnityEnvironment.exe
+  env_path: Builds\WalkerSoccer3v3\UnityEnvironment.exe
   env_args: null
   base_port: 5005
-  num_envs: 14
+  num_envs: 50
   num_areas: 1
   timeout_wait: 60
   seed: -1
@@ -64,7 +64,7 @@ engine_settings:
   width: 84
   height: 84
   quality_level: 5
-  time_scale: 20.0
+  time_scale: 20
   target_frame_rate: -1
   capture_frame_rate: 60
   no_graphics: true
@@ -74,8 +74,8 @@ checkpoint_settings:
   run_id: WalkerSoccer_v1
   initialize_from: null
   load_model: false
-  resume: true
-  force: false
+  resume: false
+  force: true
   train_model: false
   inference: false
   results_dir: results

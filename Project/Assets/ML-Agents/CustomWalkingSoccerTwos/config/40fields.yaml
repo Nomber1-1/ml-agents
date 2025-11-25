@@ -1,0 +1,3 @@
+# This file is now just a pointer so you know where each phase lives.
+# Use config/phase1_walker_balance.yaml for balance/locomotion pretraining.
+# Use config/phase2_soccer.yaml for self-play soccer after seeding from Phase 1.
