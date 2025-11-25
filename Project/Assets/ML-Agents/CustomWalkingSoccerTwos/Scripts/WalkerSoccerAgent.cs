@@ -341,10 +341,15 @@ public class WalkerSoccerAgent : Agent
         bpDict[forearmR].SetJointStrength(continuousActions[++i]);
 
         // Optional kick action (additional continuous action at end if present)
+        // Only enabled in Lesson 3+ (ball_touch >= 0.5) to promote walking first
         if (continuousActions.Length > i + 1)
         {
             float kickIntensity = continuousActions[++i]; // Expect value in [0,1]
-            TryKickBall(kickIntensity);
+            // Only attempt kick if in Lesson 3+ (when ball_touch >= 0.5)
+            if (m_BallTouch >= 0.5f)
+            {
+                TryKickBall(kickIntensity);
+            }
         }
     }
 
@@ -679,12 +684,12 @@ public class WalkerSoccerAgent : Agent
     }
 
     // Triggered kick: applies impulse to ball without requiring precise leg contact
+    // Note: This method is only called when ball_touch >= 0.5 (Lesson 3+)
     void TryKickBall(float intensity)
     {
         if (ball == null) return;
         if (intensity <= 0.01f) return;
         if (m_CurrentStepInEpisode - m_LastKickStep < kickCooldownSteps) return; // cooldown gate
-        if (m_BallTouch < 0.05f) return; // only allow once curriculum has begun ball interaction
 
         Vector3 toBall = ball.position - hips.position;
         // Horizontal distance check (ignore vertical component for range)

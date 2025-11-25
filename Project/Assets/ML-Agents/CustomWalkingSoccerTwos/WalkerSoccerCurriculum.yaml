@@ -59,67 +59,74 @@ environment_parameters:
     ball_touch:
         curriculum:
             - name: Lesson0_StandAndBalance
-              # min_lesson_length counts EPISODES, not steps. Fast pass.
+              # Stand still, no ball influence (ball_touch=0)
               completion_criteria:
                   measure: progress # progress = total_steps / max_steps
                   behavior: WalkerSoccer
                   min_lesson_length: 50 # 50 episodes for initial stabilization
                   threshold: 0.05 # 5% of max_steps (2M steps)
               value: 0.0
-            - name: Lesson1_WalkFarBall
+            - name: Lesson1_WalkTowardsBall
+              # Learn to walk, minimal ball rewards (ball_touch=0.15)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
                   min_lesson_length: 800 # ~800 episodes before next stage
-                  threshold: 0.125 # 12.5% (5M steps)
-              value: 0.2
-            - name: Lesson2_ApproachControl
+                  threshold: 0.15 # 15% (6M steps)
+              value: 0.15
+            - name: Lesson2_ChaseBall
+              # Chase ball actively, moderate rewards (ball_touch=0.35)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
-                  min_lesson_length: 800
-                  threshold: 0.25 # 25% (10M steps)
+                  min_lesson_length: 1000
+                  threshold: 0.30 # 30% (12M steps)
+              value: 0.35
+            - name: Lesson3_KickingEnabled
+              # Kick action unlocked! (ball_touch=0.5, kick action now active)
+              completion_criteria:
+                  measure: progress
+                  behavior: WalkerSoccer
+                  min_lesson_length: 1000
+                  threshold: 0.50 # 50% (20M steps)
               value: 0.5
-            - name: Lesson3_PlaySoccer
-              completion_criteria:
-                  measure: progress
-                  behavior: WalkerSoccer
-                  min_lesson_length: 800
-                  threshold: 0.375 # 37.5% (15M steps)
-              value: 0.75
-            - name: Lesson4_Competitive
+            - name: Lesson4_GoalScoring
+              # Full ball interaction + goal focus (ball_touch=1.0)
               value: 1.0
     ball_spawn_radius:
         curriculum:
             - name: Lesson0_StandAndBalance
+              # Ball far away (agents ignore it, focus on standing)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
                   min_lesson_length: 50
                   threshold: 0.05
-              # Field is 12x6 (center 0,0). Max safe radial spawn that always stays inside rectangle is 3.0 (half width).
-              # Start at max (furthest ball) then gradually reduce to bring ball closer.
               value: 3.0
-            - name: Lesson1_WalkFarBall
+            - name: Lesson1_WalkTowardsBall
+              # Ball medium distance (walk toward it casually)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
                   min_lesson_length: 800
-                  threshold: 0.125
-              value: 2.5
-            - name: Lesson2_ApproachControl
+                  threshold: 0.15
+              value: 2.7
+            - name: Lesson2_ChaseBall
+              # Ball closer (chase actively)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
-                  min_lesson_length: 800
-                  threshold: 0.25
-              value: 2.0
-            - name: Lesson3_PlaySoccer
+                  min_lesson_length: 1000
+                  threshold: 0.30
+              value: 2.3
+            - name: Lesson3_KickingEnabled
+              # Ball very close (kick range)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
-                  min_lesson_length: 800
-                  threshold: 0.375
-              value: 1.7
-            - name: Lesson4_Competitive
+                  min_lesson_length: 1000
+                  threshold: 0.50
+              value: 1.8
+            - name: Lesson4_GoalScoring
+              # Ball spawns near agents (competitive)
               value: 1.4

@@ -68,30 +68,33 @@ CustomWalkingSoccerTwos/
 - Soccer context: ball position/velocity, team ID, role, goal locations
 - Orientation cube: stabilized reference frame for observations
 
-### Action Space (39 continuous)
+### Action Space (40 continuous)
 - **Joint rotations**: chest (3), spine (3), head (2), thighs (4), shins (2), feet (6), arms (4), forearms (2)
 - **Joint strengths**: 13 configurable strength values
+- **Kick action**: 1 continuous trigger (enabled only in Lesson 3+)
 
 ### Reward Structure
-- **Goals**: +1.0 (team reward), -1.0 (opponent penalty)
+- **Goals**: +50 × time_bonus (scoring team), -10 (conceding team) — massively increased in V10!
 - **Ball touches**: +0.2 (scaled by curriculum, delayed first 50 steps)
+- **Kick reward**: +0.1 per intentional kick (Lesson 3+ only)
 - **Locomotion**: Speed matching + direction alignment (dynamic 1.0x-2.0x weight with speed ramp)
-- **Upright bonus**: +0.01 per step when hips > 0.8m height
+- **Upright bonus**: +0.03 per step with height scaling (0.85-1.3m optimal)
 - **Anti-forward-tip penalty**: -0.02 when tilting forward (upright dot < 0.7)
 - **Sideways lean penalty**: -0.02 scaled by lateral tilt
-- **Angular velocity penalty**: -0.001 per rad/s (damps flailing)
+- **Angular velocity penalty**: -0.002 per rad/s (damps flailing)
+- **Collapse penalty**: -0.01 when hips < 0.3m
 - **Existential**: ±0.25 based on role (reduced, delayed first 50 steps)
 
 ## 📊 Training Results
 
-Expected progression (V5 with curriculum):
-- **0-150k steps**: Learning to stand upright and balance (Lesson0: ball far, no ball rewards)
-- **150k-400k steps**: Stable walking, exploring with far ball (Lesson1: 9m spawn radius)
-- **400k-800k steps**: Controlled approach to ball (Lesson2: 6m radius, light ball influence)
-- **800k-1.5M steps**: Active ball chasing and kicking (Lesson3: 4m radius, moderate rewards)
-- **1.5M+ steps**: Coordinated team play and strategy (Lesson4: 3m radius, full rewards)
+Expected progression (V10 progressive skill curriculum):
+- **0-2M steps** (Lesson 0): Standing and balance — no ball influence, kick disabled
+- **2M-6M steps** (Lesson 1): Walking toward ball — minimal ball rewards (0.15), kick disabled
+- **6M-12M steps** (Lesson 2): Chasing ball actively — moderate rewards (0.35), kick disabled
+- **12M-20M steps** (Lesson 3): **Kicking enabled!** — ball_touch 0.5, intentional kick mechanic unlocked
+- **20M+ steps** (Lesson 4): Goal-scoring & strategy — full rewards (1.0), competitive play
 
-Training time: 8-48 hours depending on hardware and parallel environments.
+Training time: 12-72 hours depending on hardware and parallel environments.
 
 ## 🛠️ Configuration
 
