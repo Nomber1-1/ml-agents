@@ -109,13 +109,14 @@ public class WalkerSoccerEnvController : MonoBehaviour
     {
         if (scoredTeam == Team.Blue)
         {
-            m_BlueAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
-            m_PurpleAgentGroup.AddGroupReward(-1);
+            // Increased goal reward to 10+ to make scoring meaningful vs locomotion rewards (~30-35/episode)
+            m_BlueAgentGroup.AddGroupReward(10 * (1 - (float)m_ResetTimer / MaxEnvironmentSteps));
+            m_PurpleAgentGroup.AddGroupReward(-5);
         }
         else
         {
-            m_PurpleAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
-            m_BlueAgentGroup.AddGroupReward(-1);
+            m_PurpleAgentGroup.AddGroupReward(10 * (1 - (float)m_ResetTimer / MaxEnvironmentSteps));
+            m_BlueAgentGroup.AddGroupReward(-5);
         }
         m_PurpleAgentGroup.EndGroupEpisode();
         m_BlueAgentGroup.EndGroupEpisode();

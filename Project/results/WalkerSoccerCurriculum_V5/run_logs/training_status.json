@@ -1,48 +1,111 @@
 {
     "ball_touch": {
-        "lesson_num": 2
+        "lesson_num": 4
     },
     "ball_spawn_radius": {
-        "lesson_num": 2
+        "lesson_num": 4
     },
     "WalkerSoccer": {
         "checkpoints": [
             {
-                "steps": 499997,
-                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-499997.onnx",
-                "reward": 2.5500171062296735,
-                "creation_time": 1764028454.957999,
+                "steps": 2499990,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-2499990.onnx",
+                "reward": 24.064956602940878,
+                "creation_time": 1764032813.3156643,
                 "auxillary_file_paths": [
-                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-499997.pt"
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-2499990.pt"
                 ]
             },
             {
-                "steps": 999993,
-                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-999993.onnx",
-                "reward": 10.155967280915105,
-                "creation_time": 1764029430.650748,
+                "steps": 2999991,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-2999991.onnx",
+                "reward": 23.52717557266947,
+                "creation_time": 1764033601.7641006,
                 "auxillary_file_paths": [
-                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-999993.pt"
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-2999991.pt"
                 ]
             },
             {
-                "steps": 1331968,
-                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-1331968.onnx",
-                "reward": 13.811048438368925,
-                "creation_time": 1764029995.3679018,
+                "steps": 3499977,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-3499977.onnx",
+                "reward": 24.75619340602314,
+                "creation_time": 1764034394.0535736,
                 "auxillary_file_paths": [
-                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-1331968.pt"
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-3499977.pt"
+                ]
+            },
+            {
+                "steps": 3572985,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-3572985.onnx",
+                "reward": 25.49308108314266,
+                "creation_time": 1764034532.4730687,
+                "auxillary_file_paths": [
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-3572985.pt"
+                ]
+            },
+            {
+                "steps": 3638282,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-3638282.onnx",
+                "reward": 24.53805866332082,
+                "creation_time": 1764034662.7854533,
+                "auxillary_file_paths": [
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-3638282.pt"
+                ]
+            },
+            {
+                "steps": 3999978,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-3999978.onnx",
+                "reward": 26.30494134015396,
+                "creation_time": 1764035627.93658,
+                "auxillary_file_paths": [
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-3999978.pt"
+                ]
+            },
+            {
+                "steps": 4347774,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-4347774.onnx",
+                "reward": 29.295474948220306,
+                "creation_time": 1764036550.8880105,
+                "auxillary_file_paths": [
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-4347774.pt"
+                ]
+            },
+            {
+                "steps": 4499997,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-4499997.onnx",
+                "reward": 33.055812377060576,
+                "creation_time": 1764038133.9316497,
+                "auxillary_file_paths": [
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-4499997.pt"
+                ]
+            },
+            {
+                "steps": 4999997,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-4999997.onnx",
+                "reward": 29.994276690291848,
+                "creation_time": 1764039527.5196688,
+                "auxillary_file_paths": [
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-4999997.pt"
+                ]
+            },
+            {
+                "steps": 5094544,
+                "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-5094544.onnx",
+                "reward": 31.38584056041196,
+                "creation_time": 1764039803.809922,
+                "auxillary_file_paths": [
+                    "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-5094544.pt"
                 ]
             }
         ],
-        "elo": 1162.08598637391,
+        "elo": 1064.5034903321443,
         "final_checkpoint": {
-            "steps": 1331968,
+            "steps": 5094544,
             "file_path": "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer.onnx",
-            "reward": 13.811048438368925,
-            "creation_time": 1764029995.3679018,
+            "reward": 31.38584056041196,
+            "creation_time": 1764039803.809922,
             "auxillary_file_paths": [
-                "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-1331968.pt"
+                "results\\WalkerSoccerCurriculum_V5\\WalkerSoccer\\WalkerSoccer-5094544.pt"
             ]
         }
     },
