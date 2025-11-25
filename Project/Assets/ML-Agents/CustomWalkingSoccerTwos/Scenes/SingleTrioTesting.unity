@@ -127,32 +127,47 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2543459098295525754, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: enableDebugMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2543459098295525754, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: logLocomotionMetrics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2543459098295525754, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: freezeAtStabilization
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2836958982018799384, guid: bc841be5063db714faf58b0cdd5b7dae,
         type: 3}
       propertyPath: enableDebugMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2836958982018799384, guid: bc841be5063db714faf58b0cdd5b7dae,
         type: 3}
       propertyPath: logLocomotionMetrics
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2836958982018799384, guid: bc841be5063db714faf58b0cdd5b7dae,
         type: 3}
       propertyPath: freezeAtStabilization
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3161186979991041327, guid: bc841be5063db714faf58b0cdd5b7dae,
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 17719fe34af56564fbfbaa5ce9be7485,
+      objectReference: {fileID: 5022602860645237092, guid: b72d2ed03a5d04b4985614dd0019d509,
         type: 3}
     - target: {fileID: 3648478555146919413, guid: bc841be5063db714faf58b0cdd5b7dae,
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 17719fe34af56564fbfbaa5ce9be7485,
+      objectReference: {fileID: 5022602860645237092, guid: b72d2ed03a5d04b4985614dd0019d509,
         type: 3}
     - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
         type: 3}
@@ -208,14 +223,59 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 17719fe34af56564fbfbaa5ce9be7485,
+      objectReference: {fileID: 5022602860645237092, guid: b72d2ed03a5d04b4985614dd0019d509,
         type: 3}
+    - target: {fileID: 4193726154806315424, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: enableDebugMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193726154806315424, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: logLocomotionMetrics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193726154806315424, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: freezeAtStabilization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031725037126018493, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: enableDebugMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031725037126018493, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: logLocomotionMetrics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031725037126018493, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: freezeAtStabilization
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7377846851567810234, guid: bc841be5063db714faf58b0cdd5b7dae,
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 17719fe34af56564fbfbaa5ce9be7485,
+      objectReference: {fileID: 5022602860645237092, guid: b72d2ed03a5d04b4985614dd0019d509,
         type: 3}
+    - target: {fileID: 7612629121578946741, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: enableDebugMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7612629121578946741, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: logLocomotionMetrics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7612629121578946741, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: freezeAtStabilization
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
         type: 3}
       propertyPath: m_Name
@@ -225,13 +285,28 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 17719fe34af56564fbfbaa5ce9be7485,
+      objectReference: {fileID: 5022602860645237092, guid: b72d2ed03a5d04b4985614dd0019d509,
         type: 3}
+    - target: {fileID: 8615018745425070645, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: enableDebugMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8615018745425070645, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: logLocomotionMetrics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8615018745425070645, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: freezeAtStabilization
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8667367298585832506, guid: bc841be5063db714faf58b0cdd5b7dae,
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 17719fe34af56564fbfbaa5ce9be7485,
+      objectReference: {fileID: 5022602860645237092, guid: b72d2ed03a5d04b4985614dd0019d509,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
