@@ -64,7 +64,7 @@ environment_parameters:
                   measure: progress # progress = total_steps / max_steps
                   behavior: WalkerSoccer
                   min_lesson_length: 50 # 50 episodes for initial stabilization
-                  threshold: 0.001 # 0.1% of max_steps (~40k steps)
+                  threshold: 0.05 # 5% of max_steps (2M steps)
               value: 0.0
             - name: Lesson1_WalkFarBall
               completion_criteria:
@@ -96,7 +96,7 @@ environment_parameters:
                   measure: progress
                   behavior: WalkerSoccer
                   min_lesson_length: 50
-                  threshold: 0.001
+                  threshold: 0.05
               value: 15.0
             - name: Lesson1_WalkFarBall
               completion_criteria:
