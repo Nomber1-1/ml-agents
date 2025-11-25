@@ -22,6 +22,8 @@ mlagents-learn WalkerSoccer.yaml --run-id=MySoccerRun --no-graphics
 - ✅ WalkerSoccerAgent.cs
 - ✅ JointDriveController.cs
 - ✅ BehaviorParameters (Team ID: 0 for Blue, 1 for Purple)
+  - ✅ Vector Action: Space Size = 40 (39 + kick action)
+  - ✅ Vector Action: Space Type = Continuous
 - ✅ DecisionRequester (Decision Period: 5)
 - ✅ 16 Body Parts assigned
 - ✅ Ball reference assigned
@@ -121,15 +123,15 @@ sidewaysLeanPenalty: 0.02
 delayBallInfluenceSteps: 50
 ```
 
-## 🚦 Training Progress Stages (V5)
+## 🚦 Training Progress Stages (V10)
 
-| Steps | Lesson | Behavior |
-|-------|--------|----------|
-| 0-150k | L0 | Standing, balancing (ball far) |
-| 150k-400k | L1 | Stable walking (9m ball) |
-| 400k-800k | L2 | Controlled approach (6m ball) |
-| 800k-1.5M | L3 | Active play (4m ball) |
-| 1.5M+ | L4 | Team strategy (3m ball) |
+| Steps | Lesson | Behavior | Kick? |
+|-------|--------|----------|-------|
+| 0-2M | L0: Stand | Balance, upright posture | ❌ |
+| 2M-6M | L1: Walk | Walking toward ball (2.7m) | ❌ |
+| 6M-12M | L2: Chase | Active pursuit (2.3m) | ❌ |
+| 12M-20M | L3: Kick | **Kick action enabled!** (1.8m) | ✅ |
+| 20M+ | L4: Score | Goal-focused play (1.4m) | ✅ |
 
 ## 🔗 Quick Links
 

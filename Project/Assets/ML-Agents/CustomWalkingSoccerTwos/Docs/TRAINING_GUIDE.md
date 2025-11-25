@@ -313,20 +313,21 @@ AddReward(0.1f * facingReward);
 
 ## Training Benchmarks
 
-Expected performance timeline (V5 with dual curriculum):
+Expected performance timeline (V10 progressive skill curriculum):
 
-| Steps | Lesson | Expected Behavior | Mean Reward |
-|-------|--------|-------------------|-------------|
-| 0-150k | Lesson0: StandAndBalance | Learning upright posture, slow controlled walking | -0.8 → +0.5 |
-| 150k-400k | Lesson1: WalkFarBall | Stable walking, ball far away (9m radius) | +0.5 → +1.5 |
-| 400k-800k | Lesson2: ApproachControl | Ball closer (6m), light ball rewards active | +1.5 → +3.0 |
-| 800k-1.5M | Lesson3: PlaySoccer | Ball near (4m), moderate soccer engagement | +3.0 → +5.0 |
-| 1.5M+ | Lesson4: Competitive | Full game (3m spawn), all rewards active | +5.0+ |
+| Steps | Lesson | Expected Behavior | Mean Reward | Kick? |
+|-------|--------|-------------------|-------------|-------|
+| 0-2M | Lesson0: StandAndBalance | Learning upright posture, balance | +15 → +25 | ❌ |
+| 2M-6M | Lesson1: WalkTowardsBall | Stable walking toward ball (2.7m radius) | +20 → +30 | ❌ |
+| 6M-12M | Lesson2: ChaseBall | Active pursuit (2.3m radius), ball_touch=0.35 | +25 → +40 | ❌ |
+| 12M-20M | Lesson3: KickingEnabled | **Kick action unlocked!** (1.8m radius, ball_touch=0.5) | +30 → +60 | ✅ |
+| 20M+ | Lesson4: GoalScoring | Full rewards (1.4m radius), competitive scoring | +50+ | ✅ |
 
 **Curriculum Thresholds:**
-- Lesson progression based on smoothed mean reward
-- Min lesson length: 1200-1600 steps to ensure stability
-- Both `ball_touch` and `ball_spawn_radius` advance together
+- Lesson progression based on training progress (% of max_steps)
+- Min lesson length: 50-1000 episodes to ensure stability
+- Kick action gated by `ball_touch >= 0.5` (Lesson 3+)
+- Goal reward: 50× time bonus (increased from 10× in V9)
 
 **Hardware:**
 - **CPU Training**: ~500-1000 steps/sec (4-8 environments)

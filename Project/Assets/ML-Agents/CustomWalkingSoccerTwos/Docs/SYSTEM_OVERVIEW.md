@@ -23,11 +23,11 @@
 │  │  ├─ Striker 2            │          ├─ Striker 2          │   │
 │  │  └─ Goalie               │          └─ Goalie             │   │
 │  │                                                            │   │
-│  │  Each agent has:                                          │   │
-│  │  • 16 body parts (ragdoll)                                │   │
-│  │  • 39 continuous actions                                  │   │
-│  │  • ~150-200 observations                                  │   │
-│  │  • Position role (Striker/Goalie)                         │   │
+│  Each agent has:                                          │   │
+│  • 16 body parts (ragdoll)                                │   │
+│  • 40 continuous actions (39 + kick trigger)              │   │
+│  • ~150-200 observations                                  │   │
+│  • Position role (Striker/Goalie)                         │   │
 │  └──────────────────────────────────────────────────────────┘   │
 │                             │                                     │
 │                             │ interact with                       │
@@ -162,7 +162,7 @@ Total: ~150-200 observations (exact count depends on body part config)
 │                      ACTION APPLICATION                          │
 └─────────────────────────────────────────────────────────────────┘
 
-Neural Network Output (39 continuous actions)
+Neural Network Output (40 continuous actions)
     ↓
     ├─→ Joint Rotations (26 actions)
     │   ├─ Chest: pitch, yaw, roll (3)
@@ -179,11 +179,18 @@ Neural Network Output (39 continuous actions)
     │   ├─ ForearmR: pitch (1)
     │   └─ Head: pitch, yaw (2)
     │
-    └─→ Joint Strengths (13 actions)
-        ├─ Chest, Spine, Head (3)
-        ├─ ThighL, ShinL, FootL (3)
-        ├─ ThighR, ShinR, FootR (3)
-        └─ ArmL, ForearmL, ArmR, ForearmR (4)
+    ├─→ Joint Strengths (13 actions)
+    │   ├─ Chest, Spine, Head (3)
+    │   ├─ ThighL, ShinL, FootL (3)
+    │   ├─ ThighR, ShinR, FootR (3)
+    │   └─ ArmL, ForearmL, ArmR, ForearmR (4)
+    │
+    └─→ Kick Action (1 action, V10+)
+        └─ Kick trigger intensity [0,1]
+            ├─ Only active when ball_touch >= 0.5 (Lesson 3+)
+            ├─ Applies forward + upward impulse to ball
+            ├─ 25-step cooldown to prevent spam
+            └─ 2.0m range from hips
 
     ↓ (applied via JointDriveController)
 
@@ -204,32 +211,46 @@ Ragdoll moves!
 
 EVERY FIXED UPDATE:
 │
-├─→ Locomotion Rewards (continuous, scaled 0.5x)
+├─→ Locomotion Rewards (continuous, scaled dynamically 1.0-2.0x)
 │   ├─ Match speed reward: [0, 1]
 │   │   └─ Based on how well velocity matches target
 │   └─ Look-at reward: [0, 1]
 │       └─ Based on head facing target direction
 │   
-├─→ Existential Rewards (per position)
-│   ├─ Goalie: +1/MaxSteps (encourages survival)
-│   └─ Striker: -1/MaxSteps (encourages urgency)
+├─→ Height-Based Upright Reward
+│   ├─ Optimal zone (0.85-1.3m): +0.03 × height_quality
+│   ├─ Partial height (0.5-0.85m): +0.009 × partial_quality
+│   └─ Collapse zone (<0.3m): -0.01 × collapse_amount
 │
-└─→ Ball Interaction (on collision)
-    └─ Touch reward: +0.2 × ball_touch_curriculum
+├─→ Stability Penalties
+│   ├─ Forward tip (upright_dot < 0.7): -0.02
+│   ├─ Sideways lean (abs < 0.6): -0.02 × lean_amount
+│   └─ Angular velocity: -0.002 × rad/s
+│
+├─→ Existential Rewards (per position, delayed 50 steps)
+│   ├─ Goalie: +0.25/MaxSteps
+│   └─ Striker: -0.25/MaxSteps
+│
+├─→ Ball Interaction (on collision)
+│   └─ Touch reward: +0.2 × ball_touch_curriculum
+│
+└─→ Kick Action (Lesson 3+ only, V10)
+    └─ Intentional kick reward: +0.1 × intensity
 
-ON GOAL:
+ON GOAL (V10: Massively Increased!):
 │
 ├─→ Scoring Team
-│   └─ Group reward: +1.0 × (1 - progress_ratio)
-│       └─ Bonus for scoring early
+│   └─ Group reward: +50 × (1 - progress_ratio)
+│       └─ Early goals worth 50×, late goals 5× (time bonus)
 │
 └─→ Opposing Team
-    └─ Group penalty: -1.0
+    └─ Group penalty: -10
 
-TOTAL EPISODE REWARD RANGE:
-• Good performance: 5-15+
-• Poor performance: -5 to 0
-• Random policy: ~-2 to 2
+TOTAL EPISODE REWARD RANGE (V10):
+• Standing baseline: ~26
+• Good locomotion: 30-45
+• With goals: 50-80+
+• Poor performance: -5 to +15
 ```
 
 ## 🔀 Self-Play Process
@@ -272,38 +293,51 @@ Result: Progressively more challenging opponents
 │                   CURRICULUM STAGES                              │
 └─────────────────────────────────────────────────────────────────┘
 
-STAGE 0: Just Walking (ball_touch = 0.0)
-│  Goal: Learn to walk and balance
-│  ├─ No ball touch rewards
-│  ├─ Focus on locomotion only
-│  └─ Target: stationary or moving target
-│  Progress: When avg reward > 0.2
+LESSON 0: Stand and Balance (ball_touch=0.0, radius=3.0m) [0-2M steps]
+│  Goal: Master upright posture and stability
+│  ├─ No ball influence (ball_touch=0)
+│  ├─ Ball spawns far away (ignored)
+│  ├─ Kick action: DISABLED
+│  └─ Focus: height rewards, angular damping, collapse penalties
+│  Progress: 5% of max_steps (2M steps, 50 episodes min)
 │      ↓
 
-STAGE 1: Chase and Touch (ball_touch = 0.3)
-│  Goal: Interact with ball
-│  ├─ Small reward for touching ball
-│  ├─ Still emphasize walking
-│  └─ Ball becomes priority target
-│  Progress: When avg reward > 0.4
+LESSON 1: Walk Towards Ball (ball_touch=0.15, radius=2.7m) [2M-6M steps]
+│  Goal: Learn forward locomotion
+│  ├─ Minimal ball rewards (15%)
+│  ├─ Ball medium distance
+│  ├─ Kick action: DISABLED
+│  └─ Focus: speed matching, direction alignment
+│  Progress: 15% of max_steps (6M steps, 800 episodes min)
 │      ↓
 
-STAGE 2: Play Soccer (ball_touch = 0.5)
-│  Goal: Intentional ball control
-│  ├─ Moderate ball touch reward
-│  ├─ Agents learn to kick toward goals
-│  └─ Basic team coordination emerges
-│  Progress: When avg reward > 0.6
+LESSON 2: Chase Ball (ball_touch=0.35, radius=2.3m) [6M-12M steps]
+│  Goal: Active ball pursuit without kicking
+│  ├─ Moderate ball rewards (35%)
+│  ├─ Ball closer, more encounters
+│  ├─ Kick action: DISABLED
+│  └─ Focus: collision-based ball touches only
+│  Progress: 30% of max_steps (12M steps, 1000 episodes min)
 │      ↓
 
-STAGE 3: Competitive Soccer (ball_touch = 1.0)
-│  Goal: Advanced strategy
-│  ├─ Full ball interaction rewards
-│  ├─ Complex team tactics
-│  └─ Passing, defending, positioning
-│  Progress: Train until satisfied (5M+ steps)
+LESSON 3: Kicking Enabled! (ball_touch=0.5, radius=1.8m) [12M-20M steps]
+│  Goal: Learn to use kick action
+│  ├─ Kick action: ✅ ENABLED (ball_touch >= 0.5)
+│  ├─ Ball in kick range (1.8m spawn)
+│  ├─ +0.1 reward per kick
+│  ├─ 25-step cooldown prevents spam
+│  └─ Focus: intentional ball launching, not lunging
+│  Progress: 50% of max_steps (20M steps, 1000 episodes min)
 │      ↓
-   GRADUATION! 🎓
+
+LESSON 4: Goal Scoring (ball_touch=1.0, radius=1.4m) [20M+ steps]
+│  Goal: Competitive soccer with strategic kicking
+│  ├─ Full ball rewards (100%)
+│  ├─ Ball spawns near agents
+│  ├─ Goal reward: +50× time bonus
+│  └─ Advanced tactics: positioning, passing, defending
+│      ↓
+   GRADUATION! ⚽🎓
 ```
 
 ## 🎮 File Relationships
