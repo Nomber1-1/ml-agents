@@ -200,10 +200,14 @@ public class WalkerSoccerAgent : Agent
         //Set initial very low walking speed for balance acquisition
         MTargetWalkingSpeed = 0.5f; // will ramp in FixedUpdate regardless of randomize flag
 
-        if (m_SoccerSettings == null || m_SoccerSettings.enableStartStabilization)
+        if (m_SoccerSettings != null && m_SoccerSettings.enableStartStabilization)
         {
-            m_StabilizeSteps = m_SoccerSettings != null ? m_SoccerSettings.stabilizeStepsOnReset : 80; // Extended from 50
-            ApplyStableStandPoseTargets(m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f);
+            m_StabilizeSteps = m_SoccerSettings.stabilizeStepsOnReset; // Use actual setting value
+            ApplyStableStandPoseTargets(m_SoccerSettings.standStrength);
+        }
+        else
+        {
+            m_StabilizeSteps = 0; // No stabilization if settings missing or disabled
         }
     }
 
@@ -365,6 +369,7 @@ public class WalkerSoccerAgent : Agent
         {
             ApplyStableStandPoseTargets(m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f);
             m_StabilizeSteps--;
+            return; // Skip reward logic during stabilization to avoid confusing old models
         }
 
         var cubeForward = m_OrientationCube.transform.forward;

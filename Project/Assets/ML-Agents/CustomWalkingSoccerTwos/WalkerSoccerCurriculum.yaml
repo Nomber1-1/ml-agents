@@ -59,36 +59,33 @@ environment_parameters:
     ball_touch:
         curriculum:
             - name: Lesson0_StandAndBalance
+              # min_lesson_length counts EPISODES, not steps. Fast pass.
               completion_criteria:
-                  measure: progress
+                  measure: progress # progress = total_steps / max_steps
                   behavior: WalkerSoccer
-                  signal_smoothing: true
-                  min_lesson_length: 2000000 # Shortened: 2M steps
-                  threshold: 0.05 # Require 5% of run progress before advancing
+                  min_lesson_length: 50 # 50 episodes for initial stabilization
+                  threshold: 0.001 # 0.1% of max_steps (~40k steps)
               value: 0.0
             - name: Lesson1_WalkFarBall
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
-                  signal_smoothing: true
-                  min_lesson_length: 3000000 # 3M steps
-                  threshold: 0.125 # 12.5% total progress
+                  min_lesson_length: 800 # ~800 episodes before next stage
+                  threshold: 0.125 # 12.5% (5M steps)
               value: 0.2
             - name: Lesson2_ApproachControl
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
-                  signal_smoothing: true
-                  min_lesson_length: 3000000
-                  threshold: 0.25 # 25% progress
+                  min_lesson_length: 800
+                  threshold: 0.25 # 25% (10M steps)
               value: 0.5
             - name: Lesson3_PlaySoccer
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
-                  signal_smoothing: true
-                  min_lesson_length: 3000000
-                  threshold: 0.375 # 37.5% progress
+                  min_lesson_length: 800
+                  threshold: 0.375 # 37.5% (15M steps)
               value: 0.75
             - name: Lesson4_Competitive
               value: 1.0
@@ -98,32 +95,28 @@ environment_parameters:
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
-                  signal_smoothing: true
-                  min_lesson_length: 2000000
-                  threshold: 0.05
+                  min_lesson_length: 50
+                  threshold: 0.001
               value: 15.0
             - name: Lesson1_WalkFarBall
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
-                  signal_smoothing: true
-                  min_lesson_length: 3000000
+                  min_lesson_length: 800
                   threshold: 0.125
               value: 8.0
             - name: Lesson2_ApproachControl
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
-                  signal_smoothing: true
-                  min_lesson_length: 3000000
+                  min_lesson_length: 800
                   threshold: 0.25
               value: 5.0
             - name: Lesson3_PlaySoccer
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
-                  signal_smoothing: true
-                  min_lesson_length: 3000000
+                  min_lesson_length: 800
                   threshold: 0.375
               value: 4.0
             - name: Lesson4_Competitive
