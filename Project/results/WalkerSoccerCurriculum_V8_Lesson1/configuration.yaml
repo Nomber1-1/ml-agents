@@ -75,59 +75,59 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 6650
+          seed: 7801
           value: 0.0
       name: Lesson0_StandAndBalance
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 100000
+        min_lesson_length: 50
         signal_smoothing: true
         threshold: 0.001
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 6651
+          seed: 7802
           value: 0.2
       name: Lesson1_WalkFarBall
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.125
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 6652
+          seed: 7803
           value: 0.5
       name: Lesson2_ApproachControl
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.25
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 6653
+          seed: 7804
           value: 0.75
       name: Lesson3_PlaySoccer
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.375
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 6654
+          seed: 7805
           value: 1.0
       name: Lesson4_Competitive
       completion_criteria: null
@@ -136,59 +136,59 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 6655
+          seed: 7806
           value: 15.0
       name: Lesson0_StandAndBalance
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 100000
+        min_lesson_length: 50
         signal_smoothing: true
         threshold: 0.001
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 6656
+          seed: 7807
           value: 8.0
       name: Lesson1_WalkFarBall
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.125
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 6657
+          seed: 7808
           value: 5.0
       name: Lesson2_ApproachControl
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.25
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 6658
+          seed: 7809
           value: 4.0
       name: Lesson3_PlaySoccer
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.375
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 6659
+          seed: 7810
           value: 3.0
       name: Lesson4_Competitive
       completion_criteria: null
