@@ -380,6 +380,15 @@ public class WalkerSoccerAgent : Agent
             );
         }
 
+        // Early micro-shaping for Lesson0 (ball_touch ~ 0). Encourages initiating forward movement
+        // without overpowering later locomotion reward once curriculum advances.
+        if (m_BallTouch <= 0.05f)
+        {
+            float forwardSpeedEarly = Vector3.Dot(GetAvgVelocity(), cubeForward);
+            float normalizedEarly = Mathf.Clamp01(forwardSpeedEarly / 1.5f); // modest early target
+            AddReward(0.01f * normalizedEarly); // small additive reward
+        }
+
         var headForward = head.forward; headForward.y = 0;
         var lookAtTargetReward = (Vector3.Dot(cubeForward, headForward) + 1) * .5f;
         if (float.IsNaN(lookAtTargetReward))
