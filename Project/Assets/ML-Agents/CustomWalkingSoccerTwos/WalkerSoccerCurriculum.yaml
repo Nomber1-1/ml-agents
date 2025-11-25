@@ -45,7 +45,7 @@ behaviors:
             initial_elo: 1200.0
 
         # Training configuration
-        max_steps: 30000000 # 30M steps (adjust based on results) (10M ~ 3 hours with 14 envs)
+        max_steps: 40000000 # 30M steps (adjust based on results) (10M ~ 3 hours with 14 envs)
         time_horizon: 1000 # Steps before updating (matches episode length)
         summary_freq: 10000 # Log to TensorBoard every 10k steps
         keep_checkpoints: 10 # Keep last 10 model checkpoints
@@ -63,7 +63,7 @@ environment_parameters:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 5000000
+                  min_lesson_length: 10000000 # 10M steps per lesson
                   threshold: 0.0
               value: 0.0
             - name: Lesson1_WalkFarBall
@@ -71,7 +71,7 @@ environment_parameters:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 5000000
+                  min_lesson_length: 10000000
                   threshold: 0.0
               value: 0.2
             - name: Lesson2_ApproachControl
@@ -79,7 +79,7 @@ environment_parameters:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 5000000
+                  min_lesson_length: 10000000
                   threshold: 0.0
               value: 0.5
             - name: Lesson3_PlaySoccer
@@ -87,7 +87,7 @@ environment_parameters:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 5000000
+                  min_lesson_length: 10000000
                   threshold: 0.0
               value: 0.75
             - name: Lesson4_Competitive
@@ -99,7 +99,7 @@ environment_parameters:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 5000000
+                  min_lesson_length: 10000000
                   threshold: 0.0
               value: 15.0
             - name: Lesson1_WalkFarBall
@@ -107,7 +107,7 @@ environment_parameters:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 5000000
+                  min_lesson_length: 10000000
                   threshold: 0.0
               value: 8.0
             - name: Lesson2_ApproachControl
@@ -115,7 +115,7 @@ environment_parameters:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 5000000
+                  min_lesson_length: 10000000
                   threshold: 0.0
               value: 5.0
             - name: Lesson3_PlaySoccer
@@ -123,7 +123,7 @@ environment_parameters:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
-                  min_lesson_length: 5000000
+                  min_lesson_length: 10000000
                   threshold: 0.0
               value: 4.0
             - name: Lesson4_Competitive
