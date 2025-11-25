@@ -50,7 +50,7 @@ behaviors:
       initial_elo: 1200.0
     behavioral_cloning: null
 env_settings:
-  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\TriosV5\UnityEnvironment.exe
+  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\TriosV6\UnityEnvironment.exe
   env_args: null
   base_port: 5005
   num_envs: 14
@@ -75,7 +75,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4446
+          seed: 3311
           value: 0.0
       name: Lesson0_StandAndBalance
       completion_criteria:
@@ -88,7 +88,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4447
+          seed: 3312
           value: 0.2
       name: Lesson1_WalkFarBall
       completion_criteria:
@@ -101,7 +101,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4448
+          seed: 3313
           value: 0.4
       name: Lesson2_ApproachControl
       completion_criteria:
@@ -114,7 +114,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4449
+          seed: 3314
           value: 0.7
       name: Lesson3_PlaySoccer
       completion_criteria:
@@ -127,7 +127,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4450
+          seed: 3315
           value: 1.0
       name: Lesson4_Competitive
       completion_criteria: null
@@ -136,7 +136,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4451
+          seed: 3316
           value: 12.0
       name: Lesson0_StandAndBalance
       completion_criteria:
@@ -149,7 +149,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4452
+          seed: 3317
           value: 9.0
       name: Lesson1_WalkFarBall
       completion_criteria:
@@ -162,7 +162,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4453
+          seed: 3318
           value: 6.0
       name: Lesson2_ApproachControl
       completion_criteria:
@@ -175,7 +175,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4454
+          seed: 3319
           value: 4.0
       name: Lesson3_PlaySoccer
       completion_criteria:
@@ -188,7 +188,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4455
+          seed: 3320
           value: 3.0
       name: Lesson4_Competitive
       completion_criteria: null
@@ -196,8 +196,8 @@ checkpoint_settings:
   run_id: WalkerSoccerCurriculum_V5
   initialize_from: null
   load_model: false
-  resume: false
-  force: true
+  resume: true
+  force: false
   train_model: false
   inference: false
   results_dir: results

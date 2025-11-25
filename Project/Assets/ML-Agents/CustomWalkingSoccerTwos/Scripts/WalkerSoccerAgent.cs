@@ -37,16 +37,21 @@ public class WalkerSoccerAgent : Agent
     private float m_BallSpawnRadius;
 
     [Header("Reward Tuning")]
-    [SerializeField] private float uprightRewardPerStep = 0.01f;
+    [SerializeField] private float uprightRewardPerStep = 0.03f; // Increased from 0.01
     [SerializeField] private float locomotionRewardScale = 2.0f;
     [SerializeField] private float antiForwardTipPenalty = 0.02f;
     [SerializeField] private float uprightDotMin = 0.7f;
     [SerializeField] private int delayBallInfluenceSteps = 50;
     [SerializeField] private float maxTargetSpeed = 3.0f;
     [SerializeField] private int speedRampSteps = 400;
-    [SerializeField] private float angVelPenaltyCoef = 0.001f;
+    [SerializeField] private float angVelPenaltyCoef = 0.005f; // Increased 5x to penalize wobbling
     [SerializeField] private float sidewaysLeanPenalty = 0.02f;
     private int m_CurrentStepInEpisode;
+
+    [Header("Debug Visualization")]
+    [SerializeField] private bool enableDebugMode = false;
+    [SerializeField] private bool freezeAtStabilization = false;
+    [SerializeField] private bool logLocomotionMetrics = false;
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -197,7 +202,7 @@ public class WalkerSoccerAgent : Agent
 
         if (m_SoccerSettings == null || m_SoccerSettings.enableStartStabilization)
         {
-            m_StabilizeSteps = m_SoccerSettings != null ? m_SoccerSettings.stabilizeStepsOnReset : 50;
+            m_StabilizeSteps = m_SoccerSettings != null ? m_SoccerSettings.stabilizeStepsOnReset : 80; // Extended from 50
             ApplyStableStandPoseTargets(m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f);
         }
     }
@@ -343,6 +348,14 @@ public class WalkerSoccerAgent : Agent
         UpdateOrientationObjects();
         m_CurrentStepInEpisode++;
 
+        // Debug: freeze after stabilization to inspect pose
+        if (enableDebugMode && freezeAtStabilization && m_StabilizeSteps == 0 && m_CurrentStepInEpisode == 51)
+        {
+            LogStandingAssessment();
+            Time.timeScale = 0f; // Pause simulation
+            return;
+        }
+
         // Progressive speed ramp
         float rampT = Mathf.Clamp01(m_CurrentStepInEpisode / (float)speedRampSteps);
         float currentTarget = Mathf.Lerp(0.5f, maxTargetSpeed, rampT);
@@ -379,8 +392,18 @@ public class WalkerSoccerAgent : Agent
         }
 
         float hipsHeight = m_JdController.bodyPartsDict[hips].rb.position.y;
-        if (hipsHeight > 0.8f) AddReward(uprightRewardPerStep);
-        else if (hipsHeight < 0.3f) AddReward(-0.005f);
+        // Height-scaled reward: reward increases with height between 0.85-1.3m
+        if (hipsHeight >= 0.85f)
+        {
+            float heightQuality = Mathf.Clamp01((hipsHeight - 0.85f) / (1.3f - 0.85f));
+            AddReward(uprightRewardPerStep * (0.5f + 0.5f * heightQuality));
+        }
+        else if (hipsHeight < 0.75f)
+        {
+            // Strong penalty for collapsed/crouched state
+            float collapseAmount = (0.75f - hipsHeight) / 0.75f;
+            AddReward(-0.05f * collapseAmount);
+        }
 
         float uprightDot = Vector3.Dot(hips.up, Vector3.up);
         if (uprightDot < uprightDotMin) AddReward(-antiForwardTipPenalty);
@@ -399,6 +422,12 @@ public class WalkerSoccerAgent : Agent
 
         float locomotionScaleDynamic = locomotionRewardScale * (0.5f + 0.5f * rampT);
         AddReward(locomotionScaleDynamic * matchSpeedReward * lookAtTargetReward);
+
+        // Debug: log metrics every 100 steps
+        if (enableDebugMode && logLocomotionMetrics && m_CurrentStepInEpisode % 100 == 0)
+        {
+            LogLocomotionMetrics();
+        }
     }
 
     //Returns the average velocity of all of the body parts
@@ -527,6 +556,40 @@ public class WalkerSoccerAgent : Agent
         // Set joint strengths (26..38) to moderate-high so joints can hold pose
         float standStrength = m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f;
         for (int i = STR_START; i < STR_START + 13; i++) a[i] = standStrength;
+    }
+
+    void LogStandingAssessment()
+    {
+        float hipsHeight = hips.position.y;
+        float uprightDot = Vector3.Dot(hips.up, Vector3.up);
+        float forwardTip = Vector3.Dot(hips.forward, Vector3.down);
+        float sidewaysLean = Mathf.Abs(Vector3.Dot(hips.right, Vector3.up));
+        float angVel = m_JdController.bodyPartsDict[hips].rb.angularVelocity.magnitude;
+
+        Debug.Log($"=== Standing Assessment for {gameObject.name} (Team: {team}, Pos: {position}) ===");
+        Debug.Log($"Hips Height: {hipsHeight:F2}m (target: 0.85-1.3)");
+        Debug.Log($"Upright Dot: {uprightDot:F3} (target: >0.85)");
+        Debug.Log($"Forward Tip: {forwardTip:F3} (target: <0.15)");
+        Debug.Log($"Sideways Lean: {sidewaysLean:F3} (target: <0.3)");
+        Debug.Log($"Angular Velocity: {angVel:F2} rad/s (target: <2.0)");
+        Debug.Log($"Current Reward: {GetCumulativeReward():F2}");
+
+        bool isStanding = hipsHeight > 0.85f && hipsHeight < 1.3f && uprightDot > 0.85f;
+        bool isStable = forwardTip < 0.15f && sidewaysLean < 0.3f && angVel < 2.0f;
+
+        string status = isStanding && isStable ? "✓ GOOD" : "✗ POOR";
+        Debug.Log($"Overall Status: {status} (Standing: {isStanding}, Stable: {isStable})");
+    }
+
+    void LogLocomotionMetrics()
+    {
+        float hipsHeight = hips.position.y;
+        float uprightDot = Vector3.Dot(hips.up, Vector3.up);
+        Vector3 velocity = m_JdController.bodyPartsDict[hips].rb.linearVelocity;
+        float forwardSpeed = Vector3.Dot(velocity, transform.forward);
+        float lateralSpeed = Mathf.Abs(Vector3.Dot(velocity, transform.right));
+
+        Debug.Log($"[{gameObject.name}] Step:{m_CurrentStepInEpisode} Height:{hipsHeight:F2} Upright:{uprightDot:F2} FwdSpeed:{forwardSpeed:F2} LatSpeed:{lateralSpeed:F2} Reward:{GetCumulativeReward():F1}");
     }
 
     void ConfigureRigidbodies()
