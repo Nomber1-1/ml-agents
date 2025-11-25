@@ -48,6 +48,14 @@ public class WalkerSoccerAgent : Agent
     [SerializeField] private float sidewaysLeanPenalty = 0.02f;
     private int m_CurrentStepInEpisode;
 
+    [Header("Kick Action Settings")]
+    [SerializeField] private float kickForce = 6.0f; // Impulse magnitude applied to ball
+    [SerializeField] private float kickUpFactor = 0.3f; // Adds slight upward component
+    [SerializeField] private float kickRange = 2.0f; // Horizontal distance within which kick can trigger
+    [SerializeField] private int kickCooldownSteps = 25; // Steps between kicks to avoid spam
+    [SerializeField] private float kickReward = 0.1f; // Reward for successful intentional kick
+    private int m_LastKickStep = -999;
+
     [Header("Debug Visualization")]
     [SerializeField] private bool enableDebugMode = false;
     [SerializeField] private bool freezeAtStabilization = false;
@@ -200,10 +208,14 @@ public class WalkerSoccerAgent : Agent
         //Set initial very low walking speed for balance acquisition
         MTargetWalkingSpeed = 0.5f; // will ramp in FixedUpdate regardless of randomize flag
 
-        if (m_SoccerSettings == null || m_SoccerSettings.enableStartStabilization)
+        if (m_SoccerSettings != null && m_SoccerSettings.enableStartStabilization)
         {
-            m_StabilizeSteps = m_SoccerSettings != null ? m_SoccerSettings.stabilizeStepsOnReset : 80; // Extended from 50
-            ApplyStableStandPoseTargets(m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f);
+            m_StabilizeSteps = m_SoccerSettings.stabilizeStepsOnReset; // Use actual setting value
+            ApplyStableStandPoseTargets(m_SoccerSettings.standStrength);
+        }
+        else
+        {
+            m_StabilizeSteps = 0; // No stabilization if settings missing or disabled
         }
     }
 
@@ -327,6 +339,13 @@ public class WalkerSoccerAgent : Agent
         bpDict[forearmL].SetJointStrength(continuousActions[++i]);
         bpDict[armR].SetJointStrength(continuousActions[++i]);
         bpDict[forearmR].SetJointStrength(continuousActions[++i]);
+
+        // Optional kick action (additional continuous action at end if present)
+        if (continuousActions.Length > i + 1)
+        {
+            float kickIntensity = continuousActions[++i]; // Expect value in [0,1]
+            TryKickBall(kickIntensity);
+        }
     }
 
     //Update OrientationCube and DirectionIndicator
@@ -365,6 +384,7 @@ public class WalkerSoccerAgent : Agent
         {
             ApplyStableStandPoseTargets(m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f);
             m_StabilizeSteps--;
+            return; // Skip reward logic during stabilization to avoid confusing old models
         }
 
         var cubeForward = m_OrientationCube.transform.forward;
@@ -513,8 +533,7 @@ public class WalkerSoccerAgent : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var a = actionsOut.ContinuousActions;
-
-        // Ensure array is the expected size (39): 26 rotations + 13 strengths
+        // Expected size: 26 rotations + 13 strengths + 1 kick = 40
         // Default to a balanced standing pose with moderate strengths
         for (int i = 0; i < a.Length; i++) a[i] = 0f;
 
@@ -531,6 +550,7 @@ public class WalkerSoccerAgent : Agent
         int ARM_R_Y = 21;
         int HEAD_X = 24, HEAD_Y = 25;
         int STR_START = 26; // chest strength index
+        int KICK_IDX = 39;  // last index (after strengths)
 
         // Slightly bent-knee standing pose for better stability
         a[THIGH_L_X] = 0.12f;
@@ -571,6 +591,12 @@ public class WalkerSoccerAgent : Agent
         // Set joint strengths (26..38) to moderate-high so joints can hold pose
         float standStrength = m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f;
         for (int i = STR_START; i < STR_START + 13; i++) a[i] = standStrength;
+
+        // Spacebar triggers kick attempt at full intensity
+        if (KICK_IDX < a.Length && Input.GetKey(KeyCode.Space))
+        {
+            a[KICK_IDX] = 1f;
+        }
     }
 
     void LogStandingAssessment()
@@ -650,5 +676,30 @@ public class WalkerSoccerAgent : Agent
         bp[forearmL].SetJointStrength(strength);
         bp[armR].SetJointStrength(strength);
         bp[forearmR].SetJointStrength(strength);
+    }
+
+    // Triggered kick: applies impulse to ball without requiring precise leg contact
+    void TryKickBall(float intensity)
+    {
+        if (ball == null) return;
+        if (intensity <= 0.01f) return;
+        if (m_CurrentStepInEpisode - m_LastKickStep < kickCooldownSteps) return; // cooldown gate
+        if (m_BallTouch < 0.05f) return; // only allow once curriculum has begun ball interaction
+
+        Vector3 toBall = ball.position - hips.position;
+        // Horizontal distance check (ignore vertical component for range)
+        float horizDist = new Vector2(toBall.x, toBall.z).magnitude;
+        if (horizDist > kickRange) return;
+
+        Rigidbody ballRb = ball.GetComponent<Rigidbody>();
+        if (ballRb == null) return;
+
+        Vector3 dir = toBall.normalized;
+        dir.y = Mathf.Clamp(dir.y + kickUpFactor, 0f, 1f);
+        float force = kickForce * Mathf.Clamp01(intensity);
+        ballRb.AddForce(dir * force, ForceMode.Impulse);
+
+        AddReward(kickReward * Mathf.Clamp01(intensity));
+        m_LastKickStep = m_CurrentStepInEpisode;
     }
 }
