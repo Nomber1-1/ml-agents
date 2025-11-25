@@ -44,7 +44,7 @@ public class WalkerSoccerAgent : Agent
     [SerializeField] private int delayBallInfluenceSteps = 50;
     [SerializeField] private float maxTargetSpeed = 3.0f;
     [SerializeField] private int speedRampSteps = 400;
-    [SerializeField] private float angVelPenaltyCoef = 0.005f; // Increased 5x to penalize wobbling
+    [SerializeField] private float angVelPenaltyCoef = 0.002f; // Reduced for cold-start training
     [SerializeField] private float sidewaysLeanPenalty = 0.02f;
     private int m_CurrentStepInEpisode;
 
@@ -398,11 +398,17 @@ public class WalkerSoccerAgent : Agent
             float heightQuality = Mathf.Clamp01((hipsHeight - 0.85f) / (1.3f - 0.85f));
             AddReward(uprightRewardPerStep * (0.5f + 0.5f * heightQuality));
         }
-        else if (hipsHeight < 0.75f)
+        else if (hipsHeight >= 0.5f && hipsHeight < 0.85f)
         {
-            // Strong penalty for collapsed/crouched state
-            float collapseAmount = (0.75f - hipsHeight) / 0.75f;
-            AddReward(-0.05f * collapseAmount);
+            // Gentle encouragement to stand taller (not punishment)
+            float partialHeightReward = (hipsHeight - 0.5f) / (0.85f - 0.5f);
+            AddReward(uprightRewardPerStep * 0.3f * partialHeightReward);
+        }
+        else if (hipsHeight < 0.3f)
+        {
+            // Only penalize complete collapse (on ground)
+            float collapseAmount = (0.3f - hipsHeight) / 0.3f;
+            AddReward(-0.01f * collapseAmount);
         }
 
         float uprightDot = Vector3.Dot(hips.up, Vector3.up);
