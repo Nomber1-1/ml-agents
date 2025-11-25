@@ -37,7 +37,7 @@ behaviors:
     init_path: null
     keep_checkpoints: 10
     even_checkpoints: false
-    max_steps: 30000000
+    max_steps: 40000000
     time_horizon: 1000
     summary_freq: 10000
     threaded: false
@@ -75,59 +75,59 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7987
+          seed: 3632
           value: 0.0
       name: Lesson0_StandAndBalance
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 5000000
+        min_lesson_length: 10000000
         signal_smoothing: true
         threshold: 0.0
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7988
+          seed: 3633
           value: 0.2
       name: Lesson1_WalkFarBall
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 5000000
+        min_lesson_length: 10000000
         signal_smoothing: true
         threshold: 0.0
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7989
+          seed: 3634
           value: 0.5
       name: Lesson2_ApproachControl
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 5000000
+        min_lesson_length: 10000000
         signal_smoothing: true
         threshold: 0.0
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7990
+          seed: 3635
           value: 0.75
       name: Lesson3_PlaySoccer
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 5000000
+        min_lesson_length: 10000000
         signal_smoothing: true
         threshold: 0.0
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7991
+          seed: 3636
           value: 1.0
       name: Lesson4_Competitive
       completion_criteria: null
@@ -136,59 +136,59 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7992
+          seed: 3637
           value: 15.0
       name: Lesson0_StandAndBalance
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 5000000
+        min_lesson_length: 10000000
         signal_smoothing: true
         threshold: 0.0
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7993
+          seed: 3638
           value: 8.0
       name: Lesson1_WalkFarBall
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 5000000
+        min_lesson_length: 10000000
         signal_smoothing: true
         threshold: 0.0
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7994
+          seed: 3639
           value: 5.0
       name: Lesson2_ApproachControl
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 5000000
+        min_lesson_length: 10000000
         signal_smoothing: true
         threshold: 0.0
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7995
+          seed: 3640
           value: 4.0
       name: Lesson3_PlaySoccer
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 5000000
+        min_lesson_length: 10000000
         signal_smoothing: true
         threshold: 0.0
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7996
+          seed: 3641
           value: 3.0
       name: Lesson4_Competitive
       completion_criteria: null
