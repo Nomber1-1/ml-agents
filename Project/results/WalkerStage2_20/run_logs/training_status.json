@@ -17,24 +17,6 @@
     "WalkerSoccer": {
         "checkpoints": [
             {
-                "steps": 1534295,
-                "file_path": "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-1534295.onnx",
-                "reward": 15.206553504907575,
-                "creation_time": 1764143551.251919,
-                "auxillary_file_paths": [
-                    "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-1534295.pt"
-                ]
-            },
-            {
-                "steps": 1821413,
-                "file_path": "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-1821413.onnx",
-                "reward": -9.946715074776554,
-                "creation_time": 1764144660.353982,
-                "auxillary_file_paths": [
-                    "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-1821413.pt"
-                ]
-            },
-            {
                 "steps": 1999994,
                 "file_path": "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-1999994.onnx",
                 "reward": 3.2163636149371597,
@@ -60,16 +42,34 @@
                 "auxillary_file_paths": [
                     "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-2315741.pt"
                 ]
+            },
+            {
+                "steps": 2376822,
+                "file_path": "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-2376822.onnx",
+                "reward": 17.09849045661933,
+                "creation_time": 1764146322.8367925,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-2376822.pt"
+                ]
+            },
+            {
+                "steps": 2405309,
+                "file_path": "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-2405309.onnx",
+                "reward": 14.114486453448446,
+                "creation_time": 1764146676.1414835,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-2405309.pt"
+                ]
             }
         ],
-        "elo": 1169.213530055784,
+        "elo": 1166.2830472248552,
         "final_checkpoint": {
-            "steps": 2315741,
+            "steps": 2405309,
             "file_path": "results\\WalkerStage2_20\\WalkerSoccer.onnx",
-            "reward": 16.10952247344555,
-            "creation_time": 1764146128.730061,
+            "reward": 14.114486453448446,
+            "creation_time": 1764146676.1414835,
             "auxillary_file_paths": [
-                "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-2315741.pt"
+                "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-2405309.pt"
             ]
         }
     },

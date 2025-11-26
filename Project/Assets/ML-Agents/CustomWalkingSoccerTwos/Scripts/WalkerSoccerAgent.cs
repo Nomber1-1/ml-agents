@@ -33,7 +33,7 @@ public class WalkerSoccerAgent : Agent
 
     private float m_Existential;
     private float m_BallTouch;
-    private const float k_KickPower = 10000f;
+    private const float k_KickPower = 5000f;
 
     private BehaviorParameters m_BehaviorParameters;
     private bool m_LocomotionOnly; // Stage 1: true (locomotion), Stage 2: false (soccer)
@@ -75,7 +75,7 @@ public class WalkerSoccerAgent : Agent
     // Goalie positioning
     private Transform myGoal;
     [Header("Goalie Settings")]
-    [SerializeField] private float goalieMaxDistance = 5f; // Max distance from goal before penalty
+    [SerializeField] private float goalieMaxDistance = 2f; // Max distance from goal before penalty
     [SerializeField] private float goaliePenaltyStrength = 0.01f;
 
     // ============================================
@@ -913,7 +913,6 @@ public class WalkerSoccerAgent : Agent
                 var dir = collision.contacts[0].point - hips.position;
                 dir = dir.normalized;
                 collision.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
-                Debug.Log("Ball kicked with force: " + (dir * force).ToString("F2"));
             }
         }
     }
