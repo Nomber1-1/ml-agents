@@ -43,13 +43,14 @@ public class WalkerSoccerAgent : Agent
     [SerializeField] private float kickUpFactor = 0.3f; // Adds slight upward component
     [SerializeField] private float kickRange = 2.0f; // Horizontal distance within which kick can trigger
     [SerializeField] private int kickCooldownSteps = 25; // Steps between kicks to avoid spam
-    [SerializeField] private float kickReward = 0.1f; // Reward for successful intentional kick
+    [SerializeField] private float kickReward = 0.2f; // Reward for successful intentional kick
     private int m_LastKickStep = -999;
     private int m_LastBallTouchStep = -999;
     private int m_BallNearStuckSteps = 0;
     private Transform opponentGoal;
     private Vector3 m_LastBallPos;
     private float m_LastBallDistToOppGoal;
+    private Vector3 m_LastBallVelocity;
 
     [Header("Anti-Piling")]
     [SerializeField] private float cornerPenaltyRadius = 8f; // Distance from arena center
@@ -269,6 +270,7 @@ public class WalkerSoccerAgent : Agent
 
         // Reset ball progress tracking
         m_LastBallPos = ball != null ? ball.position : Vector3.zero;
+        m_LastBallVelocity = Vector3.zero;
         if (ball != null && opponentGoal != null)
         {
             m_LastBallDistToOppGoal = Vector3.Distance(ball.position, opponentGoal.position);
@@ -880,11 +882,15 @@ public class WalkerSoccerAgent : Agent
         if (collision.gameObject.CompareTag("ball"))
         {
             // Reward for touching the ball with cooldown to prevent farming
+            // Scale inversely with ball_touch: high in early lessons (learning chase), low in full soccer
             if (m_BallTouch > 0f)
             {
                 if (m_LastBallTouchStep < 0 || StepCount - m_LastBallTouchStep >= 20)
                 {
-                    AddReward(0.1f * m_BallTouch);
+                    // Inverse scaling: 0.35→full reward, 1.0→minimal reward
+                    // This encourages ball engagement early, then prioritizes goals in full soccer
+                    float touchScale = Mathf.Lerp(1.0f, 0.1f, (m_BallTouch - 0.35f) / 0.65f);
+                    AddReward(0.1f * m_BallTouch * touchScale);
                     m_LastBallTouchStep = StepCount;
                 }
             }
@@ -1009,7 +1015,28 @@ public class WalkerSoccerAgent : Agent
             float force = kickForce * Mathf.Clamp01(intensity);
             ballRb.AddForce(dir * force, ForceMode.Impulse);
 
-            AddReward(kickReward * Mathf.Clamp01(intensity));
+            // Base kick reward
+            float reward = kickReward * Mathf.Clamp01(intensity);
+
+            // Bonus for kicking toward opponent goal
+            if (opponentGoal != null)
+            {
+                Vector3 ballToGoal = (opponentGoal.position - ball.position).normalized;
+                float alignment = Vector3.Dot(dir, ballToGoal);
+                if (alignment > 0.5f) // Kick is somewhat toward goal
+                {
+                    reward += 0.1f * alignment; // Up to +0.1 bonus
+                }
+
+                // Extra bonus for shots on goal (close to goal + good alignment)
+                float distToGoal = Vector3.Distance(ball.position, opponentGoal.position);
+                if (distToGoal < 8f && alignment > 0.7f) // Within shooting range and aimed well
+                {
+                    reward += 0.2f; // Significant shot-on-goal bonus
+                }
+            }
+
+            AddReward(reward);
             m_LastKickStep = StepCount;
         }
     }

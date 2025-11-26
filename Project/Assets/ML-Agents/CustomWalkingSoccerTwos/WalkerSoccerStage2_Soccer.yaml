@@ -111,8 +111,8 @@ environment_parameters:
                   threshold: 0.27
               value: 2.0
 
-            - name: Lesson 4 - Full Soccer
-              value: 2.5
+            - name: Lesson 4 - Full Soccer (Center spawn for focused play)
+              value: 1.5
 
     # Fade locomotion reward so soccer signals can dominate in Stage 2
     locomotion_scale:
