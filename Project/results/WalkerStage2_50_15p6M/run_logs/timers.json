@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1764124013",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\patri\\miniconda3\\envs\\mlagents\\Scripts\\mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccerStage2_Soccer.yaml --env=C:\\Documents\\GitHub\\ml-agents\\Project\\Builds\\WalkerStage2_50.exe --num-envs=4 --initialize-from=WalkerStage1_62 --run-id=WalkerStage2_50_15p6M --resume",
+        "mlagents_version": "1.2.0.dev0",
+        "mlagents_envs_version": "1.2.0.dev0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.8.0+cu129",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1764124023"
+    },
+    "total": 10.548059799999464,
+    "count": 1,
+    "self": 10.016806500000712,
+    "children": {
+        "run_training.setup": {
+            "total": 0.5085637999991377,
+            "count": 1,
+            "self": 0.5085637999991377
+        },
+        "TrainerController.start_learning": {
+            "total": 0.02268949999961478,
+            "count": 1,
+            "self": 0.0003921999996236991,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 0.02228130000003148,
+                    "count": 1,
+                    "self": 0.02228130000003148
+                },
+                "trainer_threads": {
+                    "total": 1.8000000636675395e-06,
+                    "count": 1,
+                    "self": 1.8000000636675395e-06
+                },
+                "TrainerController._save_models": {
+                    "total": 1.4199999895936344e-05,
+                    "count": 1,
+                    "self": 1.4199999895936344e-05
+                }
+            }
+        }
+    }
+}

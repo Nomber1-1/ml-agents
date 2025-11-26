@@ -22,8 +22,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: b000e8fcd1edc454d9e6deb84abefbf9,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 3599283675615088294, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: m_DeterministicInference
@@ -195,6 +194,11 @@ MonoBehaviour:
   position: 0
   initialPos: {x: 0, y: 0, z: 0}
   rotSign: 0
+  kickForce: 6
+  kickUpFactor: 0.3
+  kickRange: 2
+  kickCooldownSteps: 25
+  kickReward: 0.1
   m_TargetWalkingSpeed: 10
   randomizeWalkSpeedEachEpisode: 1
   ball: {fileID: 0}
@@ -215,6 +219,10 @@ MonoBehaviour:
   armR: {fileID: 5461052934107261754}
   forearmR: {fileID: 783770886338125626}
   handR: {fileID: 8200617624377005701}
+  uprightDotThreshold: 0.85
+  maxSuccessSpeed: 2
+  spawnAreaHalfX: 6
+  spawnAreaHalfZ: 6
 --- !u!114 &5004001163431703029
 MonoBehaviour:
   m_ObjectHideFlags: 0
