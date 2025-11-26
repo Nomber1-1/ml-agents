@@ -35,7 +35,7 @@ behaviors:
                 strength: 1.0
 
         # Training configuration
-        max_steps: 15000000 # 15M steps for solid locomotion (3-5 hours)
+        max_steps: 20000000 # 20M steps for solid locomotion (3-5 hours)
         time_horizon: 1000
         summary_freq: 10000
         keep_checkpoints: 5
@@ -53,8 +53,8 @@ environment_parameters:
     target_walking_speed:
         sampler_type: uniform
         sampler_parameters:
-            min_value: 0.5
-            max_value: 10.0
+            min_value: 0.8
+            max_value: 4.0
 
     # No ball interaction in Stage 1
     ball_touch:

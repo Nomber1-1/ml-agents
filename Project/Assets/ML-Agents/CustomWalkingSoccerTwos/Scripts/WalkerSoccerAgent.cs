@@ -103,7 +103,6 @@ public class WalkerSoccerAgent : Agent
     [Header("Locomotion Success Gating")]
     [SerializeField] private float uprightDotThreshold = 0.85f; // Must be mostly upright to count touch
     [SerializeField] private float maxSuccessSpeed = 2.0f;       // Walk pace threshold to avoid dive touches
-    [SerializeField] private float divePenalty = 0.05f;          // Small penalty on invalid touch
     [Header("Spawn Area")]
     [SerializeField] private float spawnAreaHalfX = 6f;          // Randomize agent start X within [-half, +half]
     [SerializeField] private float spawnAreaHalfZ = 6f;          // Randomize agent start Z within [-half, +half]
@@ -440,20 +439,30 @@ public class WalkerSoccerAgent : Agent
     /// </summary>
     public void TouchedTarget()
     {
-        // Gate success by posture and speed to discourage dive-to-respawn
+        // Harsh dive suppression: only reward proper upright walking touches
         var hipsBp = m_JdController.bodyPartsDict[hips];
-        float upDot = Vector3.Dot(hips.up, Vector3.up);
-        float speed = hipsBp.rb.linearVelocity.magnitude;
+        float upDot = Mathf.Clamp01(Vector3.Dot(hips.up, Vector3.up));
+        Vector3 hipVel = hipsBp.rb.linearVelocity;
+        float horizontalSpeed = new Vector2(hipVel.x, hipVel.z).magnitude;
+        float verticalSpeed = hipVel.y;
 
-        bool validTouch = (upDot >= uprightDotThreshold) && (speed <= maxSuccessSpeed);
+        bool postureOk = upDot >= uprightDotThreshold;
+        bool speedOk = horizontalSpeed <= maxSuccessSpeed;
+        bool notDiving = verticalSpeed > -1.5f; // strict downward velocity check
 
-        if (validTouch)
+        if (postureOk && speedOk && notDiving)
         {
-            AddReward(1f);
+            // Small reward for valid touches only - no exploitation
+            AddReward(0.2f);
         }
         else
         {
-            AddReward(-divePenalty);
+            // Heavy penalty for dives to break the cycle
+            float postureMult = postureOk ? 1f : 2.5f;
+            float diveMult = verticalSpeed < -2.0f ? 3.0f : (notDiving ? 1f : 2.0f);
+            float speedMult = speedOk ? 1f : 1.8f;
+            float totalPenalty = 0.15f * postureMult * diveMult * speedMult;
+            AddReward(-totalPenalty);
         }
     }
 
