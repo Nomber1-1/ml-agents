@@ -76,8 +76,8 @@ public class WalkerSoccerAgent : Agent
     // Goalie positioning
     private Transform myGoal;
     [Header("Goalie Settings")]
-    [SerializeField] private float goalieMaxDistance = 3.0f; // Balanced leash for goalie
-    [SerializeField] private float goaliePenaltyStrength = 0.02f; // Moderate penalty per excess meter
+    [SerializeField] private float goalieMaxDistance = 2.7f; // Slightly tighter leash for goalie
+    [SerializeField] private float goaliePenaltyStrength = 0.015f; // Reduced from 0.025f to reduce penalty burden
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -571,9 +571,11 @@ public class WalkerSoccerAgent : Agent
 
             // Dynamic threshold: 2v2 (2 per team) triggers at 1+ nearby, larger teams at 2+
             int spacingThreshold = (m_AgentsPerTeam <= 2) ? 1 : 2;
+            // Use slightly larger radius for detection to catch bunching earlier
+            // Penalty remains gentle to avoid collapse
             if (nearbyCount >= spacingThreshold)
             {
-                AddReward(-0.02f * nearbyCount);
+                AddReward(-0.015f * nearbyCount); // Reduced from -0.025f
             }
 
             // Ball stuck detection and reset
@@ -797,9 +799,9 @@ public class WalkerSoccerAgent : Agent
                 if (horizDistFromGoal > goalieMaxDistance)
                 {
                     float excessDist = horizDistFromGoal - goalieMaxDistance;
-                    // In Lesson 3 (kicking practice), moderate goalie constraint
-                    // In Lesson 4 (full soccer), slightly stronger
-                    float phaseMult = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.2f : 1.1f;
+                    // In Lesson 3 (kicking practice), add modest constraint
+                    // In Lesson 4 (full soccer), keep minimal emphasis
+                    float phaseMult = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.25f : 1.0f; // Removed L4 extra penalty
                     AddReward(-goaliePenaltyStrength * phaseMult * excessDist);
                 }
             }
@@ -1041,7 +1043,8 @@ public class WalkerSoccerAgent : Agent
             float baseKick = kickReward * Mathf.Clamp01(intensity);
             // Lesson 3 (ball_touch==0.5): boost kick rewards to learn shooting
             // Lesson 4 (ball_touch==1.0): reduce kick rewards to prioritize scoring strategy
-            float phaseMultiplier = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.5f : 0.8f;
+            // Boost kick rewards in L4 (full soccer) to strengthen goal-directed behavior
+            float phaseMultiplier = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.5f : 1.25f; // Increased L4 from 0.8 to 1.25 (base 0.2 * 1.25 = 0.25 effective)
             float reward = baseKick * phaseMultiplier;
 
             // Bonus for kicking toward opponent goal
@@ -1051,14 +1054,14 @@ public class WalkerSoccerAgent : Agent
                 float alignment = Vector3.Dot(dir, ballToGoal);
                 if (alignment > 0.5f) // Kick is somewhat toward goal
                 {
-                    reward += 0.1f * alignment; // Up to +0.1 bonus
+                    reward += 0.15f * alignment; // Increased from 0.1f to 0.15f
                 }
 
                 // Extra bonus for shots on goal (close to goal + good alignment)
                 float distToGoal = Vector3.Distance(ball.position, opponentGoal.position);
                 if (distToGoal < 8f && alignment > 0.7f) // Within shooting range and aimed well
                 {
-                    reward += 0.2f; // Significant shot-on-goal bonus
+                    reward += 0.3f; // Increased from 0.2f to 0.3f for stronger shot incentive
                 }
             }
 
