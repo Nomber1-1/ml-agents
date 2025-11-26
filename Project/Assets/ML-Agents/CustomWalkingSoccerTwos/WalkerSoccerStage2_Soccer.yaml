@@ -91,73 +91,73 @@ environment_parameters:
             - name: Lesson 4 - Full Soccer
               value: 1.0
 
-        # Passing and goalie saves curriculum (enable progressively)
-        passing_scale:
-            curriculum:
-                - name: Lesson 2 - Off (no passing rewards)
-                  completion_criteria:
-                      measure: progress
-                      behavior: WalkerSoccer
-                      signal_smoothing: true
-                      min_lesson_length: 500
-                      threshold: 0.133
-                  value: 0.0
+    # Passing and goalie saves curriculum (enable progressively)
+    passing_scale:
+        curriculum:
+            - name: Lesson 2 - Off (no passing rewards)
+              completion_criteria:
+                  measure: progress
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 500
+                  threshold: 0.133
+              value: 0.0
 
-                - name: Lesson 3 - On (learn to pass)
-                  completion_criteria:
-                      measure: progress
-                      behavior: WalkerSoccer
-                      signal_smoothing: true
-                      min_lesson_length: 750
-                      threshold: 0.333
-                  value: 0.5
+            - name: Lesson 3 - On (learn to pass)
+              completion_criteria:
+                  measure: progress
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 750
+                  threshold: 0.333
+              value: 0.5
 
-                - name: Lesson 4 - Full
-                  value: 1.0
+            - name: Lesson 4 - Full
+              value: 1.0
 
-        save_scale:
-            curriculum:
-                - name: Lesson 2 - Off (no save rewards)
-                  completion_criteria:
-                      measure: progress
-                      behavior: WalkerSoccer
-                      signal_smoothing: true
-                      min_lesson_length: 500
-                      threshold: 0.133
-                  value: 0.0
+    save_scale:
+        curriculum:
+            - name: Lesson 2 - Off (no save rewards)
+              completion_criteria:
+                  measure: progress
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 500
+                  threshold: 0.133
+              value: 0.0
 
-                - name: Lesson 3 - On (learn goalie saves)
-                  completion_criteria:
-                      measure: progress
-                      behavior: WalkerSoccer
-                      signal_smoothing: true
-                      min_lesson_length: 750
-                      threshold: 0.333
-                  value: 0.5
+            - name: Lesson 3 - On (learn goalie saves)
+              completion_criteria:
+                  measure: progress
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 750
+                  threshold: 0.333
+              value: 0.5
 
-                - name: Lesson 4 - Full
-                  value: 1.0
+            - name: Lesson 4 - Full
+              value: 1.0
 
-        # Tunables for passing and shots/saves
-        assist_window:
-            sampler_type: constant
-            sampler_parameters:
-                value: 60
+    # Tunables for passing and shots/saves
+    assist_window:
+        sampler_type: constant
+        sampler_parameters:
+            value: 60
 
-        min_pass_dist:
-            sampler_type: constant
-            sampler_parameters:
-                value: 2.5
+    min_pass_dist:
+        sampler_type: constant
+        sampler_parameters:
+            value: 2.5
 
-        shot_align_threshold:
-            sampler_type: constant
-            sampler_parameters:
-                value: 0.7
+    shot_align_threshold:
+        sampler_type: constant
+        sampler_parameters:
+            value: 0.7
 
-        shot_range:
-            sampler_type: constant
-            sampler_parameters:
-                value: 9.0
+    shot_range:
+        sampler_type: constant
+        sampler_parameters:
+            value: 9.0
 
     ball_spawn_radius:
         curriculum:
