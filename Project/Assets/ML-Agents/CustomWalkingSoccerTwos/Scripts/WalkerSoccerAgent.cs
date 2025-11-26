@@ -414,6 +414,34 @@ public class WalkerSoccerAgent : Agent
         }
 
         AddReward(matchSpeedReward * lookAtTargetReward);
+
+        // Stage 1 only: Encourage turning toward off-angle targets to prevent "forward-only" exploitation
+        if (m_LocomotionOnly && target != null)
+        {
+            Vector3 toTarget = (target.position - hips.position);
+            toTarget.y = 0;
+            toTarget.Normalize();
+
+            Vector3 fwdFlat = hips.forward;
+            fwdFlat.y = 0;
+            fwdFlat.Normalize();
+
+            float angleToTarget = Vector3.Angle(fwdFlat, toTarget);
+
+            // Penalize standing still when target is off-angle (>15 degrees)
+            if (angleToTarget > 15f)
+            {
+                float turnProgress = 1f - (angleToTarget / 180f); // 0 at 180°, 1 at 0°
+                AddReward(turnProgress * 0.05f); // Small reward for reducing angle
+
+                // Penalty for low movement when target is off-angle
+                float speed = GetAvgVelocity().magnitude;
+                if (speed < 0.5f) // Barely moving
+                {
+                    AddReward(-0.02f * (angleToTarget / 180f)); // Scales with how far off target is
+                }
+            }
+        }
     }
 
     //Returns the average velocity of all of the body parts

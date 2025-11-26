@@ -24,3 +24,8 @@ Microsoft Media Foundation video decoding to texture disabled: graphics device i
 UnloadTime: 0.417600 ms
 Registered Communicator in Agent.
 Reset Params:Unity.MLAgents.EnvironmentParameters
+[Physics::Module] Cleanup current backned.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
