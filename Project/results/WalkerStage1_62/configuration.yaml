@@ -45,10 +45,10 @@ behaviors:
     self_play: null
     behavioral_cloning: null
 env_settings:
-  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\WalkerStage1_62_V3.exe
+  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\WalkerStage1_48.exe
   env_args: null
   base_port: 5005
-  num_envs: 13
+  num_envs: 12
   num_areas: 1
   timeout_wait: 60
   seed: -1
@@ -70,7 +70,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 858
+          seed: 1503
           value: 1.0
       name: locomotion_only
       completion_criteria: null
@@ -79,7 +79,7 @@ environment_parameters:
     - value:
         sampler_type: uniform
         sampler_parameters:
-          seed: 859
+          seed: 1504
           min_value: 0.8
           max_value: 4.0
       name: target_walking_speed
@@ -89,7 +89,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 860
+          seed: 1505
           value: 0.0
       name: ball_touch
       completion_criteria: null
@@ -98,7 +98,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 861
+          seed: 1506
           value: 5.0
       name: ball_spawn_radius
       completion_criteria: null

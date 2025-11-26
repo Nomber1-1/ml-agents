@@ -119,6 +119,1431 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &22766160
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (16)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &22766161 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 22766160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &87927981
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (15)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &87927982 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 87927981}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &145303269
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (12)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &145303270 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 145303269}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &322234519
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (5)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &322234520 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 322234519}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &470631760
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (8)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &470631761 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 470631760}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &797273322
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (19)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &797273323 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 797273322}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &837120043
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (7)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &837120044 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 837120043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1336248845
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (18)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &1336248846 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1336248845}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1338571564
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &1338571565 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1338571564}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1387960064
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (13)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &1387960065 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1387960064}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1482491867
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (6)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &1482491868 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1482491867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1532379372
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (10)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &1532379373 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1532379372}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1565711889
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (9)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &1565711890 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1565711889}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1612295065
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (11)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &1612295066 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1612295065}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1709508708
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &1709508709 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1709508708}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1722530789
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (14)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &1722530790 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1722530789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1976053173
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (17)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &1976053174 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1976053173}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2064433682
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &2064433683 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2064433682}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2140887259
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2281239729056698590}
+    m_Modifications:
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704919156260519447, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: m_Name
+      value: WalkerSoccerFieldTrio (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5862098676382633257, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc841be5063db714faf58b0cdd5b7dae, type: 3}
+--- !u!4 &2140887260 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3899848563122530696, guid: bc841be5063db714faf58b0cdd5b7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2140887259}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2281239729056698589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -182,11 +1607,187 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage2TrainingScene
       objectReference: {fileID: 0}
+    - target: {fileID: 2464244593636503981, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 99.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2581711996712500982, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 119.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2581711996712500982, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907496694551170732, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 121.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907496694551170732, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 40.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972775765229751472, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 120.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972775765229751472, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5813600155692504851, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575918330147683397, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 99.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575918330147683397, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 40.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6586037104101593157, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 98.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7211996722292096137, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 119.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7211996722292096137, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20.9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2656896210214212980, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 890316316440596908, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 1284964827841869900, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 1224499552487254856, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 233968920146174915, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 2074745358892253730, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 3688238503687046084, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 5499354577573093431, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 804895470161586115, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 7433806243453988180, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 5282171991785057171, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 5547842997958683322, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 886640890648087573, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 1056485134776815464, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 5541335561061164052, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 4755065453305584883, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 5894778728656390409, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 2416741119903967538, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 5523741650745151520, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 8230652930098778609, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 2855037818459758728, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 2022843154679140604, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 4722520350152180224, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 8185042834214567676, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 605578279087160894, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 3817780136349234095, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 5495625837841332196, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 1942536995076706690, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    - {fileID: 3372611414120396513, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 2064433683}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1338571565}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 2140887260}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 1709508709}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 322234520}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 6
+      addedObject: {fileID: 1482491868}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 7
+      addedObject: {fileID: 837120044}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 8
+      addedObject: {fileID: 470631761}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 9
+      addedObject: {fileID: 1565711890}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 10
+      addedObject: {fileID: 1532379373}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 11
+      addedObject: {fileID: 1612295066}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 12
+      addedObject: {fileID: 145303270}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 13
+      addedObject: {fileID: 1387960065}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 14
+      addedObject: {fileID: 1722530790}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 15
+      addedObject: {fileID: 87927982}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 16
+      addedObject: {fileID: 22766161}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 17
+      addedObject: {fileID: 1976053174}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 18
+      addedObject: {fileID: 1336248846}
+    - targetCorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+        type: 3}
+      insertIndex: 19
+      addedObject: {fileID: 797273323}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c97a27536b35864698ea30e3c3790ab, type: 3}
+--- !u!4 &2281239729056698590 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 11078846787357894, guid: 7c97a27536b35864698ea30e3c3790ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 2281239729056698589}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

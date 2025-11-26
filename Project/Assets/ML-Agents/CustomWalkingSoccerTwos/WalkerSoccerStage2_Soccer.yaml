@@ -98,7 +98,7 @@ environment_parameters:
                   signal_smoothing: true
                   min_lesson_length: 500
                   threshold: 0.40
-              value: 2.3
+              value: 1.5
 
             - name: Lesson 3 - Enable Kicking
               completion_criteria:
@@ -107,10 +107,10 @@ environment_parameters:
                   signal_smoothing: true
                   min_lesson_length: 750
                   threshold: 0.80
-              value: 1.8
+              value: 2.0
 
             - name: Lesson 4 - Full Soccer
-              value: 1.4
+              value: 2.5
 
     # Fade locomotion reward so soccer signals can dominate in Stage 2
     locomotion_scale:
