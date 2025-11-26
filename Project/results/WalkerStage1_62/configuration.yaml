@@ -38,14 +38,14 @@ behaviors:
     init_path: null
     keep_checkpoints: 5
     even_checkpoints: false
-    max_steps: 10000000
+    max_steps: 15000000
     time_horizon: 1000
     summary_freq: 10000
     threaded: false
     self_play: null
     behavioral_cloning: null
 env_settings:
-  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\WalkerStage1_62.exe
+  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\WalkerStage1_62_V2.exe
   env_args: null
   base_port: 5005
   num_envs: 16
@@ -70,7 +70,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5809
+          seed: 6886
           value: 1.0
       name: locomotion_only
       completion_criteria: null
@@ -79,7 +79,7 @@ environment_parameters:
     - value:
         sampler_type: uniform
         sampler_parameters:
-          seed: 5810
+          seed: 6887
           min_value: 0.5
           max_value: 10.0
       name: target_walking_speed
@@ -89,7 +89,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5811
+          seed: 6888
           value: 0.0
       name: ball_touch
       completion_criteria: null
@@ -98,7 +98,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5812
+          seed: 6889
           value: 5.0
       name: ball_spawn_radius
       completion_criteria: null
@@ -106,8 +106,8 @@ checkpoint_settings:
   run_id: WalkerStage1_62
   initialize_from: null
   load_model: false
-  resume: false
-  force: true
+  resume: true
+  force: false
   train_model: false
   inference: false
   results_dir: results
