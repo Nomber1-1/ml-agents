@@ -33,13 +33,13 @@ public class WalkerSoccerAgent : Agent
 
     private float m_Existential;
     private float m_BallTouch;
-    private const float k_KickPower = 5000f;
+    private const float k_KickPower = 14000f;
 
     private BehaviorParameters m_BehaviorParameters;
     private bool m_LocomotionOnly; // Stage 1: true (locomotion), Stage 2: false (soccer)
 
     [Header("Kick Action Settings")]
-    [SerializeField] private float kickForce = 6.0f; // Impulse magnitude applied to ball
+    [SerializeField] private float kickForce = 12.0f; // Stronger impulse applied to ball
     [SerializeField] private float kickUpFactor = 0.3f; // Adds slight upward component
     [SerializeField] private float kickRange = 2.0f; // Horizontal distance within which kick can trigger
     [SerializeField] private int kickCooldownSteps = 25; // Steps between kicks to avoid spam
@@ -54,7 +54,7 @@ public class WalkerSoccerAgent : Agent
 
     [Header("Anti-Piling")]
     [SerializeField] private float cornerPenaltyRadius = 8f; // Distance from arena center
-    [SerializeField] private float cornerPenaltyStrength = 0.01f;
+    [SerializeField] private float cornerPenaltyStrength = 0.02f;
     [SerializeField] private Transform arenaCenter; // Assign in Inspector
 
     private Vector3 m_BallStuckCheckPos;
@@ -76,8 +76,8 @@ public class WalkerSoccerAgent : Agent
     // Goalie positioning
     private Transform myGoal;
     [Header("Goalie Settings")]
-    [SerializeField] private float goalieMaxDistance = 2.5f; // Tighter leash to keep goalie near net
-    [SerializeField] private float goaliePenaltyStrength = 0.03f; // Stronger penalty per excess meter
+    [SerializeField] private float goalieMaxDistance = 2.0f; // Even tighter leash for goalie
+    [SerializeField] private float goaliePenaltyStrength = 0.05f; // Much stronger penalty per excess meter
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -561,7 +561,7 @@ public class WalkerSoccerAgent : Agent
                     if (otherAgent != null && otherAgent.team == team)
                     {
                         float dist = Vector3.Distance(hips.position, agentObj.transform.position);
-                        if (dist < 3f)
+                        if (dist < 2.5f)
                         {
                             nearbyCount++;
                         }
@@ -573,7 +573,7 @@ public class WalkerSoccerAgent : Agent
             int spacingThreshold = (m_AgentsPerTeam <= 2) ? 1 : 2;
             if (nearbyCount >= spacingThreshold)
             {
-                AddReward(-0.02f * nearbyCount);
+                AddReward(-0.05f * nearbyCount);
             }
 
             // Ball stuck detection and reset
@@ -668,6 +668,26 @@ public class WalkerSoccerAgent : Agent
                     {
                         m_BallWallContactSteps = 0;
                     }
+                }
+            }
+
+            // Encourage keeping ball near midfield line (center area)
+            if (arenaCenter != null)
+            {
+                float ballDistFromCenter = Vector3.Distance(
+                    new Vector3(ball.position.x, 0, ball.position.z),
+                    new Vector3(arenaCenter.position.x, 0, arenaCenter.position.z)
+                );
+                // Small positive shaping when ball remains within 4m of center; discourages long wall rolls
+                float midfieldReward = Mathf.Clamp01(1f - (ballDistFromCenter / cornerPenaltyRadius));
+                if (ballDistFromCenter < 4f)
+                {
+                    AddReward(0.02f * midfieldReward);
+                }
+                // Extra penalty when ball very close to wall (beyond radius-1m)
+                if (ballDistFromCenter > cornerPenaltyRadius - 1f)
+                {
+                    AddReward(-0.03f * (ballDistFromCenter - (cornerPenaltyRadius - 1f)));
                 }
             }
 
