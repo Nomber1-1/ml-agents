@@ -75,7 +75,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4692
+          seed: 4566
           value: 0.0
       name: locomotion_only
       completion_criteria: null
@@ -84,7 +84,7 @@ environment_parameters:
     - value:
         sampler_type: uniform
         sampler_parameters:
-          seed: 4693
+          seed: 4567
           min_value: 0.5
           max_value: 10.0
       name: target_walking_speed
@@ -94,7 +94,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4694
+          seed: 4568
           value: 0.35
       name: Lesson 2 - Chase Ball (No Kicking)
       completion_criteria:
@@ -107,7 +107,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4695
+          seed: 4569
           value: 0.5
       name: Lesson 3 - Enable Kicking (~5M steps)
       completion_criteria:
@@ -120,7 +120,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4696
+          seed: 4570
           value: 1.0
       name: Lesson 4 - Full Soccer
       completion_criteria: null
@@ -129,7 +129,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4697
+          seed: 4571
           value: 1.5
       name: Lesson 2 - Chase Ball (Aligned with no-kick)
       completion_criteria:
@@ -142,7 +142,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4698
+          seed: 4572
           value: 2.0
       name: Lesson 3 - Wider Spawn (~5M steps, kicking enabled)
       completion_criteria:
@@ -155,7 +155,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4699
+          seed: 4573
           value: 1.5
       name: Lesson 4 - Full Soccer (Center spawn for focused play)
       completion_criteria: null
@@ -164,7 +164,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4700
+          seed: 4574
           value: 0.5
       name: locomotion_scale
       completion_criteria: null

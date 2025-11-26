@@ -1,0 +1,81 @@
+{
+    "locomotion_only": {
+        "lesson_num": 0
+    },
+    "target_walking_speed": {
+        "lesson_num": 0
+    },
+    "ball_touch": {
+        "lesson_num": 2
+    },
+    "ball_spawn_radius": {
+        "lesson_num": 2
+    },
+    "locomotion_scale": {
+        "lesson_num": 0
+    },
+    "WalkerSoccer": {
+        "checkpoints": [
+            {
+                "steps": 13499937,
+                "file_path": "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-13499937.onnx",
+                "reward": -3.5226893195459112,
+                "creation_time": 1764165662.2453616,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-13499937.pt"
+                ]
+            },
+            {
+                "steps": 13999988,
+                "file_path": "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-13999988.onnx",
+                "reward": -1.2672672646563057,
+                "creation_time": 1764166388.368087,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-13999988.pt"
+                ]
+            },
+            {
+                "steps": 14499985,
+                "file_path": "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-14499985.onnx",
+                "reward": 1.4458921378734064,
+                "creation_time": 1764167130.7210624,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-14499985.pt"
+                ]
+            },
+            {
+                "steps": 14999998,
+                "file_path": "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-14999998.onnx",
+                "reward": 1.3475965668716559,
+                "creation_time": 1764167860.9589002,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-14999998.pt"
+                ]
+            },
+            {
+                "steps": 15000035,
+                "file_path": "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-15000035.onnx",
+                "reward": 1.3659402032012935,
+                "creation_time": 1764167861.1557238,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-15000035.pt"
+                ]
+            }
+        ],
+        "elo": 694.1603696610618,
+        "final_checkpoint": {
+            "steps": 15000035,
+            "file_path": "results\\WalkerStage2_20\\WalkerSoccer.onnx",
+            "reward": 1.3659402032012935,
+            "creation_time": 1764167861.1557238,
+            "auxillary_file_paths": [
+                "results\\WalkerStage2_20\\WalkerSoccer\\WalkerSoccer-15000035.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.8.0+cu129"
+    }
+}
