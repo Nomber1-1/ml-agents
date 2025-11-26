@@ -111,3 +111,9 @@ environment_parameters:
 
             - name: Lesson 4 - Full Soccer
               value: 1.4
+
+    # Fade locomotion reward so soccer signals can dominate in Stage 2
+    locomotion_scale:
+        sampler_type: constant
+        sampler_parameters:
+            value: 0.5

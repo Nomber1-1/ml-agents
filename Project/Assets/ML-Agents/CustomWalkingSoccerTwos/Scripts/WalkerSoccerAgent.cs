@@ -41,6 +41,11 @@ public class WalkerSoccerAgent : Agent
     [SerializeField] private int kickCooldownSteps = 25; // Steps between kicks to avoid spam
     [SerializeField] private float kickReward = 0.1f; // Reward for successful intentional kick
     private int m_LastKickStep = -999;
+    private int m_LastBallTouchStep = -999;
+    private int m_BallNearStuckSteps = 0;
+    private Transform opponentGoal;
+    private Vector3 m_LastBallPos;
+    private float m_LastBallDistToOppGoal;
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -126,12 +131,16 @@ public class WalkerSoccerAgent : Agent
             team = Team.Blue;
             initialPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             rotSign = 1f;
+            var opp = GameObject.FindGameObjectWithTag("purpleGoal");
+            opponentGoal = opp != null ? opp.transform : null;
         }
         else
         {
             team = Team.Purple;
             initialPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             rotSign = -1f;
+            var opp = GameObject.FindGameObjectWithTag("blueGoal");
+            opponentGoal = opp != null ? opp.transform : null;
         }
 
         // Walker initialization
@@ -158,6 +167,8 @@ public class WalkerSoccerAgent : Agent
         m_JdController.SetupBodyPart(handR);
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
+        m_LastBallTouchStep = -999;
+        m_BallNearStuckSteps = 0;
     }
 
     /// <summary>
@@ -209,6 +220,19 @@ public class WalkerSoccerAgent : Agent
         //Set our goal walking speed
         MTargetWalkingSpeed =
             randomizeWalkSpeedEachEpisode ? Random.Range(0.1f, m_maxWalkingSpeed) : MTargetWalkingSpeed;
+
+        // Reset ball progress tracking
+        m_LastBallPos = ball != null ? ball.position : Vector3.zero;
+        if (ball != null && opponentGoal != null)
+        {
+            m_LastBallDistToOppGoal = Vector3.Distance(ball.position, opponentGoal.position);
+        }
+        else
+        {
+            m_LastBallDistToOppGoal = 0f;
+        }
+        m_LastBallTouchStep = -999;
+        m_BallNearStuckSteps = 0;
     }
 
     /// <summary>
@@ -413,7 +437,49 @@ public class WalkerSoccerAgent : Agent
             );
         }
 
-        AddReward(matchSpeedReward * lookAtTargetReward);
+        // Scale locomotion reward in Stage 2 so soccer signals (touches, goals, kicks)
+        // can dominate. In Stage 1, keep full locomotion reward.
+        float locomotionScale = m_LocomotionOnly ? 1f : Mathf.Clamp01(m_ResetParams.GetWithDefault("locomotion_scale", 0.5f));
+        AddReward(locomotionScale * matchSpeedReward * lookAtTargetReward);
+
+        // Stage 2: ball-to-goal shaping rewards and anti-stall near ball
+        if (!m_LocomotionOnly && ball != null && opponentGoal != null)
+        {
+            var currDist = Vector3.Distance(ball.position, opponentGoal.position);
+            var progress = m_LastBallDistToOppGoal - currDist; // positive if closer to goal
+            if (progress > 0f)
+            {
+                AddReward(Mathf.Clamp(progress * 0.02f, 0f, 0.1f));
+            }
+            m_LastBallDistToOppGoal = currDist;
+
+            var ballRb = ball.GetComponent<Rigidbody>();
+            if (ballRb != null)
+            {
+                var toGoalDir = (opponentGoal.position - ball.position).normalized;
+                var speedAlong = Vector3.Dot(ballRb.linearVelocity, toGoalDir);
+                if (speedAlong > 0f)
+                {
+                    AddReward(Mathf.Clamp(speedAlong, 0f, 10f) * 0.005f);
+                }
+
+                var toBall = ball.position - hips.position;
+                float horizDist = new Vector2(toBall.x, toBall.z).magnitude;
+                float ballSpeedMag = ballRb.linearVelocity.magnitude;
+                if (horizDist < 1.2f && ballSpeedMag < 0.1f)
+                {
+                    m_BallNearStuckSteps++;
+                    if (m_BallNearStuckSteps % 30 == 0)
+                    {
+                        AddReward(-0.02f);
+                    }
+                }
+                else
+                {
+                    m_BallNearStuckSteps = 0;
+                }
+            }
+        }
 
         // Stage 1 only: Encourage turning toward off-angle targets to prevent "forward-only" exploitation
         if (m_LocomotionOnly && target != null)
@@ -513,8 +579,15 @@ public class WalkerSoccerAgent : Agent
     {
         if (collision.gameObject.CompareTag("ball"))
         {
-            // Reward for touching the ball
-            AddReward(0.2f * m_BallTouch);
+            // Reward for touching the ball with cooldown to prevent farming
+            if (m_BallTouch > 0f)
+            {
+                if (m_LastBallTouchStep < 0 || StepCount - m_LastBallTouchStep >= 20)
+                {
+                    AddReward(0.1f * m_BallTouch);
+                    m_LastBallTouchStep = StepCount;
+                }
+            }
 
             // In Lessons 0-1 (ball_touch = 0.0), ball respawns on touch like original Walker
             // This encourages locomotion learning without soccer complexity
