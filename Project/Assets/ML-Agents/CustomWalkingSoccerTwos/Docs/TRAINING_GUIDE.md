@@ -1,4 +1,15 @@
-# Walker Soccer Training Guide
+# Walker Soccer Training Guide - Two-Stage Approach
+
+## Overview
+
+This project uses a **two-stage transfer learning approach** to train humanoid ragdoll agents for 3v3 soccer:
+
+- **Stage 1 (PPO)**: Pure locomotion training (stand, walk, turn) - 10-20M steps
+- **Stage 2 (POCA)**: Soccer gameplay with transferred locomotion skills - 15M steps
+
+This approach is more efficient than single-phase training and produces better final results by separating skill acquisition.
+
+---
 
 ## Prerequisites
 
@@ -17,116 +28,247 @@ Before training, ensure you have:
    # GPU version (CUDA 11.8)
    pip install torch --index-url https://download.pytorch.org/whl/cu118
    ```
-4. **Unity scene built** following `UNITY_SETUP_GUIDE.md`
+4. **Two Unity builds** following `UNITY_SETUP_GUIDE.md`:
+   - Stage 1: Locomotion training scene (single agent + target)
+   - Stage 2: Full 3v3 soccer scene
 
 ---
 
-## Quick Start Training
+## Stage 1: Locomotion Training (PPO)
 
-### 1. Build Your Unity Scene
+### Purpose
+Train the humanoid ragdoll to:
+- Stand upright and maintain balance
+- Walk toward moving targets at various speeds
+- Turn in all directions (360° locomotion)
+- Handle randomized spawn positions and orientations
 
-In Unity Editor:
-1. Open **File > Build Settings**
-2. Add your Walker Soccer scene
-3. Ensure **Target Platform** matches your OS
-4. Click **Build** (save as `WalkerSoccer.exe` or similar)
-5. Place the build in a known location
+### Build Setup
 
-### 2. Start Training
+**Unity Scene Configuration:**
+- Single `WalkerSoccerAgent` per arena (recommend 10-20 arenas)
+- Moving target sphere (using `TargetController`)
+- BehaviorParameters:
+  - Vector Observation Space: **250**
+  - Continuous Actions: **40**
+  - Behavior Name: `WalkerSoccer`
 
-Open terminal/command prompt and navigate to your project directory:
+### Training Command
 
-```bash
-# Basic training command
-mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccer.yaml --run-id=WalkerSoccer_v1
-
-# With TensorBoard monitoring
-mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccer.yaml --run-id=WalkerSoccer_v1 --tensorboard
-
-# Resume from checkpoint
-mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccer.yaml --run-id=WalkerSoccer_v1 --resume
-
-# Train with specific executable
-mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccer.yaml --run-id=WalkerSoccer_v1 --env=Builds/WalkerSoccer.exe
-
-# Force overwrite existing run
-mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccer.yaml --run-id=WalkerSoccer_v1 --force
+```powershell
+mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccerStage1_Locomotion.yaml `
+  --env="Builds/WalkerStage1_Locomotion.exe" `
+  --num-envs=4 --no-graphics `
+  --run-id=WalkerStage1 --force
 ```
 
-### 3. When Prompted
+### Stage 1 Config Highlights
 
-After running the command, you'll see:
-```
-Start training by pressing the Play button in the Unity Editor
+```yaml
+trainer_type: ppo  # Single-agent PPO (faster than POCA)
+learning_rate: 0.0003
+max_steps: 10000000  # 10M steps minimum (15-20M recommended)
+hidden_units: 512
+num_layers: 3
+
+environment_parameters:
+  locomotion_only:
+    value: 1.0  # Stage 1 mode (zeros out 7 soccer observations)
+  target_walking_speed:
+    min_value: 0.8
+    max_value: 4.0  # Moderate speeds to encourage walking
 ```
 
-- If training in **Editor**: Press Play in Unity
-- If training with **Build**: The executable will start automatically
+### Expected Progress
+
+| Steps | Mean Reward | Behavior |
+|-------|-------------|----------|
+| 0-2M | -10 → +5 | Learning to stand, frequent falls |
+| 2M-5M | +5 → +15 | Stable standing, basic forward walking |
+| 5M-10M | +15 → +25 | Smooth walking, beginning to turn |
+| 10M-20M | +25 → +35 | Confident 360° turning, robust locomotion |
+
+**Key Success Indicators:**
+- Agents walk smoothly at 0.8-4.0 m/s speeds
+- Turn toward off-angle targets (not just stand and wait for reset)
+- Mean reward stabilizes above +20
+- Touch target rewards (+0.2) occur frequently while upright
+
+### When to Stop Stage 1
+
+Move to Stage 2 when:
+- ✅ Mean reward consistently above +20-25
+- ✅ Agents turn confidently toward targets >30° off-center
+- ✅ Training reached 10M-20M steps
+- ✅ Valid target touches (upright, controlled speed) outnumber dive penalties
 
 ---
 
-## Training Parameters Explained
+## Stage 2: Soccer Training (POCA)
 
-### Hyperparameters (WalkerSoccer.yaml)
+### Purpose
+Transfer locomotion skills and learn:
+- Ball chasing and positioning
+- Intentional kicking (40th action)
+- Team coordination (3v3)
+- Goal scoring and defense
 
-| Parameter | Value | Why? |
-|-----------|-------|------|
-| `learning_rate` | 0.0003 | Moderate learning rate for stable training |
-| `batch_size` | 2048 | Large batches for stable gradients with complex agents |
-| `buffer_size` | 20480 | 10x batch size, standard ratio |
-| `hidden_units` | 512 | Large network for complex walker + soccer control |
-| `num_layers` | 3 | Deep enough for hierarchical behaviors |
-| `gamma` | 0.99 | Discount factor for long-term goal planning |
-| `max_steps` | 30M | Sufficient for learning complex behaviors |
+### Build Setup
 
-### Why MA-POCA?
+**Unity Scene Configuration:**
+- Full 3v3 soccer setup (6 agents total)
+- Ball with physics + goal triggers
+- BehaviorParameters:
+  - Vector Observation Space: **250** (same as Stage 1)
+  - Continuous Actions: **40**
+  - Behavior Name: `WalkerSoccer` (must match Stage 1)
 
-We use **Multi-Agent POsthumous Credit Assignment (MA-POCA)** because:
-- ✅ Handles variable team sizes
-- ✅ Learns cooperative behaviors (passing, positioning)
-- ✅ Assigns credit appropriately in team settings
-- ✅ Includes self-play for competitive learning
+### Training Command
 
-### V5 Stabilization System
+```powershell
+mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccerStage2_Soccer.yaml `
+  --env="Builds/WalkerStage2_Soccer.exe" `
+  --num-envs=3 --no-graphics `
+  --run-id=WalkerStage2 `
+  --initialize-from=WalkerStage1 --force
+```
 
-Agents use multiple stability mechanisms:
+**Critical:** Use `--initialize-from=<Stage1_run_id>` to transfer weights.
 
-1. **Start Pose Hold** (configurable in `WalkerSoccerSettings`)
-   - First 50 physics steps hold a stable standing pose (increased from 10)
-   - High joint strengths (0.9) enforce the pose
-   - Prevents ragdoll collapse during episode initialization
-   
-2. **Progressive Speed Ramp**
-   - Walking speed starts at 0.5 m/s and ramps to 3.0 m/s over 400 steps
-   - Prevents high-momentum instability before balance is learned
-   - Dynamically adjusts locomotion reward scaling with ramp progress
-   
-3. **Neutral Orientation Start**
-   - Agents start facing forward (±10° random) instead of toward ball
-   - Prevents immediate uncontrolled lunging toward ball
-   - Ball influence delayed for first 50 steps
+### Stage 2 Config Highlights
 
-4. **Solver Iterations** (configurable)
-   - Set to 12 for better joint stability
-   - Helps maintain balance during rapid movements
-   
-5. **Configuration Options** in `WalkerSoccerSettings`:
-   - `enableStartStabilization`: Enable/disable pose hold
-   - `stabilizeStepsOnReset`: Number of steps to hold pose (default: 50)
-   - `standStrength`: Joint strength during stabilization (0.9)
-   - `solverIterations`: Physics solver iterations (12)
-   - `solverVelocityIterations`: Velocity solver iterations (12)
+```yaml
+trainer_type: poca  # Multi-agent with self-play
+learning_rate: 0.0001  # Lower LR for fine-tuning transferred weights
+max_steps: 15000000  # 15M additional steps
 
-6. **Tunable Reward Fields** in Agent Inspector:
-   - `maxTargetSpeed`: Max walking speed after ramp (3.0)
-   - `speedRampSteps`: Steps to reach max speed (400)
-   - `uprightRewardPerStep`: Height-based stability bonus (0.01)
-   - `locomotionRewardScale`: Base locomotion reward multiplier (2.0)
-   - `antiForwardTipPenalty`: Forward pitch penalty (0.02)
-   - `uprightDotMin`: Threshold for tip penalty (0.7)
-   - `angVelPenaltyCoef`: Angular velocity damping (0.001)
-   - `sidewaysLeanPenalty`: Lateral tilt penalty (0.02)
-   - `delayBallInfluenceSteps`: Delay ball rewards (50)
+self_play:
+  save_steps: 50000
+  team_change: 200000
+  window: 5
+
+environment_parameters:
+  locomotion_only:
+    value: 0.0  # Stage 2 mode (activates 7 soccer observations)
+  
+  ball_touch:  # Progressive curriculum
+    curriculum:
+      - name: Lesson 2 - Chase Ball
+        threshold: 0.40  # 6M steps (40% of 15M)
+        value: 0.35
+      - name: Lesson 3 - Enable Kicking
+        threshold: 0.80  # 12M steps (80% of 15M)
+        value: 0.5  # Kick action unlocked
+      - name: Lesson 4 - Full Soccer
+        value: 1.0
+```
+
+### Expected Progress
+
+| Steps | Lesson | Mean Reward | Behavior |
+|-------|--------|-------------|----------|
+| 0-2M | Lesson 2 | -5 → +5 | Adapting locomotion to ball context |
+| 2M-6M | Lesson 2 | +5 → +20 | Chasing ball, learning spatial awareness |
+| 6M-12M | Lesson 3 | +20 → +40 | **Kicking unlocked**, intentional strikes |
+| 12M-15M | Lesson 4 | +40 → +60+ | Coordinated play, goal scoring |
+
+**Key Success Indicators:**
+- Locomotion skills retained from Stage 1
+- Agents chase and intercept ball
+- Intentional kicks occur in Lesson 3+
+- Goals scored increase in Lesson 4
+- Self-play ELO ratings diverge (competitive balance)
+
+### Transfer Learning Notes
+
+**What Transfers:**
+- ✅ Policy network weights (locomotion skills)
+- ✅ Standing/walking/turning abilities
+- ✅ Balance and posture control
+
+**What Resets:**
+- ⚠️ Optimizer states (adam/critic start fresh - **this is normal**)
+- ⚠️ Step counter (starts from 0 for Stage 2)
+- ⚠️ Curriculum position (starts at Lesson 2)
+
+**Expected Warnings (Safe to Ignore):**
+```
+[WARNING] Failed to load for module Optimizer:adam. Initializing
+[WARNING] Failed to load for module Optimizer:critic. Initializing
+```
+
+These are **expected** when transferring PPO→POCA. Policy weights transfer successfully.
+
+---
+
+## Observation Space Architecture
+
+Both stages use **250 observations** for perfect weight transfer:
+
+**Base Locomotion (243 obs):**
+- Velocity goals: 4 floats
+- Rotation deltas: 8 floats
+- Target position: 3 floats
+- Body parts (16 parts): 228 floats
+  - Ground contact, velocities, positions, rotations, strengths
+
+**Soccer Context (7 obs):**
+- Ball position relative to agent: 3 floats
+- Ball velocity: 3 floats
+- Team identifier: 1 float
+
+**Stage 1 vs Stage 2:**
+- Stage 1 (`locomotion_only=1.0`): Soccer observations **set to zero**
+- Stage 2 (`locomotion_only=0.0`): Soccer observations **contain real data**
+
+---
+
+## Action Space (40 Continuous Actions)
+
+**Actions 0-38: Joint Control**
+- 26 joint rotations (chest, spine, limbs, head)
+- 13 joint strengths (adaptive stiffness)
+
+**Action 39: Kick Trigger**
+- Value range [0, 1] indicates kick intensity
+- Stage 1: Ignored (locomotion_only mode)
+- Stage 2: Active in Lesson 3+ (`ball_touch >= 0.5`)
+- Applies impulse to ball (6.0 force, 2.0m range, 25-step cooldown)
+
+---
+
+## Anti-Exploit Mechanisms
+
+### Stage 1: Dive Prevention
+
+**Problem:** Agents dive toward target to trigger respawn instead of walking/turning.
+
+**Solutions Implemented:**
+1. **Touch Validation:**
+   - Upright check: `Vector3.Dot(hips.up, Vector3.up) >= 0.85`
+   - Speed limit: `horizontalSpeed <= 2.0 m/s`
+   - Downward velocity check: `verticalSpeed > -1.5 m/s`
+
+2. **Graded Rewards:**
+   - Valid touch: +0.2 reward
+   - Invalid touch (dive/sprint): -0.15 to -1.35 penalty (scaled by severity)
+
+3. **Turn Encouragement** (FixedUpdate):
+   - Small reward for reducing angle to off-axis targets
+   - Penalty for standing still when target >15° off-center
+   - Prevents "forward-only" locomotion exploitation
+
+4. **Randomized Spawns:**
+   - Agent position: ±6m X/Z random offset
+   - Agent rotation: Random 0-360°
+   - Target position: Random within arena
+   - Breaks exploitation patterns
+
+### Stage 2: Consistent Positioning
+
+- Fixed spawn positions using `initialPos`
+- Team-based rotations (Blue: 90°, Purple: -90°)
+- No randomization (soccer requires consistent team structure)
 
 ---
 
@@ -134,44 +276,40 @@ Agents use multiple stability mechanisms:
 
 ### TensorBoard
 
-View real-time training metrics:
+View real-time metrics:
 
 ```bash
-# Start TensorBoard (in a separate terminal)
+# Start TensorBoard
 tensorboard --logdir results
 
-# Open browser to
-http://localhost:6006
+# Open browser to http://localhost:6006
 ```
 
-**Key Metrics to Watch:**
+**Key Metrics:**
 
-- **Environment/Cumulative Reward**: Should increase over time
-  - Target: 5-15+ after millions of steps
-  
-- **Environment/Episode Length**: Varies, but should stabilize
-  - Longer episodes = agents lasting longer without goals
-  
-- **Losses/Policy Loss**: Should decrease and stabilize
-  - If increasing steadily, reduce learning rate
-  
-- **Policy/Learning Rate**: Should stay constant (or decay if scheduled)
+**Stage 1 (PPO):**
+- `Environment/Cumulative Reward`: Target +20-35
+- `Policy/Learning Rate`: Should stay 0.0003
+- `Losses/Policy Loss`: Should decrease and stabilize
 
-- **Self-Play/ELO**: Team skill ratings
-  - Higher ELO = better performance
+**Stage 2 (POCA):**
+- `Environment/Cumulative Reward`: Target +40-60+
+- `Self-Play/ELO`: Team ratings (higher = better)
+- `Environment/Group Cumulative Reward`: Team performance
+- `Policy/Learning Rate`: Should stay 0.0001
 
 ### Console Output
 
-Monitor training in real-time:
 ```
-[INFO] WalkerSoccer. Step: 50000. Time Elapsed: 312.5 s. Mean Reward: 2.345. Std of Reward: 1.234.
+[INFO] WalkerSoccer. Step: 50000. Mean Reward: 12.345. Training. ELO: 1205.3
 ```
 
-**What to look for:**
-- ✅ Mean Reward gradually increasing
-- ✅ Steps progressing steadily
-- ❌ NaN values (indicates training instability)
-- ❌ Reward stuck at negative values
+Watch for:
+- ✅ Steadily increasing Mean Reward
+- ✅ Valid target touches (Stage 1 logs)
+- ✅ Goal events (Stage 2 logs)
+- ❌ NaN values (training instability)
+- ❌ Reward stuck negative
 
 ---
 

@@ -1,170 +1,280 @@
-# Walker Soccer - Quick Reference Card
+# Walker Soccer - Quick Reference Card (Two-Stage Training)
 
 ## 🎯 Essential Commands
 
+### Stage 1: Locomotion Training (PPO)
 ```bash
-# Start training
-mlagents-learn WalkerSoccer.yaml --run-id=MySoccerRun
+# Start Stage 1 (locomotion only, 10-20M steps)
+mlagents-learn WalkerSoccerStage1_Locomotion.yaml --run-id=WalkerStage1 --force
 
-# Resume training
-mlagents-learn WalkerSoccer.yaml --run-id=MySoccerRun --resume
+# With build and multiple environments
+mlagents-learn WalkerSoccerStage1_Locomotion.yaml --run-id=WalkerStage1 \
+  --env=Builds/WalkerStage1.exe --num-envs=4 --no-graphics
 
-# View in TensorBoard
-tensorboard --logdir results
-
-# Train headless (faster)
-mlagents-learn WalkerSoccer.yaml --run-id=MySoccerRun --no-graphics
+# Resume Stage 1
+mlagents-learn WalkerSoccerStage1_Locomotion.yaml --run-id=WalkerStage1 --resume
 ```
 
-## 📋 Component Checklist
+### Stage 2: Soccer Training (POCA + Transfer)
+```bash
+# Start Stage 2 with transferred weights
+mlagents-learn WalkerSoccerStage2_Soccer.yaml --run-id=WalkerStage2 \
+  --initialize-from=WalkerStage1 --force
 
-### Per Walker Agent
-- ✅ WalkerSoccerAgent.cs
-- ✅ JointDriveController.cs
-- ✅ BehaviorParameters (Team ID: 0 for Blue, 1 for Purple)
-  - ✅ Vector Action: Space Size = 40 (39 + kick action)
-  - ✅ Vector Action: Space Type = Continuous
+# With build and multiple environments
+mlagents-learn WalkerSoccerStage2_Soccer.yaml --run-id=WalkerStage2 \
+  --env=Builds/WalkerStage2.exe --num-envs=3 --no-graphics \
+  --initialize-from=WalkerStage1
+
+# Resume Stage 2
+mlagents-learn WalkerSoccerStage2_Soccer.yaml --run-id=WalkerStage2 --resume
+```
+
+### Monitoring
+```bash
+# View training metrics
+tensorboard --logdir results
+
+# Open browser to http://localhost:6006
+```
+
+## 📋 Build Checklist
+
+### Stage 1 Build (Locomotion)
+- ✅ Single WalkerSoccerAgent per arena (10-20 arenas recommended)
+- ✅ Moving target sphere with TargetController
+- ✅ BehaviorParameters:
+  - Vector Observation: **250**
+  - Continuous Actions: **40**
+  - Behavior Name: `WalkerSoccer`
 - ✅ DecisionRequester (Decision Period: 5)
-- ✅ 16 Body Parts assigned
-- ✅ Ball reference assigned
-- ✅ OrientationCube child
-- ✅ DirectionIndicator child
+- ✅ All 16 body parts assigned
+- ✅ OrientationCube + DirectionIndicator children
 
-### Environment
-- ✅ WalkerSoccerEnvController.cs on area
-- ✅ 6 agents in AgentsList (3 per team)
-- ✅ Ball with WalkerSoccerBallController.cs
-- ✅ Goals with tags: "blueGoal", "purpleGoal"
-- ✅ SoccerSettings in scene
+### Stage 2 Build (Soccer)
+- ✅ 6 WalkerSoccerAgents (3 per team)
+- ✅ BehaviorParameters (same as Stage 1):
+  - Vector Observation: **250** (must match Stage 1)
+  - Continuous Actions: **40**
+  - Behavior Name: `WalkerSoccer` (must match Stage 1)
+  - Team ID: 0 (Blue), 1 (Purple)
+- ✅ Ball with WalkerSoccerBallController
+- ✅ Goals tagged: "blueGoal", "purpleGoal"
+- ✅ WalkerSoccerEnvController with 6 agents in list
 
 ## 🎮 Testing Controls (Heuristic Mode)
 
 ```
-W/S - Forward/Backward
-A/D - Rotate
-WASD - Basic movement control
+W/S - Pitch control
+A/D - Turn control
+Space - Kick (Stage 2 only, when near ball)
 ```
 
 ## 🔍 Debug Checklist
 
-### If agents fall through floor:
-1. Ground has BoxCollider
-2. Collision layers properly set
-3. Rigidbody Use Gravity ✓
+### Stage 1 Issues
+
+#### Agents dive toward target instead of walking:
+1. ✅ Check `TouchedTarget()` validation is enabled
+2. ✅ Verify `uprightDotThreshold = 0.85`
+3. ✅ Verify `maxSuccessSpeed = 2.0`
+4. ✅ Turn encouragement active in FixedUpdate
+5. ✅ Walking speed range: 0.8-4.0 m/s
+
+#### Agents won't turn (forward-only locomotion):
+1. ✅ Check turn encouragement in FixedUpdate
+2. ✅ Penalty for standing still when target >15° off
+3. ✅ Reward for reducing angle to target
+4. ✅ Random agent spawns enabled (±6m X/Z, 0-360° rotation)
+
+#### Training reward stuck at 80+:
+1. ❌ Dive-reset exploitation happening
+2. ✅ Lower touch rewards to +0.2
+3. ✅ Increase dive penalties to -0.15 to -1.35
+4. ✅ Narrow walking speed to 0.8-4.0 m/s
+
+### Stage 2 Issues
+
+#### Transfer learning fails (Policy not loading):
+1. ✅ Check both stages use Behavior Name: `WalkerSoccer`
+2. ✅ Verify observation space: **250 in both stages**
+3. ✅ Confirm `--initialize-from=<correct_stage1_run_id>`
+4. ⚠️ Optimizer warnings are normal (PPO→POCA transition)
+
+#### Agents forgot how to walk:
+1. ❌ Observation space mismatch (check Unity BehaviorParameters)
+2. ✅ Should be 250 in both Stage 1 and Stage 2 builds
+3. ✅ Policy should transfer successfully (no Policy warning)
+
+#### Agents spawn randomly in Stage 2:
+1. ✅ Check `locomotion_only = 0.0` in Stage 2 YAML
+2. ✅ Spawn should use `initialPos` for fixed positions
+3. ✅ Stage 1 uses random, Stage 2 uses fixed
+
+### General Issues
+
+#### Agents fall through floor:
+1. Ground has Collider
+2. Collision layers set correctly
+3. Rigidbody Use Gravity enabled
 4. Fixed Timestep = 0.02
 
-### If agents fall over at episode start:
-1. Enable start stabilization in WalkerSoccerSettings
-2. Set stabilizeStepsOnReset = 50 (V5 default)
-3. Set standStrength = 0.9
-4. Set maxTargetSpeed = 3.0 (lower speeds help balance)
-5. Increase solver iterations to 12
+#### Agents fall over at start:
+1. Random agent spawns in Stage 1 (normal)
+2. Check joint strength settings
+3. Solver iterations: 12+
+4. Reduce max walking speed if needed
 
-### If training isn't working:
-1. Check network_settings > normalize: true
-2. Verify ball reference assigned
-3. Test in Heuristic mode first
-4. Check TensorBoard for NaN values
-
-### If physics are unstable:
-1. Enable start stabilization (see above)
-2. Reduce maxJointForceLimit (300-400)
-3. Increase Decision Period (10)
-4. Solver Iterations: 12-15
-5. Collision Detection: Continuous Dynamic
+#### Training shows NaN:
+1. network_settings > normalize: true
+2. Reduce learning rate
+3. Check for physics explosions
+4. Verify all observations are valid
 
 ## 📊 Key Metrics (TensorBoard)
 
-| Metric | Good Sign | Bad Sign |
-|--------|-----------|----------|
-| Cumulative Reward | Increasing | Flat/Negative |
-| Policy Loss | Decreasing | Increasing |
-| Episode Length | Stabilizing | Erratic |
-| Self-Play ELO | Both teams ~1200 | One team >> other |
+### Stage 1 (PPO Locomotion)
+| Metric | Target |
+|--------|--------|
+| Mean Reward | +20 to +35 |
+| Valid Touch Rate | Increasing |
+| Episode Length | Varies (target resets) |
+| Policy Loss | Decreasing, stable |
+
+### Stage 2 (POCA Soccer)
+| Metric | Target |
+|--------|--------|
+| Mean Reward | +40 to +60+ |
+| Self-Play ELO | Both ~1200 |
+| Goals Scored | Increasing in Lesson 4 |
+| Policy Loss | Decreasing, stable |
 
 ## ⚙️ Key Parameters
 
-### WalkerSoccer.yaml
+### Stage 1: WalkerSoccerStage1_Locomotion.yaml
 ```yaml
+trainer_type: ppo
 learning_rate: 0.0003
 batch_size: 2048
 hidden_units: 512
-gamma: 0.99
-max_steps: 30000000
+num_layers: 3
+max_steps: 10000000  # 10M minimum
+
+environment_parameters:
+  locomotion_only: 1.0  # Stage 1 mode
+  target_walking_speed:
+    min_value: 0.8
+    max_value: 4.0
 ```
 
-### Unity Settings
+### Stage 2: WalkerSoccerStage2_Soccer.yaml
+```yaml
+trainer_type: poca  # Multi-agent
+learning_rate: 0.0001  # Lower for fine-tuning
+max_steps: 15000000  # 15M additional
+
+self_play:
+  save_steps: 50000
+  team_change: 200000
+
+environment_parameters:
+  locomotion_only: 0.0  # Stage 2 mode
+  ball_touch: [curriculum]  # 0.35 → 0.5 → 1.0
+```
+
+### Unity Settings (Both Stages)
 ```
 Fixed Timestep: 0.02
 Decision Period: 5
-Max Environment Steps: 25000
-Joint Force Limit: 300-500
+Vector Observation Space: 250
+Continuous Actions: 40
 ```
 
-### WalkerSoccerSettings (Scene Object)
+### WalkerSoccerAgent Inspector
 ```
-enableStartStabilization: true
-stabilizeStepsOnReset: 50
-standStrength: 0.9
-solverIterations: 12
-solverVelocityIterations: 12
-```
-
-### WalkerSoccerAgent Reward Tuning (Inspector)
-```
-maxTargetSpeed: 3.0
-speedRampSteps: 400
-uprightRewardPerStep: 0.01
-locomotionRewardScale: 2.0
-antiForwardTipPenalty: 0.02
-uprightDotMin: 0.7
-angVelPenaltyCoef: 0.001
-sidewaysLeanPenalty: 0.02
-delayBallInfluenceSteps: 50
+uprightDotThreshold: 0.85
+maxSuccessSpeed: 2.0
+spawnAreaHalfX: 6.0
+spawnAreaHalfZ: 6.0
+kickForce: 6.0
+kickRange: 2.0
+kickCooldownSteps: 25
 ```
 
-## 🚦 Training Progress Stages (V10)
+## 🚦 Training Progress
 
-| Steps | Lesson | Behavior | Kick? |
-|-------|--------|----------|-------|
-| 0-2M | L0: Stand | Balance, upright posture | ❌ |
-| 2M-6M | L1: Walk | Walking toward ball (2.7m) | ❌ |
-| 6M-12M | L2: Chase | Active pursuit (2.3m) | ❌ |
-| 12M-20M | L3: Kick | **Kick action enabled!** (1.8m) | ✅ |
-| 20M+ | L4: Score | Goal-focused play (1.4m) | ✅ |
+### Stage 1: Locomotion (10-20M steps)
+| Steps | Mean Reward | Behavior |
+|-------|-------------|----------|
+| 0-2M | -10 → +5 | Learning to stand |
+| 2M-5M | +5 → +15 | Stable walking forward |
+| 5M-10M | +15 → +25 | Beginning to turn |
+| 10M-20M | +25 → +35 | Full 360° locomotion |
+
+**Success Criteria:** Mean reward >+20, agents turn toward off-angle targets
+
+### Stage 2: Soccer (15M steps)
+| Steps | Lesson | Mean Reward | Kick? |
+|-------|--------|-------------|-------|
+| 0-2M | L2: Chase | -5 → +5 | ❌ |
+| 2M-6M | L2: Chase | +5 → +20 | ❌ |
+| 6M-12M | L3: Kicking | +20 → +40 | ✅ |
+| 12M-15M | L4: Full Soccer | +40 → +60+ | ✅ |
+
+**Success Criteria:** Goals scored, coordinated team play, ELO ratings stable
 
 ## 🔗 Quick Links
 
-- [Full Setup Guide](UNITY_SETUP_GUIDE.md)
-- [Training Guide](TRAINING_GUIDE.md)
+- [Full Training Guide](TRAINING_GUIDE.md)
+- [Unity Setup Guide](UNITY_SETUP_GUIDE.md)
+- [System Overview](SYSTEM_OVERVIEW.md)
 - [Debug Guide](DEBUG_AND_IMPROVEMENTS.md)
-- [ML-Agents Docs](https://github.com/Unity-Technologies/ml-agents)
 
 ## 💡 Pro Tips
 
-1. Enable start stabilization in WalkerSoccerSettings
-2. Use multiple parallel environments (4-8 per GPU)
-3. Multi-GPU: run separate training sessions per GPU
-4. Monitor TensorBoard regularly
-5. Test in Heuristic mode before training
-6. Keep models from different checkpoints
-7. Train builds, not editor (2-3x faster)
-8. Enable Time.timeScale = 20 for faster training
-9. Scale --num-envs based on GPU VRAM (12GB → 12-16 envs)
+### Stage 1
+1. Use 10-20 parallel arenas per build
+2. Run 3-4 build instances (`--num-envs`)
+3. Monitor valid vs invalid touch ratio
+4. Stop when agents confidently turn >30° off-center
+5. Aim for 10M-20M steps before Stage 2
+
+### Stage 2
+6. Use same Behavior Name as Stage 1
+7. Observation space MUST be 250 (match Stage 1)
+8. Optimizer warnings are normal (PPO→POCA)
+9. Lower `num-envs` for POCA (3-4 vs 4-8 for PPO)
+10. Monitor locomotion retention in early steps
+
+### Performance
+11. Build training 2-3x faster than Editor
+12. Multi-GPU: separate sessions per GPU
+13. Scale `--num-envs` by VRAM (12GB → 12-16 envs Stage 1, 6-9 envs Stage 2)
+14. Use `--no-graphics` for headless training
+15. TensorBoard running = instant feedback
 
 ## 🆘 Emergency Fixes
 
-```csharp
-// If NaN in rewards
-if (float.IsNaN(reward)) return;
+### Stage 1: Dive exploitation
+```yaml
+# Narrow walking speed range
+target_walking_speed:
+  min_value: 0.8
+  max_value: 4.0  # Was 10.0
+```
 
-// If agents too weak/strong
-maxJointForceLimit = 350f; // Adjust
+### Stage 2: Transfer failed
+```bash
+# Verify observation space in Unity
+# Must be 250 in BOTH Stage 1 and Stage 2 builds
+```
 
-// If ball too fast
-ballRigidbody.drag = 0.2f; // Increase
+### General: Training unstable
+```yaml
+# Reduce learning rate
+learning_rate: 0.0001  # From 0.0003
 ```
 
 ---
 
-**Got 5 minutes?** Test Heuristic mode → See if physics work → Start training!
+**Quick Start:** Build Stage 1 → Train 10-20M steps → Build Stage 2 → Transfer and train 15M steps!
