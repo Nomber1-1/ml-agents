@@ -32,21 +32,7 @@ public class WalkerSoccerAgent : Agent
     private const float k_KickPower = 2000f;
 
     private BehaviorParameters m_BehaviorParameters;
-    private WalkerSoccerSettings m_SoccerSettings;
-    private int m_StabilizeSteps;
-    private float m_BallSpawnRadius;
-
-    [Header("Reward Tuning")]
-    [SerializeField] private float uprightRewardPerStep = 0.03f; // Increased from 0.01
-    [SerializeField] private float locomotionRewardScale = 2.0f;
-    [SerializeField] private float antiForwardTipPenalty = 0.02f;
-    [SerializeField] private float uprightDotMin = 0.7f;
-    [SerializeField] private int delayBallInfluenceSteps = 50;
-    [SerializeField] private float maxTargetSpeed = 3.0f;
-    [SerializeField] private int speedRampSteps = 400;
-    [SerializeField] private float angVelPenaltyCoef = 0.002f; // Reduced for cold-start training
-    [SerializeField] private float sidewaysLeanPenalty = 0.02f;
-    private int m_CurrentStepInEpisode;
+    private bool m_LocomotionOnly; // Stage 1: true (locomotion), Stage 2: false (soccer)
 
     [Header("Kick Action Settings")]
     [SerializeField] private float kickForce = 6.0f; // Impulse magnitude applied to ball
@@ -55,11 +41,6 @@ public class WalkerSoccerAgent : Agent
     [SerializeField] private int kickCooldownSteps = 25; // Steps between kicks to avoid spam
     [SerializeField] private float kickReward = 0.1f; // Reward for successful intentional kick
     private int m_LastKickStep = -999;
-
-    [Header("Debug Visualization")]
-    [SerializeField] private bool enableDebugMode = false;
-    [SerializeField] private bool freezeAtStabilization = false;
-    [SerializeField] private bool logLocomotionMetrics = false;
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -118,6 +99,15 @@ public class WalkerSoccerAgent : Agent
     JointDriveController m_JdController;
     EnvironmentParameters m_ResetParams;
 
+    // Stage 1 locomotion anti-exploit tuning
+    [Header("Locomotion Success Gating")]
+    [SerializeField] private float uprightDotThreshold = 0.85f; // Must be mostly upright to count touch
+    [SerializeField] private float maxSuccessSpeed = 2.0f;       // Walk pace threshold to avoid dive touches
+    [SerializeField] private float divePenalty = 0.05f;          // Small penalty on invalid touch
+    [Header("Spawn Area")]
+    [SerializeField] private float spawnAreaHalfX = 6f;          // Randomize agent start X within [-half, +half]
+    [SerializeField] private float spawnAreaHalfZ = 6f;          // Randomize agent start Z within [-half, +half]
+
     public override void Initialize()
     {
         // Soccer initialization
@@ -145,8 +135,6 @@ public class WalkerSoccerAgent : Agent
             rotSign = -1f;
         }
 
-        m_SoccerSettings = FindFirstObjectByType<WalkerSoccerSettings>();
-
         // Walker initialization
         m_OrientationCube = GetComponentInChildren<OrientationCubeController>();
         m_DirectionIndicator = GetComponentInChildren<DirectionIndicator>();
@@ -171,8 +159,6 @@ public class WalkerSoccerAgent : Agent
         m_JdController.SetupBodyPart(handR);
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
-
-        ConfigureRigidbodies();
     }
 
     /// <summary>
@@ -180,10 +166,11 @@ public class WalkerSoccerAgent : Agent
     /// </summary>
     public override void OnEpisodeBegin()
     {
+        // Check if we're in locomotion-only training (Stage 1) or full soccer (Stage 2)
+        m_LocomotionOnly = m_ResetParams.GetWithDefault("locomotion_only", 0f) > 0.5f;
+
         // Soccer-specific reset parameters
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
-        m_BallSpawnRadius = m_ResetParams.GetWithDefault("ball_spawn_radius", 3.0f);
-        m_CurrentStepInEpisode = 0;
 
         //Reset all of the body parts
         foreach (var bodyPart in m_JdController.bodyPartsDict.Values)
@@ -191,32 +178,26 @@ public class WalkerSoccerAgent : Agent
             bodyPart.Reset(bodyPart);
         }
 
-        // Start with neutral orientation to learn balance first
-        if (m_BehaviorParameters != null && m_BehaviorParameters.BehaviorType == BehaviorType.HeuristicOnly)
-        {
-            hips.rotation = Quaternion.identity;
-        }
-        else
-        {
-            // Neutral forward or small random variation (±10 degrees)
-            float randomYaw = Random.Range(-10f, 10f);
-            hips.rotation = Quaternion.Euler(0, randomYaw, 0);
-        }
+        // Randomize agent spawn position and facing to prevent dive-reset exploits
+        var hipsBp = m_JdController.bodyPartsDict[hips];
+        Vector3 baseAreaCenter = transform.position;
+        float randX = Random.Range(-spawnAreaHalfX, spawnAreaHalfX);
+        float randZ = Random.Range(-spawnAreaHalfZ, spawnAreaHalfZ);
+        Vector3 spawnPos = new Vector3(baseAreaCenter.x + randX, baseAreaCenter.y, baseAreaCenter.z + randZ);
+        hipsBp.rb.transform.position = spawnPos;
+
+        // Random start rotation to help generalize
+        hipsBp.rb.transform.rotation = Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0);
+
+        // Zero initial velocities
+        hipsBp.rb.linearVelocity = Vector3.zero;
+        hipsBp.rb.angularVelocity = Vector3.zero;
 
         UpdateOrientationObjects();
 
-        //Set initial very low walking speed for balance acquisition
-        MTargetWalkingSpeed = 0.5f; // will ramp in FixedUpdate regardless of randomize flag
-
-        if (m_SoccerSettings != null && m_SoccerSettings.enableStartStabilization)
-        {
-            m_StabilizeSteps = m_SoccerSettings.stabilizeStepsOnReset; // Use actual setting value
-            ApplyStableStandPoseTargets(m_SoccerSettings.standStrength);
-        }
-        else
-        {
-            m_StabilizeSteps = 0; // No stabilization if settings missing or disabled
-        }
+        //Set our goal walking speed
+        MTargetWalkingSpeed =
+            randomizeWalkSpeedEachEpisode ? Random.Range(0.1f, m_maxWalkingSpeed) : MTargetWalkingSpeed;
     }
 
     /// <summary>
@@ -244,6 +225,9 @@ public class WalkerSoccerAgent : Agent
 
     /// <summary>
     /// Loop over body parts to add them to observation.
+    /// Always 250 observations for proper transfer learning between stages.
+    /// Stage 1 (locomotion_only=1): Soccer observations set to zero (ignored during training)
+    /// Stage 2 (locomotion_only=0): Soccer observations contain real data
     /// </summary>
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -268,34 +252,46 @@ public class WalkerSoccerAgent : Agent
         //Position of target position relative to cube
         sensor.AddObservation(m_OrientationCube.transform.InverseTransformPoint(target.transform.position));
 
-        // Soccer-specific observations: Ball position relative to agent
-        if (ball != null)
+        // Soccer-specific observations (7 floats: 3 ball pos + 3 ball vel + 1 team)
+        // Stage 1: Zeros (network learns to ignore these inputs)
+        // Stage 2: Real data (network uses these for soccer strategy)
+        if (m_LocomotionOnly)
         {
-            sensor.AddObservation(m_OrientationCube.transform.InverseTransformPoint(ball.position));
-
-            // Ball velocity
-            Rigidbody ballRb = ball.GetComponent<Rigidbody>();
-            if (ballRb != null)
-            {
-                sensor.AddObservation(m_OrientationCube.transform.InverseTransformDirection(ballRb.linearVelocity));
-            }
-            else
-            {
-                sensor.AddObservation(Vector3.zero);
-            }
+            // Stage 1: Dummy soccer observations (all zeros)
+            sensor.AddObservation(Vector3.zero); // Ball position
+            sensor.AddObservation(Vector3.zero); // Ball velocity
+            sensor.AddObservation(0f); // Team identifier
         }
         else
         {
-            sensor.AddObservation(Vector3.zero); // ball position
-            sensor.AddObservation(Vector3.zero); // ball velocity
+            // Stage 2: Real soccer observations
+            // Ball position relative to agent
+            if (ball != null)
+            {
+                sensor.AddObservation(m_OrientationCube.transform.InverseTransformPoint(ball.position));
+
+                // Ball velocity
+                Rigidbody ballRb = ball.GetComponent<Rigidbody>();
+                if (ballRb != null)
+                {
+                    sensor.AddObservation(m_OrientationCube.transform.InverseTransformDirection(ballRb.linearVelocity));
+                }
+                else
+                {
+                    sensor.AddObservation(Vector3.zero);
+                }
+            }
+            else
+            {
+                sensor.AddObservation(Vector3.zero); // ball position
+                sensor.AddObservation(Vector3.zero); // ball velocity
+            }
+
+            // Team identifier
+            sensor.AddObservation(team == Team.Blue ? 1f : -1f);
         }
 
-        // Team identifier
-        sensor.AddObservation(team == Team.Blue ? 1f : -1f);
-
-        // Position type
-        sensor.AddObservation(position == Position.Striker ? 1f : (position == Position.Goalie ? -1f : 0f));
-
+        // Body part observations (same for both stages)
         foreach (var bodyPart in m_JdController.bodyPartsList)
         {
             CollectObservationBodyPart(bodyPart, sensor);
@@ -341,12 +337,13 @@ public class WalkerSoccerAgent : Agent
         bpDict[forearmR].SetJointStrength(continuousActions[++i]);
 
         // Optional kick action (additional continuous action at end if present)
-        // Only enabled in Lesson 3+ (ball_touch >= 0.5) to promote walking first
+        // Stage 1 (locomotion_only): Kick action ignored
+        // Stage 2 (soccer): Kick enabled in Lesson 3+ (ball_touch >= 0.5)
         if (continuousActions.Length > i + 1)
         {
             float kickIntensity = continuousActions[++i]; // Expect value in [0,1]
-            // Only attempt kick if in Lesson 3+ (when ball_touch >= 0.5)
-            if (m_BallTouch >= 0.5f)
+            // Only attempt kick in Stage 2 + Lesson 3+
+            if (!m_LocomotionOnly && m_BallTouch >= 0.5f)
             {
                 TryKickBall(kickIntensity);
             }
@@ -370,31 +367,15 @@ public class WalkerSoccerAgent : Agent
     void FixedUpdate()
     {
         UpdateOrientationObjects();
-        m_CurrentStepInEpisode++;
-
-        // Debug: freeze after stabilization to inspect pose
-        if (enableDebugMode && freezeAtStabilization && m_StabilizeSteps == 0 && m_CurrentStepInEpisode == 51)
-        {
-            LogStandingAssessment();
-            Time.timeScale = 0f; // Pause simulation
-            return;
-        }
-
-        // Progressive speed ramp
-        float rampT = Mathf.Clamp01(m_CurrentStepInEpisode / (float)speedRampSteps);
-        float currentTarget = Mathf.Lerp(0.5f, maxTargetSpeed, rampT);
-        MTargetWalkingSpeed = currentTarget;
-
-        if (m_StabilizeSteps > 0)
-        {
-            ApplyStableStandPoseTargets(m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f);
-            m_StabilizeSteps--;
-            return; // Skip reward logic during stabilization to avoid confusing old models
-        }
 
         var cubeForward = m_OrientationCube.transform.forward;
 
+        // Set reward for this step according to mixture of the following elements.
+        // a. Match target speed
+        //This reward will approach 1 if it matches perfectly and approach zero as it deviates
         var matchSpeedReward = GetMatchingVelocityReward(cubeForward * MTargetWalkingSpeed, GetAvgVelocity());
+
+        //Check for NaNs
         if (float.IsNaN(matchSpeedReward))
         {
             throw new ArgumentException(
@@ -405,17 +386,13 @@ public class WalkerSoccerAgent : Agent
             );
         }
 
-        // Early micro-shaping for Lesson0 (ball_touch ~ 0). Encourages initiating forward movement
-        // without overpowering later locomotion reward once curriculum advances.
-        if (m_BallTouch <= 0.05f)
-        {
-            float forwardSpeedEarly = Vector3.Dot(GetAvgVelocity(), cubeForward);
-            float normalizedEarly = Mathf.Clamp01(forwardSpeedEarly / 1.5f); // modest early target
-            AddReward(0.01f * normalizedEarly); // small additive reward
-        }
+        // b. Rotation alignment with target direction.
+        //This reward will approach 1 if it faces the target direction perfectly and approach zero as it deviates
+        var headForward = head.forward;
+        headForward.y = 0;
+        var lookAtTargetReward = (Vector3.Dot(cubeForward, headForward) + 1) * .5F;
 
-        var headForward = head.forward; headForward.y = 0;
-        var lookAtTargetReward = (Vector3.Dot(cubeForward, headForward) + 1) * .5f;
+        //Check for NaNs
         if (float.IsNaN(lookAtTargetReward))
         {
             throw new ArgumentException(
@@ -425,49 +402,7 @@ public class WalkerSoccerAgent : Agent
             );
         }
 
-        float hipsHeight = m_JdController.bodyPartsDict[hips].rb.position.y;
-        // Height-scaled reward: reward increases with height between 0.85-1.3m
-        if (hipsHeight >= 0.85f)
-        {
-            float heightQuality = Mathf.Clamp01((hipsHeight - 0.85f) / (1.3f - 0.85f));
-            AddReward(uprightRewardPerStep * (0.5f + 0.5f * heightQuality));
-        }
-        else if (hipsHeight >= 0.5f && hipsHeight < 0.85f)
-        {
-            // Gentle encouragement to stand taller (not punishment)
-            float partialHeightReward = (hipsHeight - 0.5f) / (0.85f - 0.5f);
-            AddReward(uprightRewardPerStep * 0.3f * partialHeightReward);
-        }
-        else if (hipsHeight < 0.3f)
-        {
-            // Only penalize complete collapse (on ground)
-            float collapseAmount = (0.3f - hipsHeight) / 0.3f;
-            AddReward(-0.01f * collapseAmount);
-        }
-
-        float uprightDot = Vector3.Dot(hips.up, Vector3.up);
-        if (uprightDot < uprightDotMin) AddReward(-antiForwardTipPenalty);
-
-        // Sideways tip penalty (simple heuristic)
-        float sidewaysTip = Mathf.Abs(Vector3.Dot(hips.right, Vector3.up));
-        if (sidewaysTip < 0.6f) AddReward(-sidewaysLeanPenalty * (0.6f - sidewaysTip));
-
-        // Angular velocity penalty (hips)
-        float angMag = m_JdController.bodyPartsDict[hips].rb.angularVelocity.magnitude;
-        AddReward(-angMag * angVelPenaltyCoef);
-
-        float ballInfluenceFactor = (m_CurrentStepInEpisode < delayBallInfluenceSteps) ? 0f : 1f;
-        if (position == Position.Goalie) AddReward(m_Existential * 0.25f * ballInfluenceFactor);
-        else if (position == Position.Striker) AddReward(-m_Existential * 0.25f * ballInfluenceFactor);
-
-        float locomotionScaleDynamic = locomotionRewardScale * (0.5f + 0.5f * rampT);
-        AddReward(locomotionScaleDynamic * matchSpeedReward * lookAtTargetReward);
-
-        // Debug: log metrics every 100 steps
-        if (enableDebugMode && logLocomotionMetrics && m_CurrentStepInEpisode % 100 == 0)
-        {
-            LogLocomotionMetrics();
-        }
+        AddReward(matchSpeedReward * lookAtTargetReward);
     }
 
     //Returns the average velocity of all of the body parts
@@ -505,7 +440,21 @@ public class WalkerSoccerAgent : Agent
     /// </summary>
     public void TouchedTarget()
     {
-        AddReward(1f);
+        // Gate success by posture and speed to discourage dive-to-respawn
+        var hipsBp = m_JdController.bodyPartsDict[hips];
+        float upDot = Vector3.Dot(hips.up, Vector3.up);
+        float speed = hipsBp.rb.linearVelocity.magnitude;
+
+        bool validTouch = (upDot >= uprightDotThreshold) && (speed <= maxSuccessSpeed);
+
+        if (validTouch)
+        {
+            AddReward(1f);
+        }
+        else
+        {
+            AddReward(-divePenalty);
+        }
     }
 
     /// <summary>
@@ -515,20 +464,34 @@ public class WalkerSoccerAgent : Agent
     {
         if (collision.gameObject.CompareTag("ball"))
         {
-            // Reward for touching the ball (delayed influence)
-            float ballInfluenceFactor = (m_CurrentStepInEpisode < delayBallInfluenceSteps) ? 0.0f : 1.0f;
-            AddReward(0.2f * m_BallTouch * ballInfluenceFactor);
+            // Reward for touching the ball
+            AddReward(0.2f * m_BallTouch);
 
-            // Apply kick force based on collision
-            var force = k_KickPower;
-            if (position == Position.Goalie)
+            // In Lessons 0-1 (ball_touch = 0.0), ball respawns on touch like original Walker
+            // This encourages locomotion learning without soccer complexity
+            if (m_BallTouch <= 0.01f)
             {
-                force = k_KickPower * 0.8f; // Goalies kick slightly less hard
+                // Ball respawn behavior (like Walker's target touch)
+                var envController = GetComponentInParent<WalkerSoccerEnvController>();
+                if (envController != null)
+                {
+                    envController.ResetBall();
+                }
             }
+            else
+            {
+                // In Lessons 2+ (ball_touch > 0.0), ball stays in play for soccer
+                // Apply kick force based on collision
+                var force = k_KickPower;
+                if (position == Position.Goalie)
+                {
+                    force = k_KickPower * 0.8f; // Goalies kick slightly less hard
+                }
 
-            var dir = collision.contacts[0].point - hips.position;
-            dir = dir.normalized;
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
+                var dir = collision.contacts[0].point - hips.position;
+                dir = dir.normalized;
+                collision.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
+            }
         }
     }
 
@@ -594,8 +557,7 @@ public class WalkerSoccerAgent : Agent
         a[SPINE_X] = pitch * 0.25f;
 
         // Set joint strengths (26..38) to moderate-high so joints can hold pose
-        float standStrength = m_SoccerSettings != null ? m_SoccerSettings.standStrength : 0.9f;
-        for (int i = STR_START; i < STR_START + 13; i++) a[i] = standStrength;
+        for (int i = STR_START; i < STR_START + 13; i++) a[i] = 0.9f;
 
         // Spacebar triggers kick attempt at full intensity
         if (KICK_IDX < a.Length && Input.GetKey(KeyCode.Space))
@@ -604,107 +566,29 @@ public class WalkerSoccerAgent : Agent
         }
     }
 
-    void LogStandingAssessment()
-    {
-        float hipsHeight = hips.position.y;
-        float uprightDot = Vector3.Dot(hips.up, Vector3.up);
-        float forwardTip = Vector3.Dot(hips.forward, Vector3.down);
-        float sidewaysLean = Mathf.Abs(Vector3.Dot(hips.right, Vector3.up));
-        float angVel = m_JdController.bodyPartsDict[hips].rb.angularVelocity.magnitude;
-
-        Debug.Log($"=== Standing Assessment for {gameObject.name} (Team: {team}, Pos: {position}) ===");
-        Debug.Log($"Hips Height: {hipsHeight:F2}m (target: 0.85-1.3)");
-        Debug.Log($"Upright Dot: {uprightDot:F3} (target: >0.85)");
-        Debug.Log($"Forward Tip: {forwardTip:F3} (target: <0.15)");
-        Debug.Log($"Sideways Lean: {sidewaysLean:F3} (target: <0.3)");
-        Debug.Log($"Angular Velocity: {angVel:F2} rad/s (target: <2.0)");
-        Debug.Log($"Current Reward: {GetCumulativeReward():F2}");
-
-        bool isStanding = hipsHeight > 0.85f && hipsHeight < 1.3f && uprightDot > 0.85f;
-        bool isStable = forwardTip < 0.15f && sidewaysLean < 0.3f && angVel < 2.0f;
-
-        string status = isStanding && isStable ? "✓ GOOD" : "✗ POOR";
-        Debug.Log($"Overall Status: {status} (Standing: {isStanding}, Stable: {isStable})");
-    }
-
-    void LogLocomotionMetrics()
-    {
-        float hipsHeight = hips.position.y;
-        float uprightDot = Vector3.Dot(hips.up, Vector3.up);
-        Vector3 velocity = m_JdController.bodyPartsDict[hips].rb.linearVelocity;
-        float forwardSpeed = Vector3.Dot(velocity, transform.forward);
-        float lateralSpeed = Mathf.Abs(Vector3.Dot(velocity, transform.right));
-
-        Debug.Log($"[{gameObject.name}] Step:{m_CurrentStepInEpisode} Height:{hipsHeight:F2} Upright:{uprightDot:F2} FwdSpeed:{forwardSpeed:F2} LatSpeed:{lateralSpeed:F2} Reward:{GetCumulativeReward():F1}");
-    }
-
-    void ConfigureRigidbodies()
-    {
-        int it = m_SoccerSettings != null ? m_SoccerSettings.solverIterations : 12;
-        int vit = m_SoccerSettings != null ? m_SoccerSettings.solverVelocityIterations : 12;
-        foreach (var bp in m_JdController.bodyPartsList)
-        {
-            var rb = bp.rb;
-            rb.maxAngularVelocity = 50f;
-            rb.solverIterations = it;
-            rb.solverVelocityIterations = vit;
-        }
-    }
-
-    void ApplyStableStandPoseTargets(float strength)
-    {
-        var bp = m_JdController.bodyPartsDict;
-        bp[chest].SetJointTargetRotation(0f, 0f, 0f);
-        bp[spine].SetJointTargetRotation(0f, 0f, 0f);
-        bp[thighL].SetJointTargetRotation(0.12f, -0.15f, 0f);
-        bp[thighR].SetJointTargetRotation(0.12f, 0.15f, 0f);
-        bp[shinL].SetJointTargetRotation(-0.20f, 0f, 0f);
-        bp[shinR].SetJointTargetRotation(-0.20f, 0f, 0f);
-        bp[footR].SetJointTargetRotation(0.06f, 0.10f, 0.05f);
-        bp[footL].SetJointTargetRotation(0.06f, -0.10f, -0.05f);
-        bp[armL].SetJointTargetRotation(0f, 0.10f, 0f);
-        bp[armR].SetJointTargetRotation(0f, -0.10f, 0f);
-        bp[forearmL].SetJointTargetRotation(0f, 0f, 0f);
-        bp[forearmR].SetJointTargetRotation(0f, 0f, 0f);
-        bp[head].SetJointTargetRotation(0f, 0f, 0f);
-
-        bp[chest].SetJointStrength(strength);
-        bp[spine].SetJointStrength(strength);
-        bp[head].SetJointStrength(strength);
-        bp[thighL].SetJointStrength(strength);
-        bp[shinL].SetJointStrength(strength);
-        bp[footL].SetJointStrength(strength);
-        bp[thighR].SetJointStrength(strength);
-        bp[shinR].SetJointStrength(strength);
-        bp[footR].SetJointStrength(strength);
-        bp[armL].SetJointStrength(strength);
-        bp[forearmL].SetJointStrength(strength);
-        bp[armR].SetJointStrength(strength);
-        bp[forearmR].SetJointStrength(strength);
-    }
-
     // Triggered kick: applies impulse to ball without requiring precise leg contact
     // Note: This method is only called when ball_touch >= 0.5 (Lesson 3+)
     void TryKickBall(float intensity)
     {
         if (ball == null) return;
         if (intensity <= 0.01f) return;
-        if (m_CurrentStepInEpisode - m_LastKickStep < kickCooldownSteps) return; // cooldown gate
+        if (m_LastKickStep < 0 || StepCount - m_LastKickStep >= kickCooldownSteps)
+        {
+            Vector3 toBall = ball.position - hips.position;
+            // Horizontal distance check (ignore vertical component for range)
+            float horizDist = new Vector2(toBall.x, toBall.z).magnitude;
+            if (horizDist > kickRange) return;
 
-        Vector3 toBall = ball.position - hips.position;
-        // Horizontal distance check (ignore vertical component for range)
-        float horizDist = new Vector2(toBall.x, toBall.z).magnitude;
-        if (horizDist > kickRange) return;
+            Rigidbody ballRb = ball.GetComponent<Rigidbody>();
+            if (ballRb == null) return;
 
-        Rigidbody ballRb = ball.GetComponent<Rigidbody>();
-        if (ballRb == null) return;
+            Vector3 dir = toBall.normalized;
+            dir.y = Mathf.Clamp(dir.y + kickUpFactor, 0f, 1f);
+            float force = kickForce * Mathf.Clamp01(intensity);
+            ballRb.AddForce(dir * force, ForceMode.Impulse);
 
-        Vector3 dir = toBall.normalized;
-        dir.y = Mathf.Clamp(dir.y + kickUpFactor, 0f, 1f);
-        float force = kickForce * Mathf.Clamp01(intensity);
-        ballRb.AddForce(dir * force, ForceMode.Impulse);
-
-        AddReward(kickReward * Mathf.Clamp01(intensity));
-        m_LastKickStep = m_CurrentStepInEpisode;
+            AddReward(kickReward * Mathf.Clamp01(intensity));
+            m_LastKickStep = StepCount;
+        }
     }
 }

@@ -1,0 +1,96 @@
+# Walker Soccer - Stage 2: Soccer with Transfer Learning (250 obs)
+# Soccer observations now contain real data (ball position, velocity, team)
+# Transfer locomotion skills from Stage 1, then learn multi-agent soccer
+
+behaviors:
+    WalkerSoccer: # Same behavior name for transfer learning
+        trainer_type: poca # Multi-agent POCA
+
+        hyperparameters:
+            # Lower learning rate for fine-tuning transferred weights
+            learning_rate: 0.0001
+            learning_rate_schedule: constant
+
+            # Batch and buffer sizes
+            batch_size: 2048
+            buffer_size: 20480
+
+            # PPO-specific parameters
+            beta: 0.005 # Entropy coefficient
+            epsilon: 0.2 # PPO clipping
+            lambd: 0.95 # GAE lambda
+            num_epoch: 3
+
+        # Neural network architecture (matches Stage 1)
+        network_settings:
+            normalize: true
+            hidden_units: 512
+            num_layers: 3
+            vis_encode_type: simple
+
+        # Reward signals
+        reward_signals:
+            extrinsic:
+                gamma: 0.995 # Slightly higher for long-term soccer strategy
+                strength: 1.0
+
+        # Self-play for competitive training
+        self_play:
+            save_steps: 50000 # Save snapshot every 50K steps
+            team_change: 200000 # Swap teams every 200K steps
+            swap_steps: 10000 # Gradual swap over 10K steps
+            window: 5 # Keep 5 snapshots
+            play_against_latest_model_ratio: 0.5 # 50% vs current, 50% vs snapshots
+            initial_elo: 1200.0
+
+        # Training configuration
+        max_steps: 15000000 # 15M additional steps (5-7 hours)
+        time_horizon: 1000
+        summary_freq: 10000
+        keep_checkpoints: 5
+        checkpoint_interval: 500000
+
+# Progressive curriculum (V10 - starting from transferred locomotion)
+curriculum:
+    # Note: Lessons 0-1 equivalent completed in Stage 1 (10M steps of locomotion training)
+    # Stage 2 starts from Lesson 2 progression
+
+    - name: Lesson 2 - Chase Ball (6M steps from transfer start)
+      completion_criteria:
+          measure: progress
+          behavior: WalkerSoccer
+          signal_smoothing: true
+          min_lesson_length: 500
+          threshold: 0.40 # 40% of Stage 2 = 6M steps
+      value:
+          ball_touch: 0.35 # Ball rewards scaled to 35%
+          ball_spawn_radius: 2.3 # Ball spawns at 2.3m
+
+    - name: Lesson 3 - Enable Kicking (12M steps total)
+      completion_criteria:
+          measure: progress
+          behavior: WalkerSoccer
+          signal_smoothing: true
+          min_lesson_length: 750
+          threshold: 0.80 # 80% of Stage 2 = 12M steps
+      value:
+          ball_touch: 0.5 # KICK ACTION ENABLED (gated at 0.5)
+          ball_spawn_radius: 1.8 # Ball spawns closer
+
+    - name: Lesson 4 - Full Soccer
+      value:
+          ball_touch: 1.0 # Full ball interaction rewards
+          ball_spawn_radius: 1.4 # Ball spawns at final distance
+
+# Environment parameters for Stage 2
+environment_parameters:
+    # STAGE 2 MODE: Full soccer (250 obs with real soccer data)
+    locomotion_only:
+        sampler_type: constant
+        value: 0.0 # Disable locomotion-only mode (soccer observations = real data)
+
+    # Randomize walking speed
+    target_walking_speed:
+        sampler_type: uniform
+        min_value: 0.5
+        max_value: 10.0
