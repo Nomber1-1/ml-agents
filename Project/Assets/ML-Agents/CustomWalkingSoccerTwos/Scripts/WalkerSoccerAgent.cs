@@ -54,7 +54,7 @@ public class WalkerSoccerAgent : Agent
 
     [Header("Anti-Piling")]
     [SerializeField] private float cornerPenaltyRadius = 8f; // Distance from arena center
-    [SerializeField] private float cornerPenaltyStrength = 0.02f;
+    [SerializeField] private float cornerPenaltyStrength = 0.01f;
     [SerializeField] private Transform arenaCenter; // Assign in Inspector
 
     private Vector3 m_BallStuckCheckPos;
@@ -76,8 +76,8 @@ public class WalkerSoccerAgent : Agent
     // Goalie positioning
     private Transform myGoal;
     [Header("Goalie Settings")]
-    [SerializeField] private float goalieMaxDistance = 2.0f; // Even tighter leash for goalie
-    [SerializeField] private float goaliePenaltyStrength = 0.05f; // Much stronger penalty per excess meter
+    [SerializeField] private float goalieMaxDistance = 3.0f; // Balanced leash for goalie
+    [SerializeField] private float goaliePenaltyStrength = 0.02f; // Moderate penalty per excess meter
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -573,7 +573,7 @@ public class WalkerSoccerAgent : Agent
             int spacingThreshold = (m_AgentsPerTeam <= 2) ? 1 : 2;
             if (nearbyCount >= spacingThreshold)
             {
-                AddReward(-0.05f * nearbyCount);
+                AddReward(-0.02f * nearbyCount);
             }
 
             // Ball stuck detection and reset
@@ -687,7 +687,7 @@ public class WalkerSoccerAgent : Agent
                 // Extra penalty when ball very close to wall (beyond radius-1m)
                 if (ballDistFromCenter > cornerPenaltyRadius - 1f)
                 {
-                    AddReward(-0.03f * (ballDistFromCenter - (cornerPenaltyRadius - 1f)));
+                    AddReward(-0.01f * (ballDistFromCenter - (cornerPenaltyRadius - 1f)));
                 }
             }
 
@@ -797,9 +797,9 @@ public class WalkerSoccerAgent : Agent
                 if (horizDistFromGoal > goalieMaxDistance)
                 {
                     float excessDist = horizDistFromGoal - goalieMaxDistance;
-                    // In Lesson 3 (kicking practice), keep goalie close very aggressively
-                    // In Lesson 4 (full soccer), still strong but slightly reduced
-                    float phaseMult = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.5f : 1.2f;
+                    // In Lesson 3 (kicking practice), moderate goalie constraint
+                    // In Lesson 4 (full soccer), slightly stronger
+                    float phaseMult = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.2f : 1.1f;
                     AddReward(-goaliePenaltyStrength * phaseMult * excessDist);
                 }
             }

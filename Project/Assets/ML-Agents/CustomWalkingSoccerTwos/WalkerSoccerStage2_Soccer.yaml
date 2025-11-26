@@ -79,14 +79,14 @@ environment_parameters:
                   threshold: 0.133
               value: 0.35
 
-            - name: Lesson 3 - Enable Kicking (~5M steps)
+            - name: Lesson 3 - Enable Kicking (~6M steps)
               # Kicking enabled with stronger rewards for shooting (handled in code)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
                   min_lesson_length: 750
-                  threshold: 0.333 # 33.3% (5M steps)
+                  threshold: 0.4 # 40% (6M steps)
               value: 0.5
 
             - name: Lesson 4 - Full Soccer
@@ -103,13 +103,13 @@ environment_parameters:
                   threshold: 0.133
               value: 1.5
 
-            - name: Lesson 3 - Wider Spawn (~5M steps, kicking enabled)
+            - name: Lesson 3 - Wider Spawn (~6M steps, kicking enabled)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
                   min_lesson_length: 750
-                  threshold: 0.333
+                  threshold: 0.4
               value: 2.0
 
             - name: Lesson 4 - Full Soccer (Center spawn for focused play)
@@ -134,7 +134,7 @@ environment_parameters:
                   behavior: WalkerSoccer
                   signal_smoothing: true
                   min_lesson_length: 800
-                  threshold: 0.333 # ~5M / 15M
+                  threshold: 0.4 # ~6M / 15M
                   require_reset: true
               value: 0.25
 
