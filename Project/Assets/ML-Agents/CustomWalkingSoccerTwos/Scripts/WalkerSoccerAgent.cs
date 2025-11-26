@@ -47,6 +47,15 @@ public class WalkerSoccerAgent : Agent
     private Vector3 m_LastBallPos;
     private float m_LastBallDistToOppGoal;
 
+    [Header("Anti-Piling")]
+    [SerializeField] private float cornerPenaltyRadius = 8f; // Distance from arena center
+    [SerializeField] private float cornerPenaltyStrength = 0.01f;
+    [SerializeField] private Transform arenaCenter; // Assign in Inspector
+
+    private Vector3 m_BallStuckCheckPos;
+    private int m_BallStuckSteps = 0;
+    private const int BALL_STUCK_THRESHOLD = 200; // ~20 seconds at 10 steps/sec
+
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
     // ============================================
@@ -169,6 +178,8 @@ public class WalkerSoccerAgent : Agent
         m_ResetParams = Academy.Instance.EnvironmentParameters;
         m_LastBallTouchStep = -999;
         m_BallNearStuckSteps = 0;
+        m_BallStuckSteps = 0;
+        m_BallStuckCheckPos = Vector3.zero;
     }
 
     /// <summary>
@@ -233,6 +244,8 @@ public class WalkerSoccerAgent : Agent
         }
         m_LastBallTouchStep = -999;
         m_BallNearStuckSteps = 0;
+        m_BallStuckSteps = 0;
+        m_BallStuckCheckPos = ball != null ? ball.position : Vector3.zero;
     }
 
     /// <summary>
@@ -477,6 +490,98 @@ public class WalkerSoccerAgent : Agent
                 else
                 {
                     m_BallNearStuckSteps = 0;
+                }
+            }
+
+            // Anti-piling: Discourage corner camping
+            if (arenaCenter != null)
+            {
+                float distFromCenter = Vector3.Distance(
+                    new Vector3(hips.position.x, 0, hips.position.z),
+                    new Vector3(arenaCenter.position.x, 0, arenaCenter.position.z)
+                );
+
+                if (distFromCenter > cornerPenaltyRadius)
+                {
+                    float excessDist = distFromCenter - cornerPenaltyRadius;
+                    AddReward(-cornerPenaltyStrength * excessDist);
+                }
+            }
+
+            // Anti-piling: Penalize agents bunching together
+            var allAgents = GameObject.FindGameObjectsWithTag("agent");
+            int nearbyCount = 0;
+            foreach (var agentObj in allAgents)
+            {
+                if (agentObj != gameObject)
+                {
+                    var otherAgent = agentObj.GetComponent<WalkerSoccerAgent>();
+                    // Only count teammates (same team)
+                    if (otherAgent != null && otherAgent.team == team)
+                    {
+                        float dist = Vector3.Distance(hips.position, agentObj.transform.position);
+                        if (dist < 3f)
+                        {
+                            nearbyCount++;
+                        }
+                    }
+                }
+            }
+
+            if (nearbyCount >= 2)
+            {
+                AddReward(-0.02f * nearbyCount);
+            }
+
+            // Ball stuck detection and reset
+            if (arenaCenter != null)
+            {
+                var ballRbStuck = ball.GetComponent<Rigidbody>();
+                if (ballRbStuck != null)
+                {
+                    float ballSpeed = ballRbStuck.linearVelocity.magnitude;
+                    float ballDistFromCenter = Vector3.Distance(
+                        new Vector3(ball.position.x, 0, ball.position.z),
+                        new Vector3(arenaCenter.position.x, 0, arenaCenter.position.z)
+                    );
+
+                    bool ballInCorner = ballDistFromCenter > cornerPenaltyRadius;
+                    bool ballNotMoving = ballSpeed < 0.1f;
+
+                    if (ballInCorner && ballNotMoving)
+                    {
+                        float posDiff = Vector3.Distance(ball.position, m_BallStuckCheckPos);
+                        if (posDiff < 0.5f)
+                        {
+                            m_BallStuckSteps++;
+
+                            if (m_BallStuckSteps > BALL_STUCK_THRESHOLD)
+                            {
+                                // Only first agent in scene resets ball
+                                if (StepCount % 6 == 0)
+                                {
+                                    ball.position = new Vector3(
+                                        arenaCenter.position.x,
+                                        ball.position.y,
+                                        arenaCenter.position.z
+                                    );
+                                    ballRbStuck.linearVelocity = Vector3.zero;
+                                    ballRbStuck.angularVelocity = Vector3.zero;
+                                    m_BallStuckSteps = 0;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m_BallStuckSteps = 0;
+                        }
+                    }
+                    else
+                    {
+                        m_BallStuckSteps = 0;
+                    }
+
+                    m_BallStuckCheckPos = ball.position;
                 }
             }
         }
