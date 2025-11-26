@@ -36,13 +36,13 @@ behaviors:
 
         # Self-play for competitive training
         # Disabled until Lesson 4 to stabilize ELO; re-enable after goals are frequent
-        self_play:
-            save_steps: 50000 # Save snapshot every 50K steps
-            team_change: 200000 # Swap teams every 200K steps
-            swap_steps: 10000 # Gradual swap over 10K steps
-            window: 5 # Keep 5 snapshots
-            play_against_latest_model_ratio: 0.5 # 50% vs current, 50% vs snapshots
-            initial_elo: 1200.0
+        # self_play:
+        #     save_steps: 50000 # Save snapshot every 50K steps
+        #     team_change: 200000 # Swap teams every 200K steps
+        #     swap_steps: 10000 # Gradual swap over 10K steps
+        #     window: 5 # Keep 5 snapshots
+        #     play_against_latest_model_ratio: 0.5 # 50% vs current, 50% vs snapshots
+        #     initial_elo: 1200.0
 
         # Training configuration
         max_steps: 15000000 # 15M additional steps (5-7 hours)
@@ -63,8 +63,8 @@ environment_parameters:
     target_walking_speed:
         sampler_type: uniform
         sampler_parameters:
-            min_value: 0.5
-            max_value: 10.0
+            min_value: 0.6
+            max_value: 6.0
 
     # Progressive curriculum (V10 - starting from transferred locomotion)
     ball_touch:
@@ -116,7 +116,7 @@ environment_parameters:
               value: 1.5
 
         # Fade locomotion reward so soccer signals dominate in Stage 2
-        # Starts at 0.4, drops to 0.25 by 5M, then 0.1 for full soccer
+        # Starts at 0.4, drops to 0.25 by 5M, then 0.15 for full soccer
     locomotion_scale:
         curriculum:
             - name: Stage2_FadeStart
@@ -126,7 +126,7 @@ environment_parameters:
                   signal_smoothing: true
                   min_lesson_length: 500
                   threshold: 0.10
-              value: 0.4
+              value: 0.5
 
             - name: Stage2_FadeMore
               completion_criteria:
@@ -136,7 +136,7 @@ environment_parameters:
                   min_lesson_length: 800
                   threshold: 0.4667 # ~7M / 15M
                   require_reset: true
-              value: 0.25
+              value: 0.4
 
             - name: Stage2_FullSoccer
               value: 0.15

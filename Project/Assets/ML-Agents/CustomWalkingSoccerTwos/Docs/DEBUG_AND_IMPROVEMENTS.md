@@ -1,4 +1,4 @@
-# Walker Soccer - Debugging & Improvements Guide
+# Walker Soccer - Debugging & Improvements Guide (Updated Nov 26, 2025)
 
 This document provides troubleshooting tips, debugging strategies, and suggestions for improving your Walker Soccer agents.
 
@@ -14,7 +14,21 @@ This document provides troubleshooting tips, debugging strategies, and suggestio
 
 ---
 
+ 
 ## Common Issues & Solutions
+ 
+### Recent Stage 2 Updates (Snapshot)
+ - Penalty softening: bunching −0.015 per teammate; goalie penalty strength 0.015; goalie L4 multiplier 1.0.
+ - Kick incentives: L4 effective base 0.25 (via phase multiplier 1.25); direction bonus up to +0.15; shot-on-goal +0.3.
+ - Locomotion baseline: `locomotion_scale = 0.15` in Lesson 4 to stabilize non-goal episodes.
+ - Anti-dive correction: posture gating for kicks (require `uprightDotThreshold`), near-ball posture shaping (bonus for upright, penalty when below threshold within 2m).
+
+ 
+### Current Observations (~9.3M steps)
+ - Mean Reward mostly −4.9 to −6.6; intermittent positive Group Reward (8–21).
+ - Diving behavior reduced post anti-dive changes; more upright approaches observed.
+ - Self-play currently disabled; re-enable when Mean Reward > −2 consistently.
+
 
 ### Physics Issues
 

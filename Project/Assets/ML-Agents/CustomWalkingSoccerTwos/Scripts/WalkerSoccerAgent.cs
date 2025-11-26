@@ -72,12 +72,15 @@ public class WalkerSoccerAgent : Agent
     private const int AGENT_WALL_STUCK_THRESHOLD = 50; // ~5 seconds
     private Vector3 m_LastAgentPos;
     private float m_AgentStuckMoveThreshold = 0.3f; // Movement less than this = stuck
+    // Dive detection near ball
+    private int m_DiveNearBallSteps = 0;
+    private const int DIVE_NEAR_BALL_RESET_THRESHOLD = 45; // ~4.5 seconds at 10 steps/sec
 
     // Goalie positioning
     private Transform myGoal;
     [Header("Goalie Settings")]
-    [SerializeField] private float goalieMaxDistance = 2.7f; // Slightly tighter leash for goalie
-    [SerializeField] private float goaliePenaltyStrength = 0.015f; // Reduced from 0.025f to reduce penalty burden
+    [SerializeField] private float goalieMaxDistance = 3.2f; // Relaxed leash to reduce incidental penalties
+    [SerializeField] private float goaliePenaltyStrength = 0.012f; // Further softened from 0.015f
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -503,7 +506,7 @@ public class WalkerSoccerAgent : Agent
             var progress = m_LastBallDistToOppGoal - currDist; // positive if closer to goal
             if (progress > 0f)
             {
-                AddReward(Mathf.Clamp(progress * 0.02f, 0f, 0.1f));
+                AddReward(Mathf.Clamp(progress * 0.03f, 0f, 0.15f));
             }
             m_LastBallDistToOppGoal = currDist;
 
@@ -514,12 +517,48 @@ public class WalkerSoccerAgent : Agent
                 var speedAlong = Vector3.Dot(ballRb.linearVelocity, toGoalDir);
                 if (speedAlong > 0f)
                 {
-                    AddReward(Mathf.Clamp(speedAlong, 0f, 10f) * 0.005f);
+                    AddReward(Mathf.Clamp(speedAlong, 0f, 10f) * 0.0075f);
                 }
 
                 var toBall = ball.position - hips.position;
                 float horizDist = new Vector2(toBall.x, toBall.z).magnitude;
                 float ballSpeedMag = ballRb.linearVelocity.magnitude;
+                // Anti-dive posture shaping near ball: discourage forward falls
+                // Compute uprightness (hips up vs world up) and penalize if below threshold when close to ball
+                float upDot = Mathf.Clamp01(Vector3.Dot(hips.up, Vector3.up));
+                if (horizDist < 2.0f)
+                {
+                    // Small bonus for staying upright near ball
+                    if (upDot >= uprightDotThreshold)
+                    {
+                        // Slightly stronger upright encouragement near ball
+                        AddReward(0.02f);
+                        m_DiveNearBallSteps = 0; // reset dive counter when posture is good
+                    }
+                    else
+                    {
+                        // Penalty scales with how far below threshold the posture is
+                        float deficit = Mathf.Clamp01(uprightDotThreshold - upDot);
+                        // Include downward velocity component to penalize active diving
+                        float downwardVel = Mathf.Max(0f, -GetAvgVelocity().y); // positive when falling
+                        AddReward(-0.03f * (0.5f + deficit + 0.5f * downwardVel));
+                        // Track sustained dive posture near ball
+                        m_DiveNearBallSteps++;
+                        if (m_DiveNearBallSteps >= DIVE_NEAR_BALL_RESET_THRESHOLD)
+                        {
+                            // Early reset promotes standing and kicking behavior
+                            var hipsBp = m_JdController.bodyPartsDict[hips];
+                            hipsBp.rb.transform.position = initialPos;
+                            hipsBp.rb.transform.rotation = Quaternion.Euler(0, rotSign * 90f, 0);
+                            hipsBp.rb.linearVelocity = Vector3.zero;
+                            hipsBp.rb.angularVelocity = Vector3.zero;
+                            AddReward(-0.05f); // small penalty for dive reset
+                            m_DiveNearBallSteps = 0;
+                        }
+                    }
+                }
+
+                // Note: Positive kick/touch rewards are gated inside TryKickBall by posture already.
                 if (horizDist < 1.2f && ballSpeedMag < 0.1f)
                 {
                     m_BallNearStuckSteps++;
@@ -575,7 +614,7 @@ public class WalkerSoccerAgent : Agent
             // Penalty remains gentle to avoid collapse
             if (nearbyCount >= spacingThreshold)
             {
-                AddReward(-0.015f * nearbyCount); // Reduced from -0.025f
+                AddReward(-0.012f * nearbyCount); // Further softened from -0.015f
             }
 
             // Ball stuck detection and reset
@@ -1030,6 +1069,13 @@ public class WalkerSoccerAgent : Agent
             // Horizontal distance check (ignore vertical component for range)
             float horizDist = new Vector2(toBall.x, toBall.z).magnitude;
             if (horizDist > kickRange) return;
+            // Require reasonably upright posture to attempt kicks to reduce dive-kicks
+            float upDot = Mathf.Clamp01(Vector3.Dot(hips.up, Vector3.up));
+            if (upDot < (uprightDotThreshold - 0.05f))
+            {
+                // Abort kick when clearly not upright; no extra penalty
+                return;
+            }
 
             Rigidbody ballRb = ball.GetComponent<Rigidbody>();
             if (ballRb == null) return;
@@ -1059,7 +1105,7 @@ public class WalkerSoccerAgent : Agent
 
                 // Extra bonus for shots on goal (close to goal + good alignment)
                 float distToGoal = Vector3.Distance(ball.position, opponentGoal.position);
-                if (distToGoal < 8f && alignment > 0.7f) // Within shooting range and aimed well
+                if (distToGoal < 10f && alignment > 0.65f) // Slightly wider detection for shot attempts
                 {
                     reward += 0.3f; // Increased from 0.2f to 0.3f for stronger shot incentive
                 }

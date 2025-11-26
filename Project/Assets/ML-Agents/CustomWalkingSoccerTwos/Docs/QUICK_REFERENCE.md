@@ -48,26 +48,15 @@ tensorboard --logdir results
   - Continuous Actions: **40**
   - Behavior Name: `WalkerSoccer`
 - ✅ DecisionRequester (Decision Period: 5)
-- ✅ All 16 body parts assigned
-- ✅ OrientationCube + DirectionIndicator children
-
 ### Stage 2 Build (Soccer)
 - ✅ 6 WalkerSoccerAgents (3 per team)
 - ✅ BehaviorParameters (same as Stage 1):
-  - Vector Observation: **250** (must match Stage 1)
-  - Continuous Actions: **40**
-  - Behavior Name: `WalkerSoccer` (must match Stage 1)
   - Team ID: 0 (Blue), 1 (Purple)
 - ✅ Ball with WalkerSoccerBallController
-- ✅ Goals tagged: "blueGoal", "purpleGoal"
-- ✅ WalkerSoccerEnvController with 6 agents in list
 
 ## 🎮 Testing Controls (Heuristic Mode)
 
 ```
-W/S - Pitch control
-A/D - Turn control
-Space - Kick (Stage 2 only, when near ball)
 ```
 
 ## 🔍 Debug Checklist
@@ -163,10 +152,6 @@ max_steps: 10000000  # 10M minimum
 environment_parameters:
   locomotion_only: 1.0  # Stage 1 mode
   target_walking_speed:
-    min_value: 0.8
-    max_value: 4.0
-```
-
 ### Stage 2: WalkerSoccerStage2_Soccer.yaml
 ```yaml
 trainer_type: poca  # Multi-agent
@@ -213,28 +198,14 @@ kickCooldownSteps: 25
 
 **Success Criteria:** Mean reward >+20, agents turn toward off-angle targets
 
-### Stage 2: Soccer (15M steps)
 | Steps | Lesson | Mean Reward | Kick? |
 |-------|--------|-------------|-------|
 | 0-2M | L2: Chase | -5 → +5 | ❌ |
 | 2M-6M | L2: Chase | +5 → +20 | ❌ |
-| 6M-12M | L3: Kicking | +20 → +40 | ✅ |
-| 12M-15M | L4: Full Soccer | +40 → +60+ | ✅ |
-
 **Success Criteria:** Goals scored, coordinated team play, ELO ratings stable
 
-## 🔗 Quick Links
-
-- [Full Training Guide](TRAINING_GUIDE.md)
-- [Unity Setup Guide](UNITY_SETUP_GUIDE.md)
-- [System Overview](SYSTEM_OVERVIEW.md)
-- [Debug Guide](DEBUG_AND_IMPROVEMENTS.md)
 
 ## 💡 Pro Tips
-
-### Stage 1
-1. Use 10-20 parallel arenas per build
-2. Run 3-4 build instances (`--num-envs`)
 3. Monitor valid vs invalid touch ratio
 4. Stop when agents confidently turn >30° off-center
 5. Aim for 10M-20M steps before Stage 2

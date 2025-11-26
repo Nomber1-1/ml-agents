@@ -119,7 +119,7 @@ if (angleToTarget > 15f) // Only when target significantly off-axis
 
 ---
 
-## Stage 2: Soccer Training (15M Target - IN PROGRESS AT 4M)
+## Stage 2: Soccer Training (15M Target - IN PROGRESS at ~9.33M)
 
 ### Goal
 Transfer locomotion skills and learn multi-agent soccer: ball chasing, kicking, team coordination, goal scoring.
@@ -931,7 +931,7 @@ This project demonstrates that successful reinforcement learning requires:
 
 The training collapse at 4M steps, while frustrating, provided invaluable insights into penalty balancing and the importance of allowing natural curriculum progression. This recovery process is itself a learning opportunity.
 
-**Current State**: Well-positioned for successful completion with softened penalties and extended Lesson 3
+**Current State**: Lesson 4 active with softened penalties, kick rewards boosted, locomotion_scale set to 0.15; anti-dive shaping implemented. Mean Reward stabilizing around −4.9 to −6.6 with intermittent positive Group Reward (8–21). Self-play disabled pending consistent Mean Reward > −2.
 
 **Future Work**: Re-enable self-play after Lesson 4, implement advanced features (passing, assists, dive action)
 
@@ -945,5 +945,5 @@ The training collapse at 4M steps, while frustrating, provided invaluable insigh
 
 **Last Updated**: November 26, 2025  
 **Project Duration**: 50+ hours across 2 stages  
-**Current Training Step**: 4M (resuming from 3M with softened penalties)  
-**Estimated Completion**: 6M-15M over next 20-25 hours
+**Current Training Step**: ~9.33M (Lesson 4, full soccer)  
+**Estimated Completion**: 10M-15M over next 15-20 hours
