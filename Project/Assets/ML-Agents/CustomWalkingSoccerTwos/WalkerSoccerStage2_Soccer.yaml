@@ -50,52 +50,52 @@ behaviors:
         keep_checkpoints: 5
         checkpoint_interval: 500000
 
-# Progressive curriculum (V10 - starting from transferred locomotion)
-curriculum:
-    - name: Lesson 2 - Chase Ball (6M steps from transfer start)
-      completion_criteria:
-          measure: progress
-          behavior: WalkerSoccer
-          signal_smoothing: true
-          min_lesson_length: 500
-          threshold: 0.40 # 40% of Stage 2 = 6M steps
-      value:
-          ball_touch:
-              sampler_type: constant
-              sampler_parameters:
-                  value: 0.35
-          ball_spawn_radius:
-              sampler_type: constant
-              sampler_parameters:
-                  value: 2.3
+        # Progressive curriculum (V10 - starting from transferred locomotion)
+        curriculum:
+            - name: Lesson 2 - Chase Ball (6M steps from transfer start)
+              completion_criteria:
+                  measure: progress
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 500
+                  threshold: 0.40 # 40% of Stage 2 = 6M steps
+              value:
+                  ball_touch:
+                      sampler_type: constant
+                      sampler_parameters:
+                          value: 0.35
+                  ball_spawn_radius:
+                      sampler_type: constant
+                      sampler_parameters:
+                          value: 2.3
 
-    - name: Lesson 3 - Enable Kicking (12M steps total)
-      completion_criteria:
-          measure: progress
-          behavior: WalkerSoccer
-          signal_smoothing: true
-          min_lesson_length: 750
-          threshold: 0.80 # 80% of Stage 2 = 12M steps
-      value:
-          ball_touch:
-              sampler_type: constant
-              sampler_parameters:
-                  value: 0.5
-          ball_spawn_radius:
-              sampler_type: constant
-              sampler_parameters:
-                  value: 1.8
+            - name: Lesson 3 - Enable Kicking (12M steps total)
+              completion_criteria:
+                  measure: progress
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 750
+                  threshold: 0.80 # 80% of Stage 2 = 12M steps
+              value:
+                  ball_touch:
+                      sampler_type: constant
+                      sampler_parameters:
+                          value: 0.5
+                  ball_spawn_radius:
+                      sampler_type: constant
+                      sampler_parameters:
+                          value: 1.8
 
-    - name: Lesson 4 - Full Soccer
-      value:
-          ball_touch:
-              sampler_type: constant
-              sampler_parameters:
-                  value: 1.0
-          ball_spawn_radius:
-              sampler_type: constant
-              sampler_parameters:
-                  value: 1.4
+            - name: Lesson 4 - Full Soccer
+              value:
+                  ball_touch:
+                      sampler_type: constant
+                      sampler_parameters:
+                          value: 1.0
+                  ball_spawn_radius:
+                      sampler_type: constant
+                      sampler_parameters:
+                          value: 1.4
 
 # Environment parameters for Stage 2
 environment_parameters:
