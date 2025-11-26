@@ -75,7 +75,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8056
+          seed: 4692
           value: 0.0
       name: locomotion_only
       completion_criteria: null
@@ -84,7 +84,7 @@ environment_parameters:
     - value:
         sampler_type: uniform
         sampler_parameters:
-          seed: 8057
+          seed: 4693
           min_value: 0.5
           max_value: 10.0
       name: target_walking_speed
@@ -94,9 +94,9 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8058
+          seed: 4694
           value: 0.35
-      name: Lesson 2 - Chase Ball (Target ~2M steps)
+      name: Lesson 2 - Chase Ball (No Kicking)
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
@@ -107,20 +107,20 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8059
+          seed: 4695
           value: 0.5
-      name: Lesson 3 - Enable Full Soccer (~4M steps)
+      name: Lesson 3 - Enable Kicking (~5M steps)
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
         min_lesson_length: 750
         signal_smoothing: true
-        threshold: 0.27
+        threshold: 0.333
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8060
+          seed: 4696
           value: 1.0
       name: Lesson 4 - Full Soccer
       completion_criteria: null
@@ -129,9 +129,9 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8061
+          seed: 4697
           value: 1.5
-      name: Lesson 2 - Chase Ball (Aligned with early kick ~2M steps)
+      name: Lesson 2 - Chase Ball (Aligned with no-kick)
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
@@ -142,29 +142,29 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8062
+          seed: 4698
           value: 2.0
-      name: Lesson 3 - Wider Spawn (~4M steps)
+      name: Lesson 3 - Wider Spawn (~5M steps, kicking enabled)
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
         min_lesson_length: 750
         signal_smoothing: true
-        threshold: 0.27
+        threshold: 0.333
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8063
-          value: 2.5
-      name: Lesson 4 - Full Soccer
+          seed: 4699
+          value: 1.5
+      name: Lesson 4 - Full Soccer (Center spawn for focused play)
       completion_criteria: null
   locomotion_scale:
     curriculum:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8064
+          seed: 4700
           value: 0.5
       name: locomotion_scale
       completion_criteria: null
