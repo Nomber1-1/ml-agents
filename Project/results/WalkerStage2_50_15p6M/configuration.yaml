@@ -34,7 +34,7 @@ behaviors:
           memory: null
           goal_conditioning_type: hyper
           deterministic: false
-    init_path: results\WalkerStage1_62\WalkerSoccer\checkpoint.pt
+    init_path: null
     keep_checkpoints: 5
     even_checkpoints: false
     max_steps: 15000000
@@ -75,7 +75,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4059
+          seed: 5973
           value: 0.0
       name: locomotion_only
       completion_criteria: null
@@ -84,7 +84,7 @@ environment_parameters:
     - value:
         sampler_type: uniform
         sampler_parameters:
-          seed: 4060
+          seed: 5974
           min_value: 0.5
           max_value: 10.0
       name: target_walking_speed
@@ -94,7 +94,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4061
+          seed: 5975
           value: 0.35
       name: Lesson 2 - Chase Ball (6M steps from transfer start)
       completion_criteria:
@@ -107,7 +107,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4062
+          seed: 5976
           value: 0.5
       name: Lesson 3 - Enable Kicking (12M steps total)
       completion_criteria:
@@ -120,7 +120,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4063
+          seed: 5977
           value: 1.0
       name: Lesson 4 - Full Soccer
       completion_criteria: null
@@ -129,7 +129,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4064
+          seed: 5978
           value: 2.3
       name: Lesson 2 - Chase Ball
       completion_criteria:
@@ -142,7 +142,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4065
+          seed: 5979
           value: 1.8
       name: Lesson 3 - Enable Kicking
       completion_criteria:
@@ -155,15 +155,15 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 4066
+          seed: 5980
           value: 1.4
       name: Lesson 4 - Full Soccer
       completion_criteria: null
 checkpoint_settings:
   run_id: WalkerStage2_50_15p6M
-  initialize_from: WalkerStage1_62
+  initialize_from: null
   load_model: false
-  resume: false
+  resume: true
   force: false
   train_model: false
   inference: false

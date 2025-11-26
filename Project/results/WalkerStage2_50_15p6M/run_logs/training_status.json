@@ -12,7 +12,7 @@
         "lesson_num": 0
     },
     "WalkerSoccer": {
-        "elo": 1208.192992887934,
+        "elo": 1182.2574999333694,
         "checkpoints": [
             {
                 "steps": 287601,
@@ -22,15 +22,33 @@
                 "auxillary_file_paths": [
                     "results\\WalkerStage2_50_15p6M\\WalkerSoccer\\WalkerSoccer-287601.pt"
                 ]
+            },
+            {
+                "steps": 499988,
+                "file_path": "results\\WalkerStage2_50_15p6M\\WalkerSoccer\\WalkerSoccer-499988.onnx",
+                "reward": 9.718472416675384,
+                "creation_time": 1764125610.986847,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_50_15p6M\\WalkerSoccer\\WalkerSoccer-499988.pt"
+                ]
+            },
+            {
+                "steps": 752822,
+                "file_path": "results\\WalkerStage2_50_15p6M\\WalkerSoccer\\WalkerSoccer-752822.onnx",
+                "reward": 23.831460978720166,
+                "creation_time": 1764125984.310574,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_50_15p6M\\WalkerSoccer\\WalkerSoccer-752822.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 287601,
+            "steps": 752822,
             "file_path": "results\\WalkerStage2_50_15p6M\\WalkerSoccer.onnx",
-            "reward": null,
-            "creation_time": 1764125251.718254,
+            "reward": 23.831460978720166,
+            "creation_time": 1764125984.310574,
             "auxillary_file_paths": [
-                "results\\WalkerStage2_50_15p6M\\WalkerSoccer\\WalkerSoccer-287601.pt"
+                "results\\WalkerStage2_50_15p6M\\WalkerSoccer\\WalkerSoccer-752822.pt"
             ]
         }
     },
