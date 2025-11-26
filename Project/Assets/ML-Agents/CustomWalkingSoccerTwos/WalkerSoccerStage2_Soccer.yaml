@@ -36,13 +36,13 @@ behaviors:
 
         # Self-play for competitive training
         # Disabled until Lesson 4 to stabilize ELO; re-enable after goals are frequent
-        # self_play:
-        #     save_steps: 50000 # Save snapshot every 50K steps
-        #     team_change: 200000 # Swap teams every 200K steps
-        #     swap_steps: 10000 # Gradual swap over 10K steps
-        #     window: 5 # Keep 5 snapshots
-        #     play_against_latest_model_ratio: 0.5 # 50% vs current, 50% vs snapshots
-        #     initial_elo: 1200.0
+        self_play:
+            save_steps: 50000 # Save snapshot every 50K steps
+            team_change: 200000 # Swap teams every 200K steps
+            swap_steps: 10000 # Gradual swap over 10K steps
+            window: 5 # Keep 5 snapshots
+            play_against_latest_model_ratio: 0.5 # 50% vs current, 50% vs snapshots
+            initial_elo: 1200.0
 
         # Training configuration
         max_steps: 15000000 # 15M additional steps (5-7 hours)
@@ -79,14 +79,14 @@ environment_parameters:
                   threshold: 0.133
               value: 0.35
 
-            - name: Lesson 3 - Enable Kicking (~6M steps)
+            - name: Lesson 3 - Enable Kicking (~7M steps)
               # Kicking enabled with stronger rewards for shooting (handled in code)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
                   min_lesson_length: 750
-                  threshold: 0.4 # 40% (6M steps)
+                  threshold: 0.4667 # ~46.67% (7M steps of 15M)
               value: 0.5
 
             - name: Lesson 4 - Full Soccer
@@ -103,13 +103,13 @@ environment_parameters:
                   threshold: 0.133
               value: 1.5
 
-            - name: Lesson 3 - Wider Spawn (~6M steps, kicking enabled)
+            - name: Lesson 3 - Wider Spawn (~7M steps, kicking enabled)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
                   min_lesson_length: 750
-                  threshold: 0.4
+                  threshold: 0.4667
               value: 2.0
 
             - name: Lesson 4 - Full Soccer (Center spawn for focused play)
@@ -134,9 +134,9 @@ environment_parameters:
                   behavior: WalkerSoccer
                   signal_smoothing: true
                   min_lesson_length: 800
-                  threshold: 0.4 # ~6M / 15M
+                  threshold: 0.4667 # ~7M / 15M
                   require_reset: true
               value: 0.25
 
             - name: Stage2_FullSoccer
-              value: 0.1
+              value: 0.15

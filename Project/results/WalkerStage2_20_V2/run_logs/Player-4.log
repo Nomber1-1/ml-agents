@@ -12,7 +12,7 @@ NullGfxDevice:
     Renderer: Null Device
     Vendor:   Unity Technologies
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  0.124 seconds
+- Loaded All Assemblies, in  0.103 seconds
 - Finished resetting the current domain, in  0.001 seconds
 [Physics::Module] Selected backend.
 [Physics::Module] Name: PhysX
@@ -21,7 +21,7 @@ Begin MonoManager ReloadAssembly
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
 Microsoft Media Foundation video decoding to texture disabled: graphics device is Null, only Direct3D 11 and Direct3D 12 (only on desktop) are supported for hardware-accelerated video decoding.
-UnloadTime: 0.468000 ms
+UnloadTime: 0.304600 ms
 Registered Communicator in Agent.
 Goal for Purple Team
 Goal for Blue Team
