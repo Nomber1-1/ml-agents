@@ -76,7 +76,7 @@ public class WalkerSoccerAgent : Agent
     // Goalie positioning
     private Transform myGoal;
     [Header("Goalie Settings")]
-    [SerializeField] private float goalieMaxDistance = 3.5f; // Tighter leash to keep goalie near net
+    [SerializeField] private float goalieMaxDistance = 2.5f; // Tighter leash to keep goalie near net
     [SerializeField] private float goaliePenaltyStrength = 0.03f; // Stronger penalty per excess meter
 
     // ============================================
@@ -883,6 +883,16 @@ public class WalkerSoccerAgent : Agent
     {
         if (collision.gameObject.CompareTag("ball"))
         {
+            // Register ball touch for pass/assist detection
+            var envCtrl = GetComponentInParent<WalkerSoccerEnvController>();
+            if (envCtrl != null)
+            {
+                var contactPoint = collision.contacts != null && collision.contacts.Length > 0
+                    ? collision.contacts[0].point
+                    : ball.position;
+                envCtrl.RegisterBallTouch(this, contactPoint, StepCount);
+            }
+
             // Reward for touching the ball with cooldown to prevent farming
             // Scale inversely with ball_touch: high in early lessons (learning chase), low in full soccer
             if (m_BallTouch > 0f)
@@ -920,6 +930,34 @@ public class WalkerSoccerAgent : Agent
 
                 var dir = collision.contacts[0].point - hips.position;
                 dir = dir.normalized;
+
+                // Goalie save reward: touching an on-target shot in the box
+                if (position == Position.Goalie && myGoal != null && envCtrl != null)
+                {
+                    var ballRb = collision.gameObject.GetComponent<Rigidbody>();
+                    if (ballRb != null)
+                    {
+                        float saveScale = Academy.Instance.EnvironmentParameters.GetWithDefault("save_scale", 0.0f);
+                        float shotAlign = Academy.Instance.EnvironmentParameters.GetWithDefault("shot_align_threshold", 0.7f);
+                        float shotRange = Academy.Instance.EnvironmentParameters.GetWithDefault("shot_range", 9.0f);
+
+                        Vector3 toOwnGoal = (myGoal.position - ball.position);
+                        toOwnGoal.y = 0f;
+                        Vector3 v = ballRb.linearVelocity; v.y = 0f;
+                        float align = 0f;
+                        if (toOwnGoal.sqrMagnitude > 0.001f && v.sqrMagnitude > 0.001f)
+                        {
+                            align = Vector3.Dot(v.normalized, toOwnGoal.normalized);
+                        }
+                        float distGoal = new Vector2(toOwnGoal.x, toOwnGoal.z).magnitude;
+
+                        bool opponentLastTouched = envCtrl.lastTouchAgent != null && envCtrl.lastTouchTeam != team;
+                        if (saveScale > 0f && opponentLastTouched && align >= shotAlign && distGoal <= shotRange)
+                        {
+                            AddReward(0.5f * saveScale); // big save bonus
+                        }
+                    }
+                }
                 collision.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
             }
         }
