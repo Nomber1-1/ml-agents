@@ -45,7 +45,7 @@ behaviors:
         #     initial_elo: 1200.0
 
         # Training configuration
-        max_steps: 20000000 # 20M additional steps (5-7 hours)
+        max_steps: 15000000 # 15M additional steps (5-7 hours)
         time_horizon: 1000
         summary_freq: 10000
         keep_checkpoints: 5
