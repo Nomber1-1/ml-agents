@@ -52,9 +52,6 @@ behaviors:
 
 # Progressive curriculum (V10 - starting from transferred locomotion)
 curriculum:
-    # Note: Lessons 0-1 equivalent completed in Stage 1 (10M steps of locomotion training)
-    # Stage 2 starts from Lesson 2 progression
-
     - name: Lesson 2 - Chase Ball (6M steps from transfer start)
       completion_criteria:
           measure: progress
@@ -63,8 +60,14 @@ curriculum:
           min_lesson_length: 500
           threshold: 0.40 # 40% of Stage 2 = 6M steps
       value:
-          ball_touch: 0.35 # Ball rewards scaled to 35%
-          ball_spawn_radius: 2.3 # Ball spawns at 2.3m
+          ball_touch:
+              sampler_type: constant
+              sampler_parameters:
+                  value: 0.35
+          ball_spawn_radius:
+              sampler_type: constant
+              sampler_parameters:
+                  value: 2.3
 
     - name: Lesson 3 - Enable Kicking (12M steps total)
       completion_criteria:
@@ -74,23 +77,37 @@ curriculum:
           min_lesson_length: 750
           threshold: 0.80 # 80% of Stage 2 = 12M steps
       value:
-          ball_touch: 0.5 # KICK ACTION ENABLED (gated at 0.5)
-          ball_spawn_radius: 1.8 # Ball spawns closer
+          ball_touch:
+              sampler_type: constant
+              sampler_parameters:
+                  value: 0.5
+          ball_spawn_radius:
+              sampler_type: constant
+              sampler_parameters:
+                  value: 1.8
 
     - name: Lesson 4 - Full Soccer
       value:
-          ball_touch: 1.0 # Full ball interaction rewards
-          ball_spawn_radius: 1.4 # Ball spawns at final distance
+          ball_touch:
+              sampler_type: constant
+              sampler_parameters:
+                  value: 1.0
+          ball_spawn_radius:
+              sampler_type: constant
+              sampler_parameters:
+                  value: 1.4
 
 # Environment parameters for Stage 2
 environment_parameters:
     # STAGE 2 MODE: Full soccer (250 obs with real soccer data)
     locomotion_only:
         sampler_type: constant
-        value: 0.0 # Disable locomotion-only mode (soccer observations = real data)
+        sampler_parameters:
+            value: 0.0 # Disable locomotion-only mode (soccer observations = real data)
 
     # Randomize walking speed
     target_walking_speed:
         sampler_type: uniform
-        min_value: 0.5
-        max_value: 10.0
+        sampler_parameters:
+            min_value: 0.5
+            max_value: 10.0
