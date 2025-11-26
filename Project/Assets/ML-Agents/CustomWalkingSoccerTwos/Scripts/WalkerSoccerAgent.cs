@@ -177,16 +177,28 @@ public class WalkerSoccerAgent : Agent
             bodyPart.Reset(bodyPart);
         }
 
-        // Randomize agent spawn position and facing to prevent dive-reset exploits
         var hipsBp = m_JdController.bodyPartsDict[hips];
-        Vector3 baseAreaCenter = transform.position;
-        float randX = Random.Range(-spawnAreaHalfX, spawnAreaHalfX);
-        float randZ = Random.Range(-spawnAreaHalfZ, spawnAreaHalfZ);
-        Vector3 spawnPos = new Vector3(baseAreaCenter.x + randX, baseAreaCenter.y, baseAreaCenter.z + randZ);
-        hipsBp.rb.transform.position = spawnPos;
 
-        // Random start rotation to help generalize
-        hipsBp.rb.transform.rotation = Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0);
+        // Stage 1: Randomize spawn to prevent dive-reset exploits
+        // Stage 2: Use fixed spawn position for consistent soccer setup
+        if (m_LocomotionOnly)
+        {
+            // Randomize agent spawn position and facing to prevent dive-reset exploits
+            Vector3 baseAreaCenter = transform.position;
+            float randX = Random.Range(-spawnAreaHalfX, spawnAreaHalfX);
+            float randZ = Random.Range(-spawnAreaHalfZ, spawnAreaHalfZ);
+            Vector3 spawnPos = new Vector3(baseAreaCenter.x + randX, baseAreaCenter.y, baseAreaCenter.z + randZ);
+            hipsBp.rb.transform.position = spawnPos;
+
+            // Random start rotation to help generalize
+            hipsBp.rb.transform.rotation = Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0);
+        }
+        else
+        {
+            // Stage 2: Use initialPos for consistent soccer positioning
+            hipsBp.rb.transform.position = initialPos;
+            hipsBp.rb.transform.rotation = Quaternion.Euler(0, rotSign * 90f, 0);
+        }
 
         // Zero initial velocities
         hipsBp.rb.linearVelocity = Vector3.zero;
