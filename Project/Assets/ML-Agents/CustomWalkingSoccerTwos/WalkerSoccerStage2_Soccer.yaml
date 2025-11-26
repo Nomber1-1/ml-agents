@@ -78,14 +78,14 @@ environment_parameters:
                   threshold: 0.133
               value: 0.35
 
-            - name: Lesson 3 - Enable Kicking (Retains later progression to full soccer)
-              # Keep higher threshold for final stage unless earlier full progression desired
+            - name: Lesson 3 - Enable Full Soccer (~4M steps)
+              # Lowered threshold to enable full soccer rewards earlier
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
                   min_lesson_length: 750
-                  threshold: 0.80
+                  threshold: 0.27
               value: 0.5
 
             - name: Lesson 4 - Full Soccer
@@ -102,13 +102,13 @@ environment_parameters:
                   threshold: 0.133
               value: 1.5
 
-            - name: Lesson 3 - Enable Kicking (Spawn radius widens post-early chase)
+            - name: Lesson 3 - Wider Spawn (~4M steps)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
                   signal_smoothing: true
                   min_lesson_length: 750
-                  threshold: 0.80
+                  threshold: 0.27
               value: 2.0
 
             - name: Lesson 4 - Full Soccer
