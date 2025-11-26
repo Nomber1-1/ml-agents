@@ -76,8 +76,8 @@ public class WalkerSoccerAgent : Agent
     // Goalie positioning
     private Transform myGoal;
     [Header("Goalie Settings")]
-    [SerializeField] private float goalieMaxDistance = 2f; // Max distance from goal before penalty
-    [SerializeField] private float goaliePenaltyStrength = 0.01f;
+    [SerializeField] private float goalieMaxDistance = 3.5f; // Tighter leash to keep goalie near net
+    [SerializeField] private float goaliePenaltyStrength = 0.03f; // Stronger penalty per excess meter
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -427,12 +427,12 @@ public class WalkerSoccerAgent : Agent
 
         // Optional kick action (additional continuous action at end if present)
         // Stage 1 (locomotion_only): Kick action ignored
-        // Stage 2 (soccer): Kick enabled in Lesson 2+ (ball_touch >= 0.35)
+        // Stage 2 (soccer): Kick enabled in Lesson 3+ (ball_touch >= 0.5)
         if (continuousActions.Length > i + 1)
         {
             float kickIntensity = continuousActions[++i]; // Expect value in [0,1]
-            // Only attempt kick in Stage 2 + Lesson 2+
-            if (!m_LocomotionOnly && m_BallTouch >= 0.35f)
+            // Only attempt kick in Stage 2 + Lesson 3+
+            if (!m_LocomotionOnly && m_BallTouch >= 0.5f)
             {
                 TryKickBall(kickIntensity);
             }
@@ -766,7 +766,7 @@ public class WalkerSoccerAgent : Agent
                 }
             }
 
-            // Goalie positioning penalty
+            // Goalie positioning penalty (scaled by lesson phase)
             if (position == Position.Goalie && myGoal != null)
             {
                 float horizDistFromGoal = Vector3.Distance(
@@ -774,11 +774,13 @@ public class WalkerSoccerAgent : Agent
                     new Vector3(myGoal.position.x, 0, myGoal.position.z)
                 );
 
-                // Only penalize if beyond max distance
                 if (horizDistFromGoal > goalieMaxDistance)
                 {
                     float excessDist = horizDistFromGoal - goalieMaxDistance;
-                    AddReward(-goaliePenaltyStrength * excessDist);
+                    // In Lesson 3 (kicking practice), keep goalie close very aggressively
+                    // In Lesson 4 (full soccer), still strong but slightly reduced
+                    float phaseMult = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.5f : 1.2f;
+                    AddReward(-goaliePenaltyStrength * phaseMult * excessDist);
                 }
             }
         }
@@ -995,7 +997,7 @@ public class WalkerSoccerAgent : Agent
     }
 
     // Triggered kick: applies impulse to ball without requiring precise leg contact
-    // Note: This method is only called when ball_touch >= 0.35 (Lesson 2+)
+    // Note: This method is only called when ball_touch >= 0.5 (Lesson 3+)
     void TryKickBall(float intensity)
     {
         if (ball == null) return;
@@ -1015,8 +1017,12 @@ public class WalkerSoccerAgent : Agent
             float force = kickForce * Mathf.Clamp01(intensity);
             ballRb.AddForce(dir * force, ForceMode.Impulse);
 
-            // Base kick reward
-            float reward = kickReward * Mathf.Clamp01(intensity);
+            // Base kick reward, scaled by curriculum phase
+            float baseKick = kickReward * Mathf.Clamp01(intensity);
+            // Lesson 3 (ball_touch==0.5): boost kick rewards to learn shooting
+            // Lesson 4 (ball_touch==1.0): reduce kick rewards to prioritize scoring strategy
+            float phaseMultiplier = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.5f : 0.8f;
+            float reward = baseKick * phaseMultiplier;
 
             // Bonus for kicking toward opponent goal
             if (opponentGoal != null)

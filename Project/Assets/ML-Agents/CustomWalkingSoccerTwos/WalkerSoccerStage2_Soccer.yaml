@@ -68,8 +68,8 @@ environment_parameters:
     # Progressive curriculum (V10 - starting from transferred locomotion)
     ball_touch:
         curriculum:
-            - name: Lesson 2 - Chase Ball (Target ~2M steps)
-              # Enable progression earlier by lowering progress threshold to 0.133 (~2M of 15M max_steps)
+            - name: Lesson 2 - Chase Ball (No Kicking)
+              # Pure chase: learn movement and ball pursuit in soccer space
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -78,8 +78,8 @@ environment_parameters:
                   threshold: 0.133
               value: 0.35
 
-            - name: Lesson 3 - Enable Full Soccer (~4M steps)
-              # Lowered threshold to enable full soccer rewards earlier
+            - name: Lesson 3 - Enable Kicking (~4M steps)
+              # Kicking enabled with stronger rewards for shooting (handled in code)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -93,7 +93,7 @@ environment_parameters:
 
     ball_spawn_radius:
         curriculum:
-            - name: Lesson 2 - Chase Ball (Aligned with early kick ~2M steps)
+            - name: Lesson 2 - Chase Ball (Aligned with no-kick)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -102,7 +102,7 @@ environment_parameters:
                   threshold: 0.133
               value: 1.5
 
-            - name: Lesson 3 - Wider Spawn (~4M steps)
+            - name: Lesson 3 - Wider Spawn (~4M steps, kicking enabled)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
