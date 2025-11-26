@@ -27,6 +27,10 @@ public class WalkerSoccerAgent : Agent
     [HideInInspector] public Vector3 initialPos;
     [HideInInspector] public float rotSign;
 
+    // Dynamic team size detection
+    private int m_TotalAgentCount = 0;
+    private int m_AgentsPerTeam = 0;
+
     private float m_Existential;
     private float m_BallTouch;
     private const float k_KickPower = 2000f;
@@ -55,6 +59,24 @@ public class WalkerSoccerAgent : Agent
     private Vector3 m_BallStuckCheckPos;
     private int m_BallStuckSteps = 0;
     private const int BALL_STUCK_THRESHOLD = 200; // ~20 seconds at 10 steps/sec
+
+    // Ball wall contact and pile detection
+    private int m_BallWallContactSteps = 0;
+    private const int BALL_WALL_THRESHOLD = 100; // ~10 seconds
+    private int m_BallAgentPileSteps = 0;
+    private const int BALL_AGENT_PILE_THRESHOLD = 150; // ~15 seconds of sustained piling
+
+    // Agent wall stuck detection
+    private int m_AgentWallStuckSteps = 0;
+    private const int AGENT_WALL_STUCK_THRESHOLD = 50; // ~5 seconds
+    private Vector3 m_LastAgentPos;
+    private float m_AgentStuckMoveThreshold = 0.3f; // Movement less than this = stuck
+
+    // Goalie positioning
+    private Transform myGoal;
+    [Header("Goalie Settings")]
+    [SerializeField] private float goalieMaxDistance = 5f; // Max distance from goal before penalty
+    [SerializeField] private float goaliePenaltyStrength = 0.01f;
 
     // ============================================
     // WALKER LOCOMOTION PROPERTIES
@@ -142,6 +164,8 @@ public class WalkerSoccerAgent : Agent
             rotSign = 1f;
             var opp = GameObject.FindGameObjectWithTag("purpleGoal");
             opponentGoal = opp != null ? opp.transform : null;
+            var own = GameObject.FindGameObjectWithTag("blueGoal");
+            myGoal = own != null ? own.transform : null;
         }
         else
         {
@@ -150,6 +174,8 @@ public class WalkerSoccerAgent : Agent
             rotSign = -1f;
             var opp = GameObject.FindGameObjectWithTag("blueGoal");
             opponentGoal = opp != null ? opp.transform : null;
+            var own = GameObject.FindGameObjectWithTag("purpleGoal");
+            myGoal = own != null ? own.transform : null;
         }
 
         // Walker initialization
@@ -180,6 +206,15 @@ public class WalkerSoccerAgent : Agent
         m_BallNearStuckSteps = 0;
         m_BallStuckSteps = 0;
         m_BallStuckCheckPos = Vector3.zero;
+        m_BallWallContactSteps = 0;
+        m_BallAgentPileSteps = 0;
+        m_AgentWallStuckSteps = 0;
+        m_LastAgentPos = transform.position;
+
+        // Detect team size for dynamic threshold adjustment
+        var allAgents = GameObject.FindGameObjectsWithTag("agent");
+        m_TotalAgentCount = allAgents.Length;
+        m_AgentsPerTeam = m_TotalAgentCount / 2; // Assuming equal teams
     }
 
     /// <summary>
@@ -246,6 +281,10 @@ public class WalkerSoccerAgent : Agent
         m_BallNearStuckSteps = 0;
         m_BallStuckSteps = 0;
         m_BallStuckCheckPos = ball != null ? ball.position : Vector3.zero;
+        m_BallWallContactSteps = 0;
+        m_BallAgentPileSteps = 0;
+        m_AgentWallStuckSteps = 0;
+        m_LastAgentPos = hipsBp.rb.transform.position;
     }
 
     /// <summary>
@@ -528,7 +567,9 @@ public class WalkerSoccerAgent : Agent
                 }
             }
 
-            if (nearbyCount >= 2)
+            // Dynamic threshold: 2v2 (2 per team) triggers at 1+ nearby, larger teams at 2+
+            int spacingThreshold = (m_AgentsPerTeam <= 2) ? 1 : 2;
+            if (nearbyCount >= spacingThreshold)
             {
                 AddReward(-0.02f * nearbyCount);
             }
@@ -582,6 +623,160 @@ public class WalkerSoccerAgent : Agent
                     }
 
                     m_BallStuckCheckPos = ball.position;
+                }
+            }
+
+            // Ball wall contact detection and reset
+            if (arenaCenter != null)
+            {
+                var ballRbWall = ball.GetComponent<Rigidbody>();
+                if (ballRbWall != null)
+                {
+                    // Check if ball is near wall edge (distance from center close to radius)
+                    float ballDistFromCenter = Vector3.Distance(
+                        new Vector3(ball.position.x, 0, ball.position.z),
+                        new Vector3(arenaCenter.position.x, 0, arenaCenter.position.z)
+                    );
+
+                    // Assuming arena radius is around 10-12m, wall contact is when ball is > 9m from center
+                    bool nearWall = ballDistFromCenter > 6f;
+                    bool ballSlowOrStuck = ballRbWall.linearVelocity.magnitude < 0.5f;
+
+                    if (nearWall && ballSlowOrStuck)
+                    {
+                        m_BallWallContactSteps++;
+
+                        if (m_BallWallContactSteps > BALL_WALL_THRESHOLD)
+                        {
+                            // Only first agent resets (based on step modulo)
+                            if (StepCount % 6 == 0)
+                            {
+                                ball.position = new Vector3(
+                                    arenaCenter.position.x,
+                                    ball.position.y,
+                                    arenaCenter.position.z
+                                );
+                                ballRbWall.linearVelocity = Vector3.zero;
+                                ballRbWall.angularVelocity = Vector3.zero;
+                                m_BallWallContactSteps = 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_BallWallContactSteps = 0;
+                    }
+                }
+            }
+
+            // Agent wall stuck detection and respawn
+            if (arenaCenter != null)
+            {
+                float agentDistFromCenter = Vector3.Distance(
+                    new Vector3(hips.position.x, 0, hips.position.z),
+                    new Vector3(arenaCenter.position.x, 0, arenaCenter.position.z)
+                );
+
+                // Check if agent is near/in wall (> 9m from center)
+                bool agentNearWall = agentDistFromCenter > 9f;
+
+                // Check if agent hasn't moved much
+                float movementDist = Vector3.Distance(hips.position, m_LastAgentPos);
+                bool agentNotMoving = movementDist < m_AgentStuckMoveThreshold;
+
+                if (agentNearWall && agentNotMoving)
+                {
+                    m_AgentWallStuckSteps++;
+
+                    if (m_AgentWallStuckSteps > AGENT_WALL_STUCK_THRESHOLD)
+                    {
+                        // Respawn agent at initial position
+                        var hipsBp = m_JdController.bodyPartsDict[hips];
+                        hipsBp.rb.transform.position = initialPos;
+                        hipsBp.rb.transform.rotation = Quaternion.Euler(0, rotSign * 90f, 0);
+                        hipsBp.rb.linearVelocity = Vector3.zero;
+                        hipsBp.rb.angularVelocity = Vector3.zero;
+
+                        // Small penalty for getting stuck
+                        AddReward(-0.1f);
+
+                        m_AgentWallStuckSteps = 0;
+                    }
+                }
+                else
+                {
+                    m_AgentWallStuckSteps = 0;
+                }
+
+                m_LastAgentPos = hips.position;
+            }
+
+            // Ball agent pile detection and reset (check every 10 frames to reduce overhead)
+            if (arenaCenter != null && StepCount % 10 == 0)
+            {
+                var allAgentsPile = GameObject.FindGameObjectsWithTag("agent");
+                int agentsNearBall = 0;
+
+                foreach (var agentObj in allAgentsPile)
+                {
+                    float distToBall = Vector3.Distance(
+                        new Vector3(agentObj.transform.position.x, 0, agentObj.transform.position.z),
+                        new Vector3(ball.position.x, 0, ball.position.z)
+                    );
+
+                    if (distToBall < 2f) // 2m radius around ball
+                    {
+                        agentsNearBall++;
+                    }
+                }
+
+                // Dynamic threshold: 2v2 (4 total) triggers at 3+ agents, larger teams at 4+
+                int pileThreshold = (m_TotalAgentCount <= 4) ? 3 : 4;
+
+                // If threshold+ agents sustained piling on ball
+                if (agentsNearBall >= pileThreshold)
+                {
+                    m_BallAgentPileSteps++;
+
+                    if (m_BallAgentPileSteps > BALL_AGENT_PILE_THRESHOLD)
+                    {
+                        // Only one agent resets (based on step modulo to avoid conflicts)
+                        if (StepCount % 6 == 0)
+                        {
+                            ball.position = new Vector3(
+                                arenaCenter.position.x,
+                                ball.position.y,
+                                arenaCenter.position.z
+                            );
+                            var ballRbPile = ball.GetComponent<Rigidbody>();
+                            if (ballRbPile != null)
+                            {
+                                ballRbPile.linearVelocity = Vector3.zero;
+                                ballRbPile.angularVelocity = Vector3.zero;
+                            }
+                            m_BallAgentPileSteps = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    m_BallAgentPileSteps = 0;
+                }
+            }
+
+            // Goalie positioning penalty
+            if (position == Position.Goalie && myGoal != null)
+            {
+                float horizDistFromGoal = Vector3.Distance(
+                    new Vector3(hips.position.x, 0, hips.position.z),
+                    new Vector3(myGoal.position.x, 0, myGoal.position.z)
+                );
+
+                // Only penalize if beyond max distance
+                if (horizDistFromGoal > goalieMaxDistance)
+                {
+                    float excessDist = horizDistFromGoal - goalieMaxDistance;
+                    AddReward(-goaliePenaltyStrength * excessDist);
                 }
             }
         }
