@@ -50,10 +50,10 @@ behaviors:
       initial_elo: 1200.0
     behavioral_cloning: null
 env_settings:
-  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\Stage2Duos_20.exe
+  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\Stage2Duos_20_V2.exe
   env_args: null
   base_port: 5005
-  num_envs: 2
+  num_envs: 4
   num_areas: 1
   timeout_wait: 60
   seed: -1
@@ -75,7 +75,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 2488
+          seed: 3982
           value: 0.0
       name: locomotion_only
       completion_criteria: null
@@ -84,7 +84,7 @@ environment_parameters:
     - value:
         sampler_type: uniform
         sampler_parameters:
-          seed: 2489
+          seed: 3983
           min_value: 0.5
           max_value: 10.0
       name: target_walking_speed
@@ -94,7 +94,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 2490
+          seed: 3984
           value: 0.35
       name: Lesson 2 - Chase Ball (No Kicking)
       completion_criteria:
@@ -107,7 +107,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 2491
+          seed: 3985
           value: 0.5
       name: Lesson 3 - Enable Kicking (~5M steps)
       completion_criteria:
@@ -120,7 +120,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 2492
+          seed: 3986
           value: 1.0
       name: Lesson 4 - Full Soccer
       completion_criteria: null
@@ -129,7 +129,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 2493
+          seed: 3987
           value: 1.5
       name: Lesson 2 - Chase Ball (Aligned with no-kick)
       completion_criteria:
@@ -142,7 +142,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 2494
+          seed: 3988
           value: 2.0
       name: Lesson 3 - Wider Spawn (~5M steps, kicking enabled)
       completion_criteria:
@@ -155,7 +155,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 2495
+          seed: 3989
           value: 1.5
       name: Lesson 4 - Full Soccer (Center spawn for focused play)
       completion_criteria: null
@@ -164,7 +164,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 2496
+          seed: 3990
           value: 0.5
       name: locomotion_scale
       completion_criteria: null
