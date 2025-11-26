@@ -12,7 +12,7 @@ NullGfxDevice:
     Renderer: Null Device
     Vendor:   Unity Technologies
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  0.170 seconds
+- Loaded All Assemblies, in  3.309 seconds
 - Finished resetting the current domain, in  0.002 seconds
 [Physics::Module] Selected backend.
 [Physics::Module] Name: PhysX
@@ -21,7 +21,7 @@ Begin MonoManager ReloadAssembly
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
 Microsoft Media Foundation video decoding to texture disabled: graphics device is Null, only Direct3D 11 and Direct3D 12 (only on desktop) are supported for hardware-accelerated video decoding.
-UnloadTime: 0.413200 ms
+UnloadTime: 0.793400 ms
 Registered Communicator in Agent.
 Reset Params:Unity.MLAgents.EnvironmentParameters
 Unable to save timers to file C:/Documents/GitHub/ml-agents/Project/Builds/WalkerStage1_62_V3/UnityEnvironment_Data\ML-Agents\Timers\Stage1Testing_timers.json
