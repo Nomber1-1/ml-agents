@@ -2,10 +2,10 @@
 /Logs/
 /[Tt]emp/
 /[Oo]bj/
-# /[Bb]uild/
-# /[Bb]uilds/*
-!/[Bb]uilds/WalkerStage1_62_v3
-!/[Bb]uilds/WalkerStage2_50
+/[Bb]uild/
+/[Bb]uilds/*
+!/[Bb]uilds/WalkerStage1_62_v3/*
+!/[Bb]uilds/WalkerStage2_50/*
 /Assets/AssetStoreTools*
 /Assets/Plugins*
 /Assets/Demonstrations*
