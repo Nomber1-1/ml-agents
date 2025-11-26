@@ -33,7 +33,7 @@ public class WalkerSoccerAgent : Agent
 
     private float m_Existential;
     private float m_BallTouch;
-    private const float k_KickPower = 2000f;
+    private const float k_KickPower = 10000f;
 
     private BehaviorParameters m_BehaviorParameters;
     private bool m_LocomotionOnly; // Stage 1: true (locomotion), Stage 2: false (soccer)
@@ -425,12 +425,12 @@ public class WalkerSoccerAgent : Agent
 
         // Optional kick action (additional continuous action at end if present)
         // Stage 1 (locomotion_only): Kick action ignored
-        // Stage 2 (soccer): Kick enabled in Lesson 3+ (ball_touch >= 0.5)
+        // Stage 2 (soccer): Kick enabled in Lesson 2+ (ball_touch >= 0.35)
         if (continuousActions.Length > i + 1)
         {
             float kickIntensity = continuousActions[++i]; // Expect value in [0,1]
-            // Only attempt kick in Stage 2 + Lesson 3+
-            if (!m_LocomotionOnly && m_BallTouch >= 0.5f)
+            // Only attempt kick in Stage 2 + Lesson 2+
+            if (!m_LocomotionOnly && m_BallTouch >= 0.35f)
             {
                 TryKickBall(kickIntensity);
             }
@@ -913,6 +913,7 @@ public class WalkerSoccerAgent : Agent
                 var dir = collision.contacts[0].point - hips.position;
                 dir = dir.normalized;
                 collision.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
+                Debug.Log("Ball kicked with force: " + (dir * force).ToString("F2"));
             }
         }
     }
@@ -989,7 +990,7 @@ public class WalkerSoccerAgent : Agent
     }
 
     // Triggered kick: applies impulse to ball without requiring precise leg contact
-    // Note: This method is only called when ball_touch >= 0.5 (Lesson 3+)
+    // Note: This method is only called when ball_touch >= 0.35 (Lesson 2+)
     void TryKickBall(float intensity)
     {
         if (ball == null) return;
