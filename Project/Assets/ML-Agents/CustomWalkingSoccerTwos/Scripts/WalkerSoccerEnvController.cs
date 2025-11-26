@@ -36,16 +36,6 @@ public class WalkerSoccerEnvController : MonoBehaviour
     public Rigidbody ballRb;
     Vector3 m_BallStartingPos;
 
-    // Ball touch state for passing/assist detection
-    [HideInInspector]
-    public WalkerSoccerAgent lastTouchAgent;
-    [HideInInspector]
-    public Team lastTouchTeam;
-    [HideInInspector]
-    public Vector3 lastTouchPos;
-    [HideInInspector]
-    public int lastTouchStep;
-
     //List of Agents On Platform
     public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
 
@@ -94,39 +84,6 @@ public class WalkerSoccerEnvController : MonoBehaviour
             m_PurpleAgentGroup.GroupEpisodeInterrupted();
             ResetScene();
         }
-    }
-
-    /// <summary>
-    /// Called by agents when they touch the ball. Detects simple passes and assigns rewards.
-    /// </summary>
-    public void RegisterBallTouch(WalkerSoccerAgent toucher, Vector3 contactPos, int stepCount)
-    {
-        if (toucher == null) return;
-
-        // Read lesson parameters
-        float passingScale = m_EnvParams.GetWithDefault("passing_scale", 0.0f);
-        float minPassDist = m_EnvParams.GetWithDefault("min_pass_dist", 2.5f);
-        float assistWindow = m_EnvParams.GetWithDefault("assist_window", 60f); // in steps
-
-        // Basic pass detection: teammate-to-teammate within window and distance
-        bool validPrev = lastTouchAgent != null && lastTouchTeam == toucher.team;
-        bool withinWindow = validPrev && (stepCount - lastTouchStep) <= assistWindow;
-        float traveled = validPrev ? Vector3.Distance(lastTouchPos, contactPos) : 0f;
-        bool enoughDistance = traveled >= minPassDist;
-
-        if (passingScale > 0f && validPrev && withinWindow && enoughDistance)
-        {
-            // Reward passer and receiver (heavier to passer)
-            float baseR = 0.2f * passingScale;
-            lastTouchAgent.AddReward(baseR);       // passer
-            toucher.AddReward(0.1f * passingScale); // receiver
-        }
-
-        // Update last touch state
-        lastTouchAgent = toucher;
-        lastTouchTeam = toucher.team;
-        lastTouchPos = contactPos;
-        lastTouchStep = stepCount;
     }
 
 
