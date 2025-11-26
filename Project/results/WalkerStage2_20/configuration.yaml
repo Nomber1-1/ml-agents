@@ -75,7 +75,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5644
+          seed: 6664
           value: 0.0
       name: locomotion_only
       completion_criteria: null
@@ -84,7 +84,7 @@ environment_parameters:
     - value:
         sampler_type: uniform
         sampler_parameters:
-          seed: 5645
+          seed: 6665
           min_value: 0.5
           max_value: 10.0
       name: target_walking_speed
@@ -94,7 +94,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5646
+          seed: 6666
           value: 0.35
       name: Lesson 2 - Chase Ball (6M steps from transfer start)
       completion_criteria:
@@ -107,7 +107,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5647
+          seed: 6667
           value: 0.5
       name: Lesson 3 - Enable Kicking (12M steps total)
       completion_criteria:
@@ -120,7 +120,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5648
+          seed: 6668
           value: 1.0
       name: Lesson 4 - Full Soccer
       completion_criteria: null
@@ -129,7 +129,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5649
+          seed: 6669
           value: 1.5
       name: Lesson 2 - Chase Ball
       completion_criteria:
@@ -142,7 +142,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5650
+          seed: 6670
           value: 2.0
       name: Lesson 3 - Enable Kicking
       completion_criteria:
@@ -155,7 +155,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5651
+          seed: 6671
           value: 2.5
       name: Lesson 4 - Full Soccer
       completion_criteria: null
@@ -164,7 +164,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 5652
+          seed: 6672
           value: 0.5
       name: locomotion_scale
       completion_criteria: null
