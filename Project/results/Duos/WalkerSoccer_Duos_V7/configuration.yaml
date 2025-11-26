@@ -50,10 +50,10 @@ behaviors:
       initial_elo: 1200.0
     behavioral_cloning: null
 env_settings:
-  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\DuosV6_16\UnityEnvironment.exe
+  env_path: C:\Documents\GitHub\ml-agents\Project\Builds\DuosV7_16\UnityEnvironment.exe
   env_args: null
   base_port: 5005
-  num_envs: 8
+  num_envs: 10
   num_areas: 1
   timeout_wait: 60
   seed: -1
@@ -75,59 +75,59 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3270
+          seed: 7560
           value: 0.0
       name: Lesson0_StandAndBalance
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 2000000
+        min_lesson_length: 50
         signal_smoothing: true
         threshold: 0.05
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3271
+          seed: 7561
           value: 0.2
       name: Lesson1_WalkFarBall
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.125
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3272
+          seed: 7562
           value: 0.5
       name: Lesson2_ApproachControl
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.25
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3273
+          seed: 7563
           value: 0.75
       name: Lesson3_PlaySoccer
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.375
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3274
+          seed: 7564
           value: 1.0
       name: Lesson4_Competitive
       completion_criteria: null
@@ -136,60 +136,60 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3275
-          value: 15.0
+          seed: 7565
+          value: 3.0
       name: Lesson0_StandAndBalance
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 2000000
+        min_lesson_length: 50
         signal_smoothing: true
         threshold: 0.05
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3276
-          value: 8.0
+          seed: 7566
+          value: 2.5
       name: Lesson1_WalkFarBall
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.125
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3277
-          value: 5.0
+          seed: 7567
+          value: 2.0
       name: Lesson2_ApproachControl
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.25
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3278
-          value: 4.0
+          seed: 7568
+          value: 1.7
       name: Lesson3_PlaySoccer
       completion_criteria:
         behavior: WalkerSoccer
         measure: progress
-        min_lesson_length: 3000000
+        min_lesson_length: 800
         signal_smoothing: true
         threshold: 0.375
         require_reset: false
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 3279
-          value: 3.0
+          seed: 7569
+          value: 1.4
       name: Lesson4_Competitive
       completion_criteria: null
 checkpoint_settings:
@@ -197,7 +197,7 @@ checkpoint_settings:
   initialize_from: null
   load_model: false
   resume: false
-  force: false
+  force: true
   train_model: false
   inference: false
   results_dir: results
