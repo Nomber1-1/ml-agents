@@ -88,7 +88,7 @@ class TorchModelSaver(BaseModelSaver):
         policy: Optional[TorchPolicy] = None,
         reset_global_steps: bool = False,
     ) -> None:
-        saved_state_dict = torch.load(load_path)
+        saved_state_dict = torch.load(load_path, weights_only=False)  # Add weights_only=False
         if policy is None:
             modules = self.modules
             policy = self.policy

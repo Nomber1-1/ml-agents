@@ -1455,7 +1455,7 @@ Transform:
   m_GameObject: {fileID: 5595921840649578875}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 425, z: 0}
+  m_LocalPosition: {x: 0, y: 501, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1497,6 +1497,7 @@ GameObject:
   - component: {fileID: 3278580518817994372}
   - component: {fileID: 3989866149107339367}
   - component: {fileID: 4280173543017665863}
+  - component: {fileID: 8136742175748987265}
   m_Layer: 0
   m_Name: SoccerBall
   m_TagString: ball
@@ -1673,6 +1674,21 @@ MonoBehaviour:
   onCollisionExitEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8136742175748987265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5611807115648673530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8c11b1253e1564ab100bbabe062bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallBounceImpulseScale: 1.1
+  minWallNormalY: 0.2
+  minOutgoingSpeed: 1.5
 --- !u!1 &5862098676382633257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,7 +2032,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5381807000252610908}

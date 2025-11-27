@@ -1,0 +1,80 @@
+{
+    "locomotion_only": {
+        "lesson_num": 0
+    },
+    "target_walking_speed": {
+        "lesson_num": 0
+    },
+    "ball_touch": {
+        "lesson_num": 1
+    },
+    "ball_spawn_radius": {
+        "lesson_num": 1
+    },
+    "locomotion_scale": {
+        "lesson_num": 1
+    },
+    "WalkerSoccer": {
+        "checkpoints": [
+            {
+                "steps": 999998,
+                "file_path": "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-999998.onnx",
+                "reward": -3.294026329004733,
+                "creation_time": 1764201694.0699146,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-999998.pt"
+                ]
+            },
+            {
+                "steps": 1499996,
+                "file_path": "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-1499996.onnx",
+                "reward": -2.6902830143769583,
+                "creation_time": 1764202755.1652515,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-1499996.pt"
+                ]
+            },
+            {
+                "steps": 1641135,
+                "file_path": "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-1641135.onnx",
+                "reward": -2.712950169783006,
+                "creation_time": 1764203118.7790453,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-1641135.pt"
+                ]
+            },
+            {
+                "steps": 1999995,
+                "file_path": "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-1999995.onnx",
+                "reward": -3.228257614103953,
+                "creation_time": 1764204146.5749714,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-1999995.pt"
+                ]
+            },
+            {
+                "steps": 2157155,
+                "file_path": "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-2157155.onnx",
+                "reward": -3.136784387453382,
+                "creation_time": 1764204618.1919005,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-2157155.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2157155,
+            "file_path": "results\\WalkerStage2_from6_5M\\WalkerSoccer.onnx",
+            "reward": -3.136784387453382,
+            "creation_time": 1764204618.1919005,
+            "auxillary_file_paths": [
+                "results\\WalkerStage2_from6_5M\\WalkerSoccer\\WalkerSoccer-2157155.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.8.0+cu129"
+    }
+}

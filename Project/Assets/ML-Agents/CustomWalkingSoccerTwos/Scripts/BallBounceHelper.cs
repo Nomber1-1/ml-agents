@@ -25,7 +25,7 @@ namespace CustomWalkingSoccerTwos
         void OnCollisionEnter(Collision collision)
         {
             // Treat any collider tagged "Wall" or with near-horizontal normal as a wall
-            bool isWallTag = collision.collider.CompareTag("Wall");
+            bool isWallTag = collision.collider.CompareTag("wall");
             ContactPoint cp = collision.GetContact(0);
             bool isWallNormal = Mathf.Abs(cp.normal.y) <= minWallNormalY;
             if (!isWallTag && !isWallNormal)

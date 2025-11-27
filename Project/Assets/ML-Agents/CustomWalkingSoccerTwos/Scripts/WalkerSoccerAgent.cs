@@ -43,7 +43,7 @@ public class WalkerSoccerAgent : Agent
     [SerializeField] private float kickUpFactor = 0.3f; // Adds slight upward component
     [SerializeField] private float kickRange = 2.0f; // Horizontal distance within which kick can trigger
     [SerializeField] private int kickCooldownSteps = 25; // Steps between kicks to avoid spam
-    [SerializeField] private float kickReward = 0.2f; // Reward for successful intentional kick
+    [SerializeField] private float kickReward = 0.3f; // Reward for successful intentional kick (increased)
     private int m_LastKickStep = -999;
     private int m_LastBallTouchStep = -999;
     private int m_BallNearStuckSteps = 0;
@@ -74,7 +74,7 @@ public class WalkerSoccerAgent : Agent
     private float m_AgentStuckMoveThreshold = 0.3f; // Movement less than this = stuck
     // Dive detection near ball
     private int m_DiveNearBallSteps = 0;
-    private const int DIVE_NEAR_BALL_RESET_THRESHOLD = 45; // ~4.5 seconds at 10 steps/sec
+    private const int DIVE_NEAR_BALL_RESET_THRESHOLD = 20; // ~4.5 seconds at 10 steps/sec
 
     // Goalie positioning
     private Transform myGoal;
@@ -552,7 +552,7 @@ public class WalkerSoccerAgent : Agent
                             hipsBp.rb.transform.rotation = Quaternion.Euler(0, rotSign * 90f, 0);
                             hipsBp.rb.linearVelocity = Vector3.zero;
                             hipsBp.rb.angularVelocity = Vector3.zero;
-                            AddReward(-0.05f); // small penalty for dive reset
+                            AddReward(-0.1f); // small penalty for dive reset
                             m_DiveNearBallSteps = 0;
                         }
                     }
@@ -614,7 +614,8 @@ public class WalkerSoccerAgent : Agent
             // Penalty remains gentle to avoid collapse
             if (nearbyCount >= spacingThreshold)
             {
-                AddReward(-0.012f * nearbyCount); // Further softened from -0.015f
+                // Increase bunching penalty to reduce "walling" that blocks shots
+                AddReward(-0.02f * nearbyCount);
             }
 
             // Ball stuck detection and reset
@@ -981,7 +982,21 @@ public class WalkerSoccerAgent : Agent
 
                 var dir = collision.contacts[0].point - hips.position;
                 dir = dir.normalized;
-                collision.gameObject.GetComponent<Rigidbody>().AddForce(dir * force);
+                var ballRb = collision.gameObject.GetComponent<Rigidbody>();
+                ballRb.AddForce(dir * force);
+
+                // Apply small cost for any incidental kick to discourage random scrums,
+                // and penalize clearly misaligned impacts toward own goal/sidelines.
+                if (opponentGoal != null)
+                {
+                    Vector3 ballToGoal = (opponentGoal.position - ball.transform.position).normalized;
+                    float alignment = Vector3.Dot(dir, ballToGoal);
+                    AddReward(-0.02f); // base cost per physical kick
+                    if (alignment < 0.3f)
+                    {
+                        AddReward(-0.12f * (0.3f - alignment));
+                    }
+                }
             }
         }
     }
@@ -1090,7 +1105,8 @@ public class WalkerSoccerAgent : Agent
             // Lesson 3 (ball_touch==0.5): boost kick rewards to learn shooting
             // Lesson 4 (ball_touch==1.0): reduce kick rewards to prioritize scoring strategy
             // Boost kick rewards in L4 (full soccer) to strengthen goal-directed behavior
-            float phaseMultiplier = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.5f : 1.25f; // Increased L4 from 0.8 to 1.25 (base 0.2 * 1.25 = 0.25 effective)
+            // Stronger phase multipliers to make purposeful kicks matter more
+            float phaseMultiplier = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.8f : 2.0f;
             float reward = baseKick * phaseMultiplier;
 
             // Bonus for kicking toward opponent goal
@@ -1098,16 +1114,24 @@ public class WalkerSoccerAgent : Agent
             {
                 Vector3 ballToGoal = (opponentGoal.position - ball.position).normalized;
                 float alignment = Vector3.Dot(dir, ballToGoal);
-                if (alignment > 0.5f) // Kick is somewhat toward goal
+                // Base kick cost to discourage random kicks
+                AddReward(-0.03f);
+                if (alignment > 0.3f) // Kick is somewhat toward goal
                 {
-                    reward += 0.15f * alignment; // Increased from 0.1f to 0.15f
+                    reward += 0.35f * alignment; // Stronger directional bonus
+                }
+                else
+                {
+                    // Penalty for misaligned kicks (toward sidelines/own goal)
+                    float misalign = Mathf.Clamp01(0.3f - alignment);
+                    reward -= 0.2f * misalign;
                 }
 
                 // Extra bonus for shots on goal (close to goal + good alignment)
                 float distToGoal = Vector3.Distance(ball.position, opponentGoal.position);
-                if (distToGoal < 10f && alignment > 0.65f) // Slightly wider detection for shot attempts
+                if (distToGoal < 12f && alignment > 0.6f) // Slightly wider detection and stronger bonus
                 {
-                    reward += 0.3f; // Increased from 0.2f to 0.3f for stronger shot incentive
+                    reward += 0.6f; // Stronger shot incentive
                 }
             }
 
