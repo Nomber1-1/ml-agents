@@ -140,3 +140,19 @@ environment_parameters:
 
             - name: Stage2_FullSoccer
               value: 0.15
+
+    # Self-play weight: gradually enable competitive self-play
+    # 0.0 = cooperative (no ELO penalty early), 1.0 = full competitive
+    self_play_weight:
+        curriculum:
+            - name: Stage2_CooperativePhase
+              completion_criteria:
+                  measure: progress
+                  behavior: WalkerSoccer
+                  signal_smoothing: true
+                  min_lesson_length: 1000
+                  threshold: 0.50 # Enable at 50% (~10M steps)
+              value: 0.0
+
+            - name: Stage2_CompetitivePhase
+              value: 1.0

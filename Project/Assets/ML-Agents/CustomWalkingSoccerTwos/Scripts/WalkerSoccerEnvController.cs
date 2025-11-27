@@ -108,17 +108,22 @@ public class WalkerSoccerEnvController : MonoBehaviour
 
     public void GoalTouched(Team scoredTeam)
     {
+        // Gradually enable competitive self-play via curriculum parameter
+        float selfPlayWeight = m_EnvParams.GetWithDefault("self_play_weight", 1.0f);
+
+        // Base goal reward with time bonus
+        float goalReward = 50 * (1 - (float)m_ResetTimer / MaxEnvironmentSteps);
+        float penaltyReward = -10 * selfPlayWeight; // Scale penalty by self-play weight
+
         if (scoredTeam == Team.Blue)
         {
-            // Goal reward: 50× base + time bonus. Baseline standing reward ~26, so goals are 2-3× more valuable.
-            // Fast goals (early episode) get up to 50× reward, incentivizing aggressive play.
-            m_BlueAgentGroup.AddGroupReward(50 * (1 - (float)m_ResetTimer / MaxEnvironmentSteps));
-            m_PurpleAgentGroup.AddGroupReward(-10);
+            m_BlueAgentGroup.AddGroupReward(goalReward);
+            m_PurpleAgentGroup.AddGroupReward(penaltyReward);
         }
         else
         {
-            m_PurpleAgentGroup.AddGroupReward(50 * (1 - (float)m_ResetTimer / MaxEnvironmentSteps));
-            m_BlueAgentGroup.AddGroupReward(-10);
+            m_PurpleAgentGroup.AddGroupReward(goalReward);
+            m_BlueAgentGroup.AddGroupReward(penaltyReward);
         }
         m_PurpleAgentGroup.EndGroupEpisode();
         m_BlueAgentGroup.EndGroupEpisode();
