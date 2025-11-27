@@ -1,5 +1,9 @@
 # Walker Soccer - Quick Reference Card (Two-Stage Training)
 
+**✅ Project Status**: COMPLETED  
+**Final Model**: `results/WalkerStage2_20_V3/WalkerSoccer.onnx`  
+**Total Training**: 18M (Stage 1) + 15M (Stage 2) = 33M steps
+
 ## 🎯 Essential Commands
 
 ### Stage 1: Locomotion Training (PPO)

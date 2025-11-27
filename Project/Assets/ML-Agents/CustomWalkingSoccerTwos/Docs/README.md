@@ -14,6 +14,8 @@ Walker Soccer Twos uses a **two-stage training architecture** where humanoid wal
 
 This approach dramatically improves training efficiency by separating locomotion learning from soccer strategy.
 
+**✅ Training Completed**: Final trained model available at `results/WalkerStage2_20_V3` (33M total steps)
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -262,6 +264,19 @@ mlagents-learn WalkerSoccerStage2_Soccer.yaml --run-id=WalkerStage2 \
 
 # Monitor progress (locomotion should be retained!)
 tensorboard --logdir results
+```
+
+### Using the Pre-Trained Model
+```bash
+# The final trained model is available in the results directory:
+# results/WalkerStage2_20_V3/WalkerSoccer.onnx
+
+# To use in Unity:
+# 1. Locate the .onnx file in results/WalkerStage2_20_V3/
+# 2. In Unity, select your WalkerSoccerAgent
+# 3. In Behavior Parameters component, drag the .onnx file to the Model field
+# 4. Set Behavior Type to "Inference Only"
+# 5. Press Play to watch the trained agents!
 ```
 
 ## 🤝 Contributing

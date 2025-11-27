@@ -4,11 +4,11 @@
 
 **Project**: Humanoid ragdoll agents learning bipedal locomotion and 3v3 soccer through two-stage transfer learning
 
-**Duration**: 50+ hours of training across 22M+ steps  
+**Duration**: 50+ hours of training across 33M steps (18M Stage 1 + 15M Stage 2)  
 **Architecture**: PPO (Stage 1) → POCA (Stage 2) transfer learning  
 **Key Innovation**: Zero-padded observation space enables perfect weight transfer while allowing stage-specific training
 
-**Current Status**: Stage 2 at 4M steps, recovering from penalty overload, progressing toward 15M completion
+**Final Status**: ✅ COMPLETED - Final model: `results/WalkerStage2_20_V3`
 
 ---
 
@@ -44,7 +44,7 @@ Train humanoid ragdoll to master bipedal locomotion with full 360° turning capa
 
 ---
 
-## Stage 2: Soccer Training (15M Target - IN PROGRESS)
+## Stage 2: Soccer Training (15M Steps - COMPLETED)
 
 ### Objective
 Transfer locomotion skills and learn multi-agent soccer: ball chasing, kicking, team coordination, goal scoring.
@@ -81,9 +81,10 @@ Transfer locomotion skills and learn multi-agent soccer: ball chasing, kicking, 
 **Solution**: Disabled self-play temporarily, enhanced locomotion fade curriculum
 
 #### Phase 7: Training Collapse (4M steps) ⚠️ CRITICAL LEARNING MOMENT
-**Status**: 🔄 Recovering  
+**Status**: ✅ Resolved  
 **Issue**: Mean Reward dropped to -10 to -22 (expected +3 to +8)  
-**Root Cause**: Cumulative penalty overload crushing exploration
+**Root Cause**: Cumulative penalty overload crushing exploration  
+**Recovery**: Successfully recovered through penalty softening and resumed training
 
 ### The 4M Training Collapse - Deep Dive
 
@@ -127,18 +128,18 @@ This was the **most critical learning moment** of the entire project, revealing 
 | Goalie Phase | 1.5×/1.2× | 1.2×/1.1× | Reduce lesson emphasis |
 | Wall Proximity | -0.03 | -0.01 | Permit necessary wall play |
 
-**Expected Outcome**: Mean Reward recovery to +3 to +10 by 6M steps
+**Actual Outcome**: Mean Reward successfully recovered, training completed to 15M steps with stable performance and consistent goal-scoring behavior
 
-### Current Curriculum Structure
+### Final Curriculum Structure (Completed)
 
-**Lesson 2 (0-2M steps): Chase Ball**
+**Lesson 2 (0-2M steps): Chase Ball** ✅
 - `ball_touch = 0.35`
 - `ball_spawn_radius = 1.5m`
 - `locomotion_scale = 0.4`
 - Kick: ❌ Disabled
 - **Focus**: Locomotion transfer, ball awareness
 
-**Lesson 3 (2M-6M steps): Kicking Practice** ⬅️ Currently Here
+**Lesson 3 (2M-6M steps): Kicking Practice** ✅
 - `ball_touch = 0.5`
 - `ball_spawn_radius = 2.0m`
 - `locomotion_scale = 0.4 → 0.25`
@@ -146,12 +147,13 @@ This was the **most critical learning moment** of the entire project, revealing 
 - **Focus**: Learn kick timing, direction, power
 - **Extended from 5M to 6M for additional practice**
 
-**Lesson 4 (6M+ steps): Full Soccer**
+**Lesson 4 (6M-15M steps): Full Soccer** ✅
 - `ball_touch = 1.0`
 - `ball_spawn_radius = 1.5m`
-- `locomotion_scale = 0.1`
-- Kick: ✅ Enabled with reduced emphasis
+- `locomotion_scale = 0.15` (final value after further adjustments)
+- Kick: ✅ Enabled with enhanced goal-directed rewards
 - **Focus**: Goal scoring, team coordination, strategy
+- **Completed successfully with stable performance**
 
 ### Advanced Features Implemented
 
@@ -272,12 +274,14 @@ This was the **most critical learning moment** of the entire project, revealing 
 - Valid touch rate: 80%+ of target encounters
 - Training efficiency: 18M steps in 12 hours
 
-**Stage 2 (Current):**
-- Transfer success: Immediate locomotion retention
-- Multiple exploit systems prevented and resolved
-- Dynamic team size adaptation working
-- Curriculum progression functional
-- Recovery strategy in place for 4M collapse
+**Stage 2 (Completed - 15M steps):**
+- Transfer success: Immediate locomotion retention ✅
+- Multiple exploit systems prevented and resolved ✅
+- Dynamic team size adaptation working ✅
+- Curriculum progression completed through all lessons ✅
+- Recovery from 4M collapse successful ✅
+- Anti-dive mechanics and kick reward restructuring implemented ✅
+- Final model achieving consistent goal-scoring behavior ✅
 
 ### Qualitative Insights
 
@@ -302,13 +306,15 @@ The training collapse at 4M steps, while initially appearing as a failure, becam
 
 ## Future Work
 
-### Short-Term (6M-15M steps)
-- Complete Lesson 3 with softened penalties
-- Transition to Lesson 4 (full soccer)
-- Monitor natural behavior improvement
-- Re-enable self-play when goals frequent
+### Completed Achievements
+- ✅ Completed all curriculum lessons through 15M steps
+- ✅ Successfully recovered from penalty overload at 4M
+- ✅ Implemented anti-dive mechanics and upright posture shaping
+- ✅ Enhanced kick reward structure with goal-directed bonuses
+- ✅ Achieved stable positive Mean Reward with consistent goal-scoring
+- ✅ Final trained model saved as `results/WalkerStage2_20_V3`
 
-### Medium-Term Enhancements
+### Potential Future Enhancements
 - Passing rewards (detect teammate sequences)
 - Assist bonuses (credit passer for goals)
 - Goalkeeper dive action (dedicated save mechanic)
@@ -425,5 +431,5 @@ A: The principles apply broadly: staged learning, curriculum design, penalty bal
 **Target Audience**: RL practitioners, ML engineers, AI researchers  
 **Key Takeaway**: Successful RL requires curriculum design, penalty balancing, and trust in the learning process
 
-**Last Updated**: November 26, 2025  
-**Project Status**: Stage 2 at 4M steps, recovery in progress
+**Last Updated**: November 27, 2025  
+**Project Status**: ✅ COMPLETED - Final model: `results/WalkerStage2_20_V3`

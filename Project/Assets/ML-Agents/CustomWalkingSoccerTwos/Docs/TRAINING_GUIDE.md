@@ -476,15 +476,20 @@ Expected performance timeline (V10 progressive skill curriculum):
 
 ## Evaluating Trained Models
 
-### Testing in Unity
+### Using the Pre-Trained Model
 
-1. **Load trained model**:
-   - Copy `.onnx` file from `results/WalkerSoccer_v1/` to Unity
-   - Drag onto agent's Behavior Parameters > Model
+The final trained model is available at `results/WalkerStage2_20_V3/WalkerSoccer.onnx`
+
+1. **Load trained model in Unity**:
+   - Locate `results/WalkerStage2_20_V3/WalkerSoccer.onnx`
+   - In Unity, select your WalkerSoccerAgent GameObject
+   - In the Behavior Parameters component, drag the `.onnx` file to the Model field
 
 2. **Set Behavior Type**: `Inference Only`
 
-3. **Press Play** - watch trained agents play!
+3. **Press Play** - watch trained agents play soccer!
+
+### Testing in Unity
 
 ### Model Comparison
 

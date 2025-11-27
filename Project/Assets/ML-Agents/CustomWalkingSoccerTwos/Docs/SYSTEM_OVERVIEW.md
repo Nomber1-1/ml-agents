@@ -1,5 +1,9 @@
 # Walker Soccer System Overview - Two-Stage Training Architecture
 
+**✅ Project Status**: COMPLETED  
+**Final Trained Model**: `results/WalkerStage2_20_V3/WalkerSoccer.onnx`  
+**Total Training**: 18M (Stage 1) + 15M (Stage 2) = 33M steps
+
 ## 🏗️ Two-Stage Architecture Diagram
 
 ```
