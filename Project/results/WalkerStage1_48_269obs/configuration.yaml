@@ -36,7 +36,7 @@ behaviors:
           goal_conditioning_type: hyper
           deterministic: false
     init_path: null
-    keep_checkpoints: 5
+    keep_checkpoints: 40
     even_checkpoints: false
     max_steps: 20000000
     time_horizon: 1000
@@ -70,7 +70,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7054
+          seed: 9647
           value: 1.0
       name: locomotion_only
       completion_criteria: null
@@ -79,7 +79,7 @@ environment_parameters:
     - value:
         sampler_type: uniform
         sampler_parameters:
-          seed: 7055
+          seed: 9648
           min_value: 0.8
           max_value: 4.0
       name: target_walking_speed
@@ -89,7 +89,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7056
+          seed: 9649
           value: 0.0
       name: ball_touch
       completion_criteria: null
@@ -98,7 +98,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 7057
+          seed: 9650
           value: 5.0
       name: ball_spawn_radius
       completion_criteria: null
@@ -106,8 +106,8 @@ checkpoint_settings:
   run_id: WalkerStage1_48_269obs
   initialize_from: null
   load_model: false
-  resume: false
-  force: true
+  resume: true
+  force: false
   train_model: false
   inference: false
   results_dir: results

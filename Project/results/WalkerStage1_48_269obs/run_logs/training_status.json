@@ -57,15 +57,195 @@
                 "auxillary_file_paths": [
                     "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-3808383.pt"
                 ]
+            },
+            {
+                "steps": 3999989,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-3999989.onnx",
+                "reward": 17.007269123003475,
+                "creation_time": 1764265160.1158144,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-3999989.pt"
+                ]
+            },
+            {
+                "steps": 4499985,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-4499985.onnx",
+                "reward": 19.23305170705536,
+                "creation_time": 1764265394.8664613,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-4499985.pt"
+                ]
+            },
+            {
+                "steps": 4999983,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-4999983.onnx",
+                "reward": 22.62361323715714,
+                "creation_time": 1764265617.7586267,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-4999983.pt"
+                ]
+            },
+            {
+                "steps": 5499986,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-5499986.onnx",
+                "reward": 26.955659597367376,
+                "creation_time": 1764265835.019277,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-5499986.pt"
+                ]
+            },
+            {
+                "steps": 5999985,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-5999985.onnx",
+                "reward": 31.389526985766803,
+                "creation_time": 1764266042.1418574,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-5999985.pt"
+                ]
+            },
+            {
+                "steps": 6499977,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-6499977.onnx",
+                "reward": 40.268271010367414,
+                "creation_time": 1764266237.9622662,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-6499977.pt"
+                ]
+            },
+            {
+                "steps": 6999974,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-6999974.onnx",
+                "reward": 50.53184275759898,
+                "creation_time": 1764266425.7414389,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-6999974.pt"
+                ]
+            },
+            {
+                "steps": 7499965,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-7499965.onnx",
+                "reward": 64.06692107064383,
+                "creation_time": 1764266585.6407506,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-7499965.pt"
+                ]
+            },
+            {
+                "steps": 7999981,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-7999981.onnx",
+                "reward": 66.61265132623018,
+                "creation_time": 1764266724.0009408,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-7999981.pt"
+                ]
+            },
+            {
+                "steps": 8499963,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-8499963.onnx",
+                "reward": 66.48280732313358,
+                "creation_time": 1764266876.329019,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-8499963.pt"
+                ]
+            },
+            {
+                "steps": 8999925,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-8999925.onnx",
+                "reward": 78.45611768525109,
+                "creation_time": 1764267047.283791,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-8999925.pt"
+                ]
+            },
+            {
+                "steps": 9499981,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-9499981.onnx",
+                "reward": 85.0923940228665,
+                "creation_time": 1764267219.5981655,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-9499981.pt"
+                ]
+            },
+            {
+                "steps": 9999956,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-9999956.onnx",
+                "reward": 92.39539029978205,
+                "creation_time": 1764267386.9856062,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-9999956.pt"
+                ]
+            },
+            {
+                "steps": 10499992,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-10499992.onnx",
+                "reward": 91.80787600000113,
+                "creation_time": 1764267554.6806147,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-10499992.pt"
+                ]
+            },
+            {
+                "steps": 10999877,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-10999877.onnx",
+                "reward": 98.53614670736184,
+                "creation_time": 1764267723.4271019,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-10999877.pt"
+                ]
+            },
+            {
+                "steps": 11499960,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-11499960.onnx",
+                "reward": 99.41046337995813,
+                "creation_time": 1764267891.9185743,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-11499960.pt"
+                ]
+            },
+            {
+                "steps": 11999947,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-11999947.onnx",
+                "reward": 103.47511618363166,
+                "creation_time": 1764268059.1808074,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-11999947.pt"
+                ]
+            },
+            {
+                "steps": 12499987,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-12499987.onnx",
+                "reward": 110.71898433964262,
+                "creation_time": 1764268222.8365312,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-12499987.pt"
+                ]
+            },
+            {
+                "steps": 12999962,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-12999962.onnx",
+                "reward": 100.31734913273861,
+                "creation_time": 1764268391.731355,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-12999962.pt"
+                ]
+            },
+            {
+                "steps": 13249470,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-13249470.onnx",
+                "reward": 110.09252773485487,
+                "creation_time": 1764268466.4854205,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-13249470.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 3808383,
+            "steps": 13249470,
             "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer.onnx",
-            "reward": 15.888867338352343,
-            "creation_time": 1764265071.4850895,
+            "reward": 110.09252773485487,
+            "creation_time": 1764268466.4854205,
             "auxillary_file_paths": [
-                "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-3808383.pt"
+                "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-13249470.pt"
             ]
         }
     },

@@ -1,4 +1,4 @@
-# Walker Soccer - Stage 1: Locomotion Training (250 obs)
+# Walker Soccer - Stage 1: Locomotion Training (269 obs)
 # Soccer observations set to zero during Stage 1 (network learns to ignore them)
 # Train with PPO for faster learning, then transfer to Stage 2
 
@@ -35,15 +35,15 @@ behaviors:
                 strength: 1.0
 
         # Training configuration
-        max_steps: 20000000 # 20M steps for solid locomotion (3-5 hours)
+        max_steps: 30000000 # 30-40M steps for solid locomotion
         time_horizon: 1000
         summary_freq: 10000
         keep_checkpoints: 40
-        checkpoint_interval: 500000
+        checkpoint_interval: 1000000
 
 # Environment parameters for Stage 1
 environment_parameters:
-    # STAGE 1 MODE: Locomotion only (250 obs with 7 soccer obs zeroed)
+    # STAGE 1 MODE: Locomotion only (269 obs with 26 soccer obs zeroed)
     locomotion_only:
         sampler_type: constant
         sampler_parameters:
@@ -62,8 +62,8 @@ environment_parameters:
         sampler_parameters:
             value: 0.0
 
-    # Ball spawns far (agents walk to target sphere instead)
+    # No ball spawning in Stage 1
     ball_spawn_radius:
         sampler_type: constant
         sampler_parameters:
-            value: 5.0
+            value: 0.0

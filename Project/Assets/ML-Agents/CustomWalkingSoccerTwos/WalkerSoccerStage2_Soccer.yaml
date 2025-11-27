@@ -1,4 +1,4 @@
-# Walker Soccer - Stage 2: Soccer with Transfer Learning (250 obs)
+# Walker Soccer - Stage 2: Soccer with Transfer Learning (269 obs)
 # Soccer observations now contain real data (ball position, velocity, team)
 # Transfer locomotion skills from Stage 1, then learn multi-agent soccer
 
@@ -45,15 +45,15 @@ behaviors:
             initial_elo: 1200.0
 
         # Training configuration
-        max_steps: 24000000 # 24M additional steps
+        max_steps: 20000000 # 20M additional steps
         time_horizon: 1000
         summary_freq: 10000
-        keep_checkpoints: 5
+        keep_checkpoints: 40
         checkpoint_interval: 500000
 
 # Environment parameters for Stage 2
 environment_parameters:
-    # STAGE 2 MODE: Full soccer (250 obs with real soccer data)
+    # STAGE 2 MODE: Full soccer (269 obs with real soccer data)
     locomotion_only:
         sampler_type: constant
         sampler_parameters:

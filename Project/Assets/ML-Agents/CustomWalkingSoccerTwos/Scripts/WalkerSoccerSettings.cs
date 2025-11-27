@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Provided by Unity ML-Agents Examples
 public class WalkerSoccerSettings : MonoBehaviour
 {
     public Material purpleMaterial;

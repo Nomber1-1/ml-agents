@@ -3,6 +3,7 @@ using Unity.MLAgents;
 using UnityEngine;
 using Unity.MLAgentsExamples; // Added for JointDriveController
 
+// Inspired by Unity ML-Agents Examples
 public class WalkerSoccerEnvController : MonoBehaviour
 {
     [System.Serializable]
