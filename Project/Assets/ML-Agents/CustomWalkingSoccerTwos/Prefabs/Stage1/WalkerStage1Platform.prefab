@@ -122,6 +122,11 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 7431691405317613155}
+    - target: {fileID: 68579961006571340, guid: db339d15e425bb84687f8b0312ade0f3,
+        type: 3}
+      propertyPath: goalieMaxDistance
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: m_Model

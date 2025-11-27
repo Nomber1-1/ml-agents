@@ -202,7 +202,7 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 5000
   team: 0
-  position: 2
+  position: 0
   initialPos: {x: 0, y: 0, z: 0}
   rotSign: 0
   kickForce: 6
@@ -213,7 +213,7 @@ MonoBehaviour:
   cornerPenaltyRadius: 8
   cornerPenaltyStrength: 0.01
   arenaCenter: {fileID: 0}
-  goalieMaxDistance: 3.2
+  goalieMaxDistance: 2.5
   goaliePenaltyStrength: 0.012
   m_TargetWalkingSpeed: 10
   randomizeWalkSpeedEachEpisode: 1

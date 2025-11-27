@@ -38,7 +38,7 @@ behaviors:
         max_steps: 20000000 # 20M steps for solid locomotion (3-5 hours)
         time_horizon: 1000
         summary_freq: 10000
-        keep_checkpoints: 5
+        keep_checkpoints: 40
         checkpoint_interval: 500000
 
 # Environment parameters for Stage 1

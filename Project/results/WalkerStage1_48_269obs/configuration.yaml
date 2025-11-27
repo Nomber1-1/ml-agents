@@ -70,7 +70,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8261
+          seed: 7054
           value: 1.0
       name: locomotion_only
       completion_criteria: null
@@ -79,7 +79,7 @@ environment_parameters:
     - value:
         sampler_type: uniform
         sampler_parameters:
-          seed: 8262
+          seed: 7055
           min_value: 0.8
           max_value: 4.0
       name: target_walking_speed
@@ -89,7 +89,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8263
+          seed: 7056
           value: 0.0
       name: ball_touch
       completion_criteria: null
@@ -98,7 +98,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 8264
+          seed: 7057
           value: 5.0
       name: ball_spawn_radius
       completion_criteria: null
@@ -107,7 +107,7 @@ checkpoint_settings:
   initialize_from: null
   load_model: false
   resume: false
-  force: false
+  force: true
   train_model: false
   inference: false
   results_dir: results

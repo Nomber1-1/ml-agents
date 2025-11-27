@@ -2511,6 +2511,11 @@ PrefabInstance:
       propertyPath: arenaCenter
       value: 
       objectReference: {fileID: 7497278253082080527}
+    - target: {fileID: 68579961006571340, guid: db339d15e425bb84687f8b0312ade0f3,
+        type: 3}
+      propertyPath: goalieMaxDistance
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 689124100552162061, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -2544,7 +2549,7 @@ PrefabInstance:
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 250
+      value: 269
       objectReference: {fileID: 0}
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
@@ -2683,6 +2688,11 @@ PrefabInstance:
       propertyPath: arenaCenter
       value: 
       objectReference: {fileID: 7497278253082080527}
+    - target: {fileID: 68579961006571340, guid: db339d15e425bb84687f8b0312ade0f3,
+        type: 3}
+      propertyPath: goalieMaxDistance
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: TeamId
@@ -2716,7 +2726,7 @@ PrefabInstance:
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 250
+      value: 269
       objectReference: {fileID: 0}
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
@@ -2840,6 +2850,11 @@ PrefabInstance:
       propertyPath: arenaCenter
       value: 
       objectReference: {fileID: 7497278253082080527}
+    - target: {fileID: 68579961006571340, guid: db339d15e425bb84687f8b0312ade0f3,
+        type: 3}
+      propertyPath: goalieMaxDistance
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: TeamId
@@ -2873,7 +2888,7 @@ PrefabInstance:
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 250
+      value: 269
       objectReference: {fileID: 0}
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
@@ -3002,6 +3017,11 @@ PrefabInstance:
       propertyPath: arenaCenter
       value: 
       objectReference: {fileID: 7497278253082080527}
+    - target: {fileID: 68579961006571340, guid: db339d15e425bb84687f8b0312ade0f3,
+        type: 3}
+      propertyPath: goalieMaxDistance
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 689124100552162061, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -3035,7 +3055,7 @@ PrefabInstance:
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 250
+      value: 269
       objectReference: {fileID: 0}
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
@@ -3174,6 +3194,11 @@ PrefabInstance:
       propertyPath: arenaCenter
       value: 
       objectReference: {fileID: 7497278253082080527}
+    - target: {fileID: 68579961006571340, guid: db339d15e425bb84687f8b0312ade0f3,
+        type: 3}
+      propertyPath: goalieMaxDistance
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 689124100552162061, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -3207,7 +3232,7 @@ PrefabInstance:
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 250
+      value: 269
       objectReference: {fileID: 0}
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
@@ -3351,6 +3376,11 @@ PrefabInstance:
       propertyPath: arenaCenter
       value: 
       objectReference: {fileID: 7497278253082080527}
+    - target: {fileID: 68579961006571340, guid: db339d15e425bb84687f8b0312ade0f3,
+        type: 3}
+      propertyPath: goalieMaxDistance
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: TeamId
@@ -3384,7 +3414,7 @@ PrefabInstance:
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 250
+      value: 269
       objectReference: {fileID: 0}
     - target: {fileID: 1233551324449850307, guid: db339d15e425bb84687f8b0312ade0f3,
         type: 3}
