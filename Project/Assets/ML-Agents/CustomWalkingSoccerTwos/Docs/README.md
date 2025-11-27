@@ -35,7 +35,7 @@ Follow the official Unity ML-Agents installation instructions:
 **[Unity ML-Agents Installation Guide](https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/Installation.html)**
 
 ### Quick Summary
-1. Open the Unity project (`Project` folder) in Unity Editor.
+1. Open the Unity project (`Project` folder) in Unity Editor (version: 6000.0.40f1).
 2. In Unity, go to **Window > Package Manager**.
 3. Click the **+** button and select **Add package from git URL**.
 4. Enter: `com.unity.ml-agents`
