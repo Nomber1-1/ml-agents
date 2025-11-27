@@ -41,7 +41,7 @@ public class WalkerSoccerAgent : Agent
     [Header("Kick Action Settings")]
     [SerializeField] private float kickForce = 12.0f; // Stronger impulse applied to ball
     [SerializeField] private float kickUpFactor = 0.3f; // Adds slight upward component
-    [SerializeField] private float kickRange = 2.0f; // Horizontal distance within which kick can trigger
+    [SerializeField] private float kickRange = 1.5f; // Horizontal distance within which kick can trigger
     [SerializeField] private int kickCooldownSteps = 25; // Steps between kicks to avoid spam
     [SerializeField] private float kickReward = 0.3f; // Reward for successful intentional kick (increased)
     private int m_LastKickStep = -999;
@@ -51,6 +51,9 @@ public class WalkerSoccerAgent : Agent
     private Vector3 m_LastBallPos;
     private float m_LastBallDistToOppGoal;
     private Vector3 m_LastBallVelocity;
+    // Cached lists for nearby agents
+    private System.Collections.Generic.List<Transform> m_Teammates = new System.Collections.Generic.List<Transform>();
+    private System.Collections.Generic.List<Transform> m_Opponents = new System.Collections.Generic.List<Transform>();
 
     [Header("Anti-Piling")]
     [SerializeField] private float cornerPenaltyRadius = 8f; // Distance from arena center
@@ -219,6 +222,26 @@ public class WalkerSoccerAgent : Agent
         var allAgents = GameObject.FindGameObjectsWithTag("agent");
         m_TotalAgentCount = allAgents.Length;
         m_AgentsPerTeam = m_TotalAgentCount / 2; // Assuming equal teams
+
+        // Build teammate/opponent caches
+        m_Teammates.Clear();
+        m_Opponents.Clear();
+        foreach (var go in allAgents)
+        {
+            if (go == this.gameObject) continue;
+            var bp = go.GetComponent<BehaviorParameters>();
+            if (bp == null) continue;
+            bool isBlue = bp.TeamId == (int)Team.Blue;
+            bool sameTeam = (team == Team.Blue && isBlue) || (team == Team.Purple && !isBlue);
+            if (sameTeam)
+            {
+                m_Teammates.Add(go.transform);
+            }
+            else
+            {
+                m_Opponents.Add(go.transform);
+            }
+        }
     }
 
     /// <summary>
@@ -344,15 +367,23 @@ public class WalkerSoccerAgent : Agent
         //Position of target position relative to cube
         sensor.AddObservation(m_OrientationCube.transform.InverseTransformPoint(target.transform.position));
 
-        // Soccer-specific observations (7 floats: 3 ball pos + 3 ball vel + 1 team)
-        // Stage 1: Zeros (network learns to ignore these inputs)
-        // Stage 2: Real data (network uses these for soccer strategy)
+        // Soccer-specific observations
+        // Previous: 7 floats (ball pos 3 + ball vel 3 + team 1)
+        // Added: role (1), myGoal pos (3), oppGoal pos (3), up to 2 teammate positions (2x3), up to 2 opponent positions (2x3)
+        // Total added = 19; new soccer obs total = 26
         if (m_LocomotionOnly)
         {
             // Stage 1: Dummy soccer observations (all zeros)
             sensor.AddObservation(Vector3.zero); // Ball position
             sensor.AddObservation(Vector3.zero); // Ball velocity
             sensor.AddObservation(0f); // Team identifier
+            sensor.AddObservation(0f); // Role
+            sensor.AddObservation(Vector3.zero); // My goal
+            sensor.AddObservation(Vector3.zero); // Opponent goal
+            sensor.AddObservation(Vector3.zero); // Teammate 1
+            sensor.AddObservation(Vector3.zero); // Teammate 2
+            sensor.AddObservation(Vector3.zero); // Opponent 1
+            sensor.AddObservation(Vector3.zero); // Opponent 2
         }
         else
         {
@@ -381,6 +412,36 @@ public class WalkerSoccerAgent : Agent
 
             // Team identifier
             sensor.AddObservation(team == Team.Blue ? 1f : -1f);
+
+            // Role (Striker=1, Goalie=-1, Generic=0)
+            float roleVal = position == Position.Striker ? 1f : (position == Position.Goalie ? -1f : 0f);
+            sensor.AddObservation(roleVal);
+
+            // Goal positions
+            sensor.AddObservation(myGoal != null
+                ? m_OrientationCube.transform.InverseTransformPoint(myGoal.position)
+                : Vector3.zero);
+            sensor.AddObservation(opponentGoal != null
+                ? m_OrientationCube.transform.InverseTransformPoint(opponentGoal.position)
+                : Vector3.zero);
+
+            // Teammates (up to 2)
+            Vector3 tm1 = Vector3.zero, tm2 = Vector3.zero;
+            if (m_Teammates.Count > 0)
+                tm1 = m_OrientationCube.transform.InverseTransformPoint(m_Teammates[0].position);
+            if (m_Teammates.Count > 1)
+                tm2 = m_OrientationCube.transform.InverseTransformPoint(m_Teammates[1].position);
+            sensor.AddObservation(tm1);
+            sensor.AddObservation(tm2);
+
+            // Opponents (up to 2)
+            Vector3 op1 = Vector3.zero, op2 = Vector3.zero;
+            if (m_Opponents.Count > 0)
+                op1 = m_OrientationCube.transform.InverseTransformPoint(m_Opponents[0].position);
+            if (m_Opponents.Count > 1)
+                op2 = m_OrientationCube.transform.InverseTransformPoint(m_Opponents[1].position);
+            sensor.AddObservation(op1);
+            sensor.AddObservation(op2);
         }
 
         // Body part observations (same for both stages)
@@ -518,6 +579,17 @@ public class WalkerSoccerAgent : Agent
                 if (speedAlong > 0f)
                 {
                     AddReward(Mathf.Clamp(speedAlong, 0f, 10f) * 0.0075f);
+                }
+
+                // Discourage ball movement toward own goal
+                if (myGoal != null)
+                {
+                    var toOwnDir = (myGoal.position - ball.position).normalized;
+                    var speedTowardOwn = Vector3.Dot(ballRb.linearVelocity, toOwnDir);
+                    if (speedTowardOwn > 0f)
+                    {
+                        AddReward(-Mathf.Clamp(speedTowardOwn, 0f, 10f) * 0.01f);
+                    }
                 }
 
                 var toBall = ball.position - hips.position;
@@ -844,7 +916,52 @@ public class WalkerSoccerAgent : Agent
                     float phaseMult = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.25f : 1.0f; // Removed L4 extra penalty
                     AddReward(-goaliePenaltyStrength * phaseMult * excessDist);
                 }
+
+                // Defensive shaping: reward lining up between ball and own goal
+                if (ball != null)
+                {
+                    Vector3 toBallFromGoal = (ball.position - myGoal.position).normalized;
+                    Vector3 toAgentFromGoal = (hips.position - myGoal.position).normalized;
+                    float align = Mathf.Clamp01((Vector3.Dot(toBallFromGoal, toAgentFromGoal) + 1f) * 0.5f);
+                    AddReward(0.015f * align);
+                }
             }
+
+            // Striker situational aggression near opponent goal
+            if (position == Position.Striker && opponentGoal != null && ball != null)
+            {
+                float d = Vector3.Distance(ball.position, opponentGoal.position);
+                float nearOpp = Mathf.Clamp01(6f / (d + 0.001f));
+                AddReward(0.015f * nearOpp);
+            }
+
+            // Mild coordination: spacing penalty for close teammates, bonus for marking opponents
+            float spacingPenalty = 0f;
+            foreach (var tm in m_Teammates)
+            {
+                float d = Vector3.Distance(hips.position, tm.position);
+                if (d < 2.0f)
+                {
+                    spacingPenalty += (2.0f - d) * 0.005f;
+                }
+            }
+            AddReward(-spacingPenalty);
+
+            float markingBonus = 0f;
+            foreach (var op in m_Opponents)
+            {
+                if (myGoal != null)
+                {
+                    Vector3 toGoal = (myGoal.position - op.position).normalized;
+                    Vector3 toAgent = (hips.position - op.position).normalized;
+                    float proj = Vector3.Dot(toAgent, toGoal);
+                    if (proj > 0f)
+                    {
+                        markingBonus += proj * 0.005f;
+                    }
+                }
+            }
+            AddReward(markingBonus);
         }
 
         // Stage 1 only: Encourage turning toward off-angle targets to prevent "forward-only" exploitation
