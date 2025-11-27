@@ -28,6 +28,21 @@ PrefabInstance:
       propertyPath: m_DeterministicInference
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3599283675615088294, guid: dd62a2a5a838943fba3d2cbb377a75b3,
+        type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 269
+      objectReference: {fileID: 0}
+    - target: {fileID: 3599283675615088294, guid: dd62a2a5a838943fba3d2cbb377a75b3,
+        type: 3}
+      propertyPath: 'm_BrainParameters.VectorActionSize.Array.data[0]'
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3599283675615088294, guid: dd62a2a5a838943fba3d2cbb377a75b3,
+        type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.m_NumContinuousActions
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3925309372585159072, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: m_RootOrder
@@ -127,10 +142,6 @@ PrefabInstance:
         type: 3}
       insertIndex: 2
       addedObject: {fileID: 68579961006571340}
-    - targetCorrespondingSourceObject: {fileID: 4409675767907316506, guid: dd62a2a5a838943fba3d2cbb377a75b3,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5004001163431703029}
   m_SourcePrefab: {fileID: 100100000, guid: dd62a2a5a838943fba3d2cbb377a75b3, type: 3}
 --- !u!4 &554021006085965436 stripped
 Transform:
@@ -191,7 +202,7 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 5000
   team: 0
-  position: 0
+  position: 2
   initialPos: {x: 0, y: 0, z: 0}
   rotSign: 0
   kickForce: 6
@@ -199,6 +210,11 @@ MonoBehaviour:
   kickRange: 2
   kickCooldownSteps: 25
   kickReward: 0.1
+  cornerPenaltyRadius: 8
+  cornerPenaltyStrength: 0.01
+  arenaCenter: {fileID: 0}
+  goalieMaxDistance: 3.2
+  goaliePenaltyStrength: 0.012
   m_TargetWalkingSpeed: 10
   randomizeWalkSpeedEachEpisode: 1
   ball: {fileID: 0}
@@ -223,27 +239,6 @@ MonoBehaviour:
   maxSuccessSpeed: 2
   spawnAreaHalfX: 6
   spawnAreaHalfZ: 6
---- !u!114 &5004001163431703029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2152471811746365055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9437a8275717fb841b8665aaa3f0533f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
-  team: 0
-  position: 0
-  agentRb: {fileID: 0}
-  initialPos: {x: 0, y: 1, z: 0}
-  rotSign: 0
 --- !u!4 &3383691867792067854 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1015567049146122347, guid: dd62a2a5a838943fba3d2cbb377a75b3,

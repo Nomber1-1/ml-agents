@@ -1,0 +1,59 @@
+{
+    "locomotion_only": {
+        "lesson_num": 0
+    },
+    "target_walking_speed": {
+        "lesson_num": 0
+    },
+    "ball_touch": {
+        "lesson_num": 0
+    },
+    "ball_spawn_radius": {
+        "lesson_num": 0
+    },
+    "WalkerSoccer": {
+        "checkpoints": [
+            {
+                "steps": 499996,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-499996.onnx",
+                "reward": 1.0453181890818553,
+                "creation_time": 1764262760.9509552,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-499996.pt"
+                ]
+            },
+            {
+                "steps": 999989,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-999989.onnx",
+                "reward": 2.681263549393461,
+                "creation_time": 1764263053.7468426,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-999989.pt"
+                ]
+            },
+            {
+                "steps": 1302964,
+                "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-1302964.onnx",
+                "reward": 3.6964857116098693,
+                "creation_time": 1764263182.8060088,
+                "auxillary_file_paths": [
+                    "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-1302964.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1302964,
+            "file_path": "results\\WalkerStage1_48_269obs\\WalkerSoccer.onnx",
+            "reward": 3.6964857116098693,
+            "creation_time": 1764263182.8060088,
+            "auxillary_file_paths": [
+                "results\\WalkerStage1_48_269obs\\WalkerSoccer\\WalkerSoccer-1302964.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.8.0+cu129"
+    }
+}

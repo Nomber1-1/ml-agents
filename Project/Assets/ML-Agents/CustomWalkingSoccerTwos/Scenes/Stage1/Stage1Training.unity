@@ -3610,6 +3610,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WalkerStage1Platform
       objectReference: {fileID: 0}
+    - target: {fileID: 4706987649960196946, guid: 2bb9f6cc4bef14a48b7d88b873fe218c,
+        type: 3}
+      propertyPath: position
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5770125118224141494, guid: 2bb9f6cc4bef14a48b7d88b873fe218c,
         type: 3}
       propertyPath: m_Name

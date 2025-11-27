@@ -218,7 +218,7 @@ public class WalkerSoccerAgent : Agent
         m_AgentWallStuckSteps = 0;
         m_LastAgentPos = transform.position;
 
-        // Detect team size for dynamic threshold adjustment
+        // Detect team size for dynamic threshold adjustment -> For Testing 2v2 / 3v3 / etc
         var allAgents = GameObject.FindGameObjectsWithTag("agent");
         m_TotalAgentCount = allAgents.Length;
         m_AgentsPerTeam = m_TotalAgentCount / 2; // Assuming equal teams
@@ -364,8 +364,17 @@ public class WalkerSoccerAgent : Agent
         sensor.AddObservation(Quaternion.FromToRotation(hips.forward, cubeForward));
         sensor.AddObservation(Quaternion.FromToRotation(head.forward, cubeForward));
 
-        //Position of target position relative to cube
-        sensor.AddObservation(m_OrientationCube.transform.InverseTransformPoint(target.transform.position));
+        // Target position observation:
+        // Stage 1 (locomotion_only): keep target position (locomotion objective).
+        // Stage 2 (soccer): target == ball; omit duplicate by supplying zero placeholder to preserve observation count.
+        if (m_LocomotionOnly)
+        {
+            sensor.AddObservation(m_OrientationCube.transform.InverseTransformPoint(target.transform.position));
+        }
+        else
+        {
+            sensor.AddObservation(Vector3.zero); // placeholder (removed redundancy)
+        }
 
         // Soccer-specific observations
         // Previous: 7 floats (ball pos 3 + ball vel 3 + team 1)

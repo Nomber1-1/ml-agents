@@ -186,8 +186,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: c0d42fd00ce2d6643b467d7a31e7dddd,
+      objectReference: {fileID: 5022602860645237092, guid: b6f889af20b1d954b9f5add20026bd8e,
         type: 3}
+    - target: {fileID: 5549386472356959671, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 269
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
