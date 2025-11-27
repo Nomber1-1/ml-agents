@@ -207,7 +207,8 @@ PrefabInstance:
       propertyPath: targetToLookAt
       value: 
       objectReference: {fileID: 7431691405317613155}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5004001163431703029, guid: db339d15e425bb84687f8b0312ade0f3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
