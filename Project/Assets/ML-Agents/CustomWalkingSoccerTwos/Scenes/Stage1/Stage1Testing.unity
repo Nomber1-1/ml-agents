@@ -195,6 +195,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6696484174527441208, guid: 2b15433e3a6c76843ac14b7f21005087,
         type: 3}
+      propertyPath: MaxStep
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696484174527441208, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
       propertyPath: position
       value: 2
       objectReference: {fileID: 0}
