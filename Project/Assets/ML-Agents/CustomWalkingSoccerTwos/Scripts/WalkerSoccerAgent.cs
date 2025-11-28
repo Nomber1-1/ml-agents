@@ -75,6 +75,7 @@ public class WalkerSoccerAgent : Agent
     private const int AGENT_WALL_STUCK_THRESHOLD = 50; // ~5 seconds
     private Vector3 m_LastAgentPos;
     private float m_AgentStuckMoveThreshold = 0.3f; // Movement less than this = stuck
+    private bool m_IsCollidingWithWall = false; // Track wall collision via tag
     // Dive detection near ball
     private int m_DiveNearBallSteps = 0;
     private const int DIVE_NEAR_BALL_RESET_THRESHOLD = 20; // ~4.5 seconds at 10 steps/sec
@@ -323,6 +324,7 @@ public class WalkerSoccerAgent : Agent
         m_LastAgentPos = hipsBp.rb.transform.position;
         m_WasFallen = false;
         m_FallenSteps = 0;
+        m_IsCollidingWithWall = false;
     }
 
     /// <summary>
@@ -863,16 +865,17 @@ public class WalkerSoccerAgent : Agent
                 }
             }
 
-            // Agent wall stuck detection and respawn
-            if (arenaCenter != null)
+            // Agent wall stuck detection - penalty only, no respawn (Stage 2 only)
+            if (!m_LocomotionOnly)
             {
-                float agentDistFromCenter = Vector3.Distance(
-                    new Vector3(hips.position.x, 0, hips.position.z),
-                    new Vector3(arenaCenter.position.x, 0, arenaCenter.position.z)
-                );
+                // Check if agent is colliding with wall (via "wall" tag)
+                bool agentNearWall = m_IsCollidingWithWall;
 
-                // Check if agent is near/in wall (> 9m from center)
-                bool agentNearWall = agentDistFromCenter > 9f;
+                // Penalty for being in contact with wall
+                if (agentNearWall)
+                {
+                    AddReward(-0.05f); // Penalty for wall contact
+                }
 
                 // Check if agent hasn't moved much
                 float movementDist = Vector3.Distance(hips.position, m_LastAgentPos);
@@ -882,28 +885,8 @@ public class WalkerSoccerAgent : Agent
                 {
                     m_AgentWallStuckSteps++;
 
-                    if (m_AgentWallStuckSteps > AGENT_WALL_STUCK_THRESHOLD)
-                    {
-                        // Teleport agent back (physics glitch recovery only)
-                        var hipsBp = m_JdController.bodyPartsDict[hips];
-                        hipsBp.rb.transform.position = initialPos;
-                        hipsBp.rb.transform.rotation = Quaternion.Euler(0, rotSign * 90f, 0);
-                        hipsBp.rb.linearVelocity = Vector3.zero;
-                        hipsBp.rb.angularVelocity = Vector3.zero;
-
-                        // Reset all body parts to prevent glitched state
-                        foreach (var bodyPart in m_JdController.bodyPartsDict.Values)
-                        {
-                            bodyPart.Reset(bodyPart);
-                        }
-
-                        // Penalty for getting stuck in wall
-                        AddReward(-0.15f);
-
-                        m_AgentWallStuckSteps = 0;
-                        m_WasFallen = false; // Reset fall tracking after teleport
-                        m_FallenSteps = 0;
-                    }
+                    // Continuous penalty for being stuck - agent must learn to escape
+                    AddReward(-0.08f);
                 }
                 else
                 {
@@ -1202,6 +1185,30 @@ public class WalkerSoccerAgent : Agent
                     }
                 }
             }
+        }
+
+        // Track wall collisions by tag
+        if (collision.gameObject.CompareTag("wall"))
+        {
+            m_IsCollidingWithWall = true;
+        }
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        // Track wall collisions by tag
+        if (collision.gameObject.CompareTag("wall"))
+        {
+            m_IsCollidingWithWall = true;
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        // Stop tracking wall collision when we leave
+        if (collision.gameObject.CompareTag("wall"))
+        {
+            m_IsCollidingWithWall = false;
         }
     }
 
