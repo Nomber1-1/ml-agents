@@ -627,29 +627,27 @@ public class WalkerSoccerAgent : Agent
                     // Small bonus for staying upright near ball
                     if (upDot >= uprightDotThreshold)
                     {
-                        // Slightly stronger upright encouragement near ball
                         AddReward(0.02f);
-                        m_DiveNearBallSteps = 0; // reset dive counter when posture is good
+                        // Bonus for recovering from a fall (get-up behavior)
+                        if (m_DiveNearBallSteps > 0)
+                        {
+                            AddReward(0.08f); // Reward for getting up
+                        }
+                        m_DiveNearBallSteps = 0;
                     }
                     else
                     {
                         // Penalty scales with how far below threshold the posture is
                         float deficit = Mathf.Clamp01(uprightDotThreshold - upDot);
-                        // Include downward velocity component to penalize active diving
-                        float downwardVel = Mathf.Max(0f, -GetAvgVelocity().y); // positive when falling
+                        float downwardVel = Mathf.Max(0f, -GetAvgVelocity().y);
                         AddReward(-0.03f * (0.5f + deficit + 0.5f * downwardVel));
                         // Track sustained dive posture near ball
                         m_DiveNearBallSteps++;
+                        // Remove early reset: let agent learn to get up
+                        // If agent stays down too long, apply a small penalty
                         if (m_DiveNearBallSteps >= DIVE_NEAR_BALL_RESET_THRESHOLD)
                         {
-                            // Early reset promotes standing and kicking behavior
-                            var hipsBp = m_JdController.bodyPartsDict[hips];
-                            hipsBp.rb.transform.position = initialPos;
-                            hipsBp.rb.transform.rotation = Quaternion.Euler(0, rotSign * 90f, 0);
-                            hipsBp.rb.linearVelocity = Vector3.zero;
-                            hipsBp.rb.angularVelocity = Vector3.zero;
-                            AddReward(-0.1f); // small penalty for dive reset
-                            m_DiveNearBallSteps = 0;
+                            AddReward(-0.08f); // Penalty for staying down too long
                         }
                     }
                 }
