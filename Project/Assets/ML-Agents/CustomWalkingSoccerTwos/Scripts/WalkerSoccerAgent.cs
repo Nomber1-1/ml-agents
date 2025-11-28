@@ -590,14 +590,29 @@ public class WalkerSoccerAgent : Agent
                     AddReward(Mathf.Clamp(speedAlong, 0f, 10f) * 0.0075f);
                 }
 
-                // Discourage ball movement toward own goal
+                // Discourage ball movement toward own goal (stronger penalty)
                 if (myGoal != null)
                 {
                     var toOwnDir = (myGoal.position - ball.position).normalized;
                     var speedTowardOwn = Vector3.Dot(ballRb.linearVelocity, toOwnDir);
                     if (speedTowardOwn > 0f)
                     {
-                        AddReward(-Mathf.Clamp(speedTowardOwn, 0f, 10f) * 0.01f);
+                        AddReward(-Mathf.Clamp(speedTowardOwn, 0f, 10f) * 0.04f); // Stronger penalty
+                    }
+
+                    // Penalty for ball position close to own goal (not scored)
+                    float distToOwnGoal = Vector3.Distance(ball.position, myGoal.position);
+                    if (distToOwnGoal < 6f)
+                    {
+                        AddReward(-0.08f * (6f - distToOwnGoal)); // Up to -0.48 if ball is very close
+                    }
+
+                    // Bonus for ball progress away from own goal
+                    Vector3 ballToOppGoal = (opponentGoal.position - ball.position).normalized;
+                    float progressAway = Vector3.Dot(ballRb.linearVelocity, ballToOppGoal);
+                    if (progressAway > 0f)
+                    {
+                        AddReward(progressAway * 0.01f); // Small bonus for moving ball toward opponent goal
                     }
                 }
 
@@ -720,6 +735,20 @@ public class WalkerSoccerAgent : Agent
                         if (posDiff < 0.5f)
                         {
                             m_BallStuckSteps++;
+
+                            // Penalize agents near ball when stuck in corner
+                            float agentDistToBall = Vector3.Distance(hips.position, ball.position);
+                            if (agentDistToBall < 3.0f)
+                            {
+                                AddReward(-0.08f); // Strong penalty for camping near stuck ball
+                            }
+
+                            // Small bonus for moving ball away from wall/corner
+                            float ballToCenter = cornerPenaltyRadius - ballDistFromCenter;
+                            if (ballToCenter > 0.5f)
+                            {
+                                AddReward(0.02f * ballToCenter); // Encourage ball progress away from wall
+                            }
 
                             if (m_BallStuckSteps > BALL_STUCK_THRESHOLD)
                             {
@@ -917,22 +946,33 @@ public class WalkerSoccerAgent : Agent
                     new Vector3(myGoal.position.x, 0, myGoal.position.z)
                 );
 
-                if (horizDistFromGoal > goalieMaxDistance)
+                // Tighter leash when ball is near own goal
+                float leash = goalieMaxDistance;
+                float distToBall = ball != null ? Vector3.Distance(ball.position, myGoal.position) : 99f;
+                if (distToBall < 10f)
                 {
-                    float excessDist = horizDistFromGoal - goalieMaxDistance;
-                    // In Lesson 3 (kicking practice), add modest constraint
-                    // In Lesson 4 (full soccer), keep minimal emphasis
-                    float phaseMult = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.25f : 1.0f; // Removed L4 extra penalty
-                    AddReward(-goaliePenaltyStrength * phaseMult * excessDist);
+                    leash = Mathf.Lerp(goalieMaxDistance, 1.5f, (10f - distToBall) / 10f); // 1.5m leash if ball is very close
                 }
 
-                // Defensive shaping: reward lining up between ball and own goal
+                if (horizDistFromGoal > leash)
+                {
+                    float excessDist = horizDistFromGoal - leash;
+                    float phaseMult = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.25f : 1.0f;
+                    AddReward(-goaliePenaltyStrength * phaseMult * excessDist * 2.0f); // Double penalty for leaving goal
+                }
+
+                // Defensive shaping: reward lining up between ball and own goal (stronger bonus if ball is close)
                 if (ball != null)
                 {
                     Vector3 toBallFromGoal = (ball.position - myGoal.position).normalized;
                     Vector3 toAgentFromGoal = (hips.position - myGoal.position).normalized;
                     float align = Mathf.Clamp01((Vector3.Dot(toBallFromGoal, toAgentFromGoal) + 1f) * 0.5f);
-                    AddReward(0.015f * align);
+                    float blockBonus = 0.03f * align;
+                    if (distToBall < 8f)
+                    {
+                        blockBonus += 0.04f * (8f - distToBall) / 8f; // Extra bonus for blocking when ball is close
+                    }
+                    AddReward(blockBonus);
                 }
             }
 
