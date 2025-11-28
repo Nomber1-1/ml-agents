@@ -3,67 +3,67 @@
 # Train with PPO for faster learning, then transfer to Stage 2
 
 behaviors:
-    WalkerSoccer: # Same behavior name for transfer learning
-        trainer_type: ppo # Single-agent PPO (not POCA)
+  WalkerSoccer: # Same behavior name for transfer learning
+    trainer_type: ppo # Single-agent PPO (not POCA)
 
-        hyperparameters:
-            # Learning rate schedule
-            learning_rate: 0.0003
-            learning_rate_schedule: constant
+    hyperparameters:
+      # Learning rate schedule
+      learning_rate: 0.0003
+      learning_rate_schedule: constant
 
-            # Batch and buffer sizes
-            batch_size: 8192
-            buffer_size: 81920
+      # Batch and buffer sizes
+      batch_size: 8192
+      buffer_size: 81920
 
-            # PPO-specific parameters
-            beta: 0.005 # Entropy coefficient (exploration)
-            epsilon: 0.2 # PPO clipping
-            lambd: 0.95 # GAE lambda
-            num_epoch: 3 # Number of passes through experience
+      # PPO-specific parameters
+      beta: 0.005 # Entropy coefficient (exploration)
+      epsilon: 0.2 # PPO clipping
+      lambd: 0.95 # GAE lambda
+      num_epoch: 3 # Number of passes through experience
 
-        # Neural network architecture
-        network_settings:
-            normalize: true # Normalize observations
-            hidden_units: 512 # Large network for complex walker control
-            num_layers: 3 # Deep network for learning locomotion
-            vis_encode_type: simple
+    # Neural network architecture
+    network_settings:
+      normalize: true # Normalize observations
+      hidden_units: 512 # Large network for complex walker control
+      num_layers: 3 # Deep network for learning locomotion
+      vis_encode_type: simple
 
-        # Reward signals
-        reward_signals:
-            extrinsic:
-                gamma: 0.99 # Discount factor
-                strength: 1.0
+    # Reward signals
+    reward_signals:
+      extrinsic:
+        gamma: 0.99 # Discount factor
+        strength: 1.0
 
-        # Training configuration
-        max_steps: 30000000 # 30-40M steps for solid locomotion
-        time_horizon: 1000
-        summary_freq: 10000
-        keep_checkpoints: 40
-        checkpoint_interval: 1000000
+    # Training configuration
+    max_steps: 50000000 # 30-40M steps for solid locomotion
+    time_horizon: 1000
+    summary_freq: 10000
+    keep_checkpoints: 50
+    checkpoint_interval: 1000000
 
 # Environment parameters for Stage 1
 environment_parameters:
-    # STAGE 1 MODE: Locomotion only (269 obs with 26 soccer obs zeroed)
-    locomotion_only:
-        sampler_type: constant
-        sampler_parameters:
-            value: 1.0 # Enable locomotion-only mode (soccer observations = zero)
+  # STAGE 1 MODE: Locomotion only (269 obs with 26 soccer obs zeroed)
+  locomotion_only:
+    sampler_type: constant
+    sampler_parameters:
+      value: 1.0 # Enable locomotion-only mode (soccer observations = zero)
 
-    # Randomize walking speed each episode
-    target_walking_speed:
-        sampler_type: uniform
-        sampler_parameters:
-            min_value: 0.8
-            max_value: 4.0
+  # Randomize walking speed each episode
+  target_walking_speed:
+    sampler_type: uniform
+    sampler_parameters:
+      min_value: 0.8
+      max_value: 4.0
 
-    # No ball interaction in Stage 1
-    ball_touch:
-        sampler_type: constant
-        sampler_parameters:
-            value: 0.0
+  # No ball interaction in Stage 1
+  ball_touch:
+    sampler_type: constant
+    sampler_parameters:
+      value: 0.0
 
-    # No ball spawning in Stage 1
-    ball_spawn_radius:
-        sampler_type: constant
-        sampler_parameters:
-            value: 0.0
+  # No ball spawning in Stage 1
+  ball_spawn_radius:
+    sampler_type: constant
+    sampler_parameters:
+      value: 0.0

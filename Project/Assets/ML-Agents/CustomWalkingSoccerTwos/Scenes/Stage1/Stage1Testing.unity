@@ -186,12 +186,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 9e0817e6b6359c14db95491c8104f978,
+      objectReference: {fileID: 5022602860645237092, guid: fb19927875c18404cafaca75b2c58b28,
         type: 3}
     - target: {fileID: 5549386472356959671, guid: 2b15433e3a6c76843ac14b7f21005087,
         type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
       value: 269
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696484174527441208, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: MaxStep
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 6696484174527441208, guid: 2b15433e3a6c76843ac14b7f21005087,
         type: 3}
