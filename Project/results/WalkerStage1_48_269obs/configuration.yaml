@@ -14,7 +14,7 @@ behaviors:
       learning_rate_schedule: constant
       beta_schedule: constant
       epsilon_schedule: constant
-    checkpoint_interval: 500000
+    checkpoint_interval: 1000000
     network_settings:
       normalize: true
       hidden_units: 512
@@ -38,7 +38,7 @@ behaviors:
     init_path: null
     keep_checkpoints: 40
     even_checkpoints: false
-    max_steps: 20000000
+    max_steps: 30000000
     time_horizon: 1000
     summary_freq: 10000
     threaded: false
@@ -70,7 +70,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 9647
+          seed: 8368
           value: 1.0
       name: locomotion_only
       completion_criteria: null
@@ -79,7 +79,7 @@ environment_parameters:
     - value:
         sampler_type: uniform
         sampler_parameters:
-          seed: 9648
+          seed: 8369
           min_value: 0.8
           max_value: 4.0
       name: target_walking_speed
@@ -89,7 +89,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 9649
+          seed: 8370
           value: 0.0
       name: ball_touch
       completion_criteria: null
@@ -98,8 +98,8 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 9650
-          value: 5.0
+          seed: 8371
+          value: 0.0
       name: ball_spawn_radius
       completion_criteria: null
 checkpoint_settings:

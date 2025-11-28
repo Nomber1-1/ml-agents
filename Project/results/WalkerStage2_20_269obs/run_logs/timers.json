@@ -1,0 +1,54 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1764275348",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\patri\\miniconda3\\envs\\mlagents\\Scripts\\mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccerStage1_Locomotion.yaml --env=C:\\Documents\\GitHub\\ml-agents\\Project\\Builds\\WalkerStage2_20_269obs.exe --num-envs=4 --initialize-from=WalkerStage1_48_269obs --run-id=WalkerStage2_20_269obs",
+        "mlagents_version": "1.2.0.dev0",
+        "mlagents_envs_version": "1.2.0.dev0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.8.0+cu129",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1764275352"
+    },
+    "total": 3.867890299996361,
+    "count": 1,
+    "self": 0.29268399998545647,
+    "children": {
+        "run_training.setup": {
+            "total": 0.22092890000203624,
+            "count": 1,
+            "self": 0.22092890000203624
+        },
+        "TrainerController.start_learning": {
+            "total": 3.3542774000088684,
+            "count": 1,
+            "self": 0.0005095999804325402,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 3.207699799997499,
+                    "count": 1,
+                    "self": 3.207699799997499
+                },
+                "trainer_threads": {
+                    "total": 9.00006853044033e-07,
+                    "count": 1,
+                    "self": 9.00006853044033e-07
+                },
+                "TrainerController._save_models": {
+                    "total": 0.14606710002408363,
+                    "count": 1,
+                    "self": 0.01022180003928952,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.1358452999847941,
+                            "count": 1,
+                            "self": 0.1358452999847941
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
