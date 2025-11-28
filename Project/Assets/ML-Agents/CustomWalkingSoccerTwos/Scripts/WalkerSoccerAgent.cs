@@ -85,8 +85,16 @@ public class WalkerSoccerAgent : Agent
     [SerializeField] private float fallenThreshold = 0.5f; // upDot below this = considered fallen
     [SerializeField] private float fallenPenaltyPerStep = 0.02f; // Penalty for staying down
     [SerializeField] private float recoveryReward = 0.5f; // Reward for getting back up
+    [SerializeField] private int earlyRecoveryWindow = 40; // Bonus window (steps fallen) for quick recovery
+    [SerializeField] private float earlyRecoveryBonus = 1.2f; // Additional reward if recovered quickly
+    [SerializeField] private float fallenEscalationRate = 0.05f; // Escalate penalty per fallen step
+    [SerializeField] private float locomotionSuppressionDot = 0.65f; // Below this uprightness, dampen locomotion reward
+    [SerializeField] private float proneBonusPerStep = 0.015f; // Encourage being face-down vs. on back
+    [SerializeField] private float supinePenaltyPerStep = 0.03f; // Penalize staying on back to encourage rolling
     private bool m_WasFallen = false;
     private int m_FallenSteps = 0;
+    private float m_LastChestUpDot = 0f;
+    private int m_SupineSteps = 0;
 
     // Goalie positioning
     private Transform myGoal;
@@ -576,10 +584,26 @@ public class WalkerSoccerAgent : Agent
             );
         }
 
-        // Scale locomotion reward in Stage 2 so soccer signals (touches, goals, kicks)
-        // can dominate. In Stage 1, keep full locomotion reward.
+        // Uprightness gating for locomotion reward
+        float upDotEarly = Mathf.Clamp01(Vector3.Dot(hips.up, Vector3.up));
+        // Scale locomotion reward in Stage 2 so soccer signals (touches, goals, kicks) can dominate.
         float locomotionScale = m_LocomotionOnly ? 1f : Mathf.Clamp01(m_ResetParams.GetWithDefault("locomotion_scale", 0.5f));
-        AddReward(locomotionScale * matchSpeedReward * lookAtTargetReward);
+        float postureMultiplier;
+        if (upDotEarly < fallenThreshold)
+        {
+            // Fully suppress locomotion reward when clearly fallen
+            postureMultiplier = 0f;
+        }
+        else if (upDotEarly < locomotionSuppressionDot)
+        {
+            // Smoothly ramp up locomotion reward as agent approaches uprightness
+            postureMultiplier = Mathf.InverseLerp(fallenThreshold, locomotionSuppressionDot, upDotEarly);
+        }
+        else
+        {
+            postureMultiplier = 1f;
+        }
+        AddReward(locomotionScale * postureMultiplier * matchSpeedReward * lookAtTargetReward);
 
         // Stage 2: ball-to-goal shaping rewards and anti-stall near ball
         if (!m_LocomotionOnly && ball != null && opponentGoal != null)
@@ -639,16 +663,58 @@ public class WalkerSoccerAgent : Agent
                 if (isFallen)
                 {
                     m_FallenSteps++;
-                    // Continuous penalty for being down - encourages learning to get up
-                    AddReward(-fallenPenaltyPerStep);
+                    // Escalating penalty while fallen (quadratic-ish growth via rate)
+                    float escalated = fallenPenaltyPerStep * (1f + m_FallenSteps * fallenEscalationRate);
+                    AddReward(-escalated);
+
+                    // Prefer falling/remaining face-down (prone) over on-back (supine)
+                    // chest.up roughly points away from the torso; face-down => chest.up ~ Vector3.down
+                    float chestUpDot = Mathf.Clamp(Vector3.Dot(chest.up, Vector3.up), -1f, 1f);
+                    float proneScore = Mathf.Clamp01(-chestUpDot);   // 0..1 higher when face-down
+                    float supineScore = Mathf.Clamp01(chestUpDot);    // 0..1 higher when on-back
+
+                    // Small shaping each step: reward prone, penalize supine
+                    AddReward(proneBonusPerStep * proneScore);
+                    AddReward(-supinePenaltyPerStep * supineScore);
+
+                    // Encourage rolling progression away from supine: reward reduction in chestUpDot while fallen
+                    if (m_FallenSteps > 1)
+                    {
+                        float supineReduction = Mathf.Max(0f, m_LastChestUpDot - chestUpDot);
+                        if (supineReduction > 0f)
+                        {
+                            AddReward(0.02f * supineReduction); // bonus for rolling toward stomach
+                        }
+                    }
+
+                    // Track sustained supine to further discourage
+                    if (supineScore > 0.6f)
+                    {
+                        m_SupineSteps++;
+                        AddReward(-0.01f * Mathf.Min(m_SupineSteps, 50)); // grow penalty for staying on back
+                    }
+                    else
+                    {
+                        m_SupineSteps = 0;
+                    }
+
+                    m_LastChestUpDot = chestUpDot;
                     m_WasFallen = true;
                 }
                 else if (m_WasFallen)
                 {
-                    // Agent successfully got back up! Big reward
-                    AddReward(recoveryReward * (1f + Mathf.Min(m_FallenSteps / 50f, 2f))); // Bonus scales with time down
+                    // Agent successfully got back up
+                    float baseRecovery = recoveryReward * (1f + Mathf.Min(m_FallenSteps / 25f, 3f));
+                    if (m_FallenSteps <= earlyRecoveryWindow)
+                    {
+                        // Extra bonus for quick recovery (linearly decays within window)
+                        float quickFactor = 1f - (float)m_FallenSteps / Mathf.Max(1, earlyRecoveryWindow);
+                        baseRecovery += earlyRecoveryBonus * quickFactor;
+                    }
+                    AddReward(baseRecovery);
                     m_WasFallen = false;
                     m_FallenSteps = 0;
+                    m_SupineSteps = 0;
                 }
 
                 // Anti-dive posture shaping near ball: discourage forward falls
@@ -1146,6 +1212,7 @@ public class WalkerSoccerAgent : Agent
                 }
             }
 
+
             // In Lessons 0-1 (ball_touch = 0.0), ball respawns on touch like original Walker
             // This encourages locomotion learning without soccer complexity
             if (m_BallTouch <= 0.01f)
@@ -1154,6 +1221,7 @@ public class WalkerSoccerAgent : Agent
                 var envController = GetComponentInParent<WalkerSoccerEnvController>();
                 if (envController != null)
                 {
+                    Debug.Log($"[RespawnDebug] Agent {name} triggered ResetBall due to early-stage ball_touch={m_BallTouch}.");
                     envController.ResetBall();
                 }
             }
@@ -1212,7 +1280,6 @@ public class WalkerSoccerAgent : Agent
         }
     }
 
-    /// <summary>
     /// Heuristic for manual control (testing purposes)
     /// </summary>
     public override void Heuristic(in ActionBuffers actionsOut)
