@@ -71,9 +71,9 @@ CustomWalkingSoccerTwos/
 
 ### Unified Agent Architecture
 - **Single agent script** with conditional behavior (`locomotion_only` flag)
-- **250 observations** consistent across both stages:
+- **269 observations** consistent across both stages:
   - 243 locomotion observations (always active)
-  - 7 soccer observations (zeros in Stage 1, real data in Stage 2)
+  - 26 soccer observations (zeros in Stage 1, real data in Stage 2)
 - **40 continuous actions**: 39 joints + 1 kick (gated by curriculum)
 
 ### Anti-Exploit Mechanisms
@@ -84,19 +84,26 @@ CustomWalkingSoccerTwos/
 
 ## 🧠 Agent Design
 
-### Observation Space (250 dimensions)
+### Observation Space (269 dimensions)
 **Locomotion Observations (243, both stages):**
 - Velocity goals (4): Current vs target speeds
 - Rotations (8): Body orientation deltas
-- Target position (3): Direction to goal
+- Target position (3): Direction to goal (Stage 1) / zero placeholder (Stage 2)
 - Body parts (228): 16 parts × ~14 obs each (positions, velocities, rotations, contacts)
 
-**Soccer Context Observations (7, conditional):**
+**Soccer Context Observations (26, conditional):**
 - Ball position relative to agent (3)
 - Ball velocity (3)
 - Team identifier (1: +1 Blue, -1 Purple)
-- **Stage 1**: All zeros (Vector3.zero + 0f)
-- **Stage 2**: Real soccer data
+- Role identifier (1: +1 Striker, -1 Goalie, 0 Generic)
+- Own goal position (3)
+- Opponent goal position (3)
+- Teammate 1 position (3)
+- Teammate 2 position (3)
+- Opponent 1 position (3)
+- Opponent 2 position (3)
+- **Stage 1**: All zeros (26 floats = 0)
+- **Stage 2**: Real soccer data (role-aware, goal-aware, team-aware)
 
 ### Action Space (40 continuous)
 - **Joint rotations (26)**: chest (3), spine (3), head (2), limbs (18)
@@ -115,12 +122,24 @@ CustomWalkingSoccerTwos/
 - Stability penalties: Forward tip, sideways lean, angular velocity
 
 **Stage 2 (Soccer Focus):**
-- Goals: +50 × time_bonus (scoring), -10 (conceding)
+- Goals: +50 × time_bonus (scoring), -10 × self_play_weight (conceding, auto-scaled by curriculum)
 - Ball touches: +0.2 × curriculum (delayed 50 steps)
 - Kick reward: +0.1 per intentional kick (Lesson 3+)
 - Locomotion rewards: Retained from Stage 1
 - Upright bonus: +0.03 per step (height-scaled)
-- Existential rewards: ±0.25 by role (goalie/striker)
+- **Role-Aware Rewards:**
+  - Striker: +0.015 per step near opponent goal
+  - Goalie: +0.015 per step aligned with ball (defensive positioning)
+- **Goal-Aware Penalties:**
+  - Own-goal velocity: -0.04 × speedTowardOwn (4x base penalty)
+  - Own-goal proximity: -0.08 × proximity to own goal when moving ball toward it
+  - Progress bonus: +0.01 for moving ball away from own goal
+- **Coordination Incentives:**
+  - Spacing penalty: -0.005 per teammate within 2m (reduce bunching)
+  - Marking bonus: +0.005 per opponent marked (within 3m)
+- **Anti-Exploit Penalties:**
+  - Corner camping: -0.08 for staying near stuck ball + 0.02 for moving it
+  - Goalie leash: dynamic penalty (doubled strength) for leaving goal area
 
 ## 📊 Training Results
 
@@ -180,10 +199,14 @@ self_play:
 
 environment_parameters:
   locomotion_only: 0.0  # Stage 2 mode
-  ball_touch:  # Curriculum
+  ball_touch:  # Curriculum: kick enablement
     - 0.35 (Lesson 2, 0-6M)
     - 0.5 (Lesson 3, 6M-12M, kick enabled)
     - 1.0 (Lesson 4, 12M-15M)
+  self_play_weight:  # NEW - Automated competitive pressure
+    - 0.0 (start, cooperative learning)
+    - 1.0 (50% progress, fully competitive)
+```
 ```
 
 ## 📖 Documentation
@@ -223,11 +246,14 @@ See `TRAINING_GUIDE.md` and `QUICK_REFERENCE.md` for detailed solutions.
 
 ### Current Implementation
 - ✅ Two-stage transfer learning (PPO → POCA)
-- ✅ 250-observation zero-padding for perfect weight transfer
+- ✅ 269-observation zero-padding for perfect weight transfer
 - ✅ Turn encouragement to prevent forward-only policies
 - ✅ Touch validation to prevent dive exploits
 - ✅ Conditional spawning (random Stage 1, fixed Stage 2)
 - ✅ Curriculum learning (chase → kick → score)
+- ✅ Automated self-play enablement via curriculum
+- ✅ Role-aware and goal-aware reward shaping
+- ✅ Anti-exploit penalties (corner camping, own-goal, goalie wandering)
 
 ### Planned Enhancements
 - [ ] LSTM memory for temporal reasoning

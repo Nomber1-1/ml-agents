@@ -75,26 +75,9 @@ public class WalkerSoccerAgent : Agent
     private const int AGENT_WALL_STUCK_THRESHOLD = 50; // ~5 seconds
     private Vector3 m_LastAgentPos;
     private float m_AgentStuckMoveThreshold = 0.3f; // Movement less than this = stuck
-    private bool m_IsCollidingWithWall = false; // Track wall collision via tag
     // Dive detection near ball
     private int m_DiveNearBallSteps = 0;
     private const int DIVE_NEAR_BALL_RESET_THRESHOLD = 20; // ~4.5 seconds at 10 steps/sec
-
-    // Fall recovery tracking
-    [Header("Fall Recovery Settings")]
-    [SerializeField] private float fallenThreshold = 0.5f; // upDot below this = considered fallen
-    [SerializeField] private float fallenPenaltyPerStep = 0.02f; // Penalty for staying down
-    [SerializeField] private float recoveryReward = 0.5f; // Reward for getting back up
-    [SerializeField] private int earlyRecoveryWindow = 40; // Bonus window (steps fallen) for quick recovery
-    [SerializeField] private float earlyRecoveryBonus = 1.2f; // Additional reward if recovered quickly
-    [SerializeField] private float fallenEscalationRate = 0.05f; // Escalate penalty per fallen step
-    [SerializeField] private float locomotionSuppressionDot = 0.65f; // Below this uprightness, dampen locomotion reward
-    [SerializeField] private float proneBonusPerStep = 0.015f; // Encourage being face-down vs. on back
-    [SerializeField] private float supinePenaltyPerStep = 0.03f; // Penalize staying on back to encourage rolling
-    private bool m_WasFallen = false;
-    private int m_FallenSteps = 0;
-    private float m_LastChestUpDot = 0f;
-    private int m_SupineSteps = 0;
 
     // Goalie positioning
     private Transform myGoal;
@@ -330,9 +313,6 @@ public class WalkerSoccerAgent : Agent
         m_BallAgentPileSteps = 0;
         m_AgentWallStuckSteps = 0;
         m_LastAgentPos = hipsBp.rb.transform.position;
-        m_WasFallen = false;
-        m_FallenSteps = 0;
-        m_IsCollidingWithWall = false;
     }
 
     /// <summary>
@@ -360,7 +340,7 @@ public class WalkerSoccerAgent : Agent
 
     /// <summary>
     /// Loop over body parts to add them to observation.
-    /// Always 269 observations for proper transfer learning between stages.
+    /// Always 250 observations for proper transfer learning between stages.
     /// Stage 1 (locomotion_only=1): Soccer observations set to zero (ignored during training)
     /// Stage 2 (locomotion_only=0): Soccer observations contain real data
     /// </summary>
@@ -584,26 +564,10 @@ public class WalkerSoccerAgent : Agent
             );
         }
 
-        // Uprightness gating for locomotion reward
-        float upDotEarly = Mathf.Clamp01(Vector3.Dot(hips.up, Vector3.up));
-        // Scale locomotion reward in Stage 2 so soccer signals (touches, goals, kicks) can dominate.
+        // Scale locomotion reward in Stage 2 so soccer signals (touches, goals, kicks)
+        // can dominate. In Stage 1, keep full locomotion reward.
         float locomotionScale = m_LocomotionOnly ? 1f : Mathf.Clamp01(m_ResetParams.GetWithDefault("locomotion_scale", 0.5f));
-        float postureMultiplier;
-        if (upDotEarly < fallenThreshold)
-        {
-            // Fully suppress locomotion reward when clearly fallen
-            postureMultiplier = 0f;
-        }
-        else if (upDotEarly < locomotionSuppressionDot)
-        {
-            // Smoothly ramp up locomotion reward as agent approaches uprightness
-            postureMultiplier = Mathf.InverseLerp(fallenThreshold, locomotionSuppressionDot, upDotEarly);
-        }
-        else
-        {
-            postureMultiplier = 1f;
-        }
-        AddReward(locomotionScale * postureMultiplier * matchSpeedReward * lookAtTargetReward);
+        AddReward(locomotionScale * matchSpeedReward * lookAtTargetReward);
 
         // Stage 2: ball-to-goal shaping rewards and anti-stall near ball
         if (!m_LocomotionOnly && ball != null && opponentGoal != null)
@@ -655,90 +619,38 @@ public class WalkerSoccerAgent : Agent
                 var toBall = ball.position - hips.position;
                 float horizDist = new Vector2(toBall.x, toBall.z).magnitude;
                 float ballSpeedMag = ballRb.linearVelocity.magnitude;
-
-                // Fall recovery system: track fallen state and reward getting back up
-                float upDot = Mathf.Clamp01(Vector3.Dot(hips.up, Vector3.up));
-                bool isFallen = upDot < fallenThreshold;
-
-                if (isFallen)
-                {
-                    m_FallenSteps++;
-                    // Escalating penalty while fallen (quadratic-ish growth via rate)
-                    float escalated = fallenPenaltyPerStep * (1f + m_FallenSteps * fallenEscalationRate);
-                    AddReward(-escalated);
-
-                    // Prefer falling/remaining face-down (prone) over on-back (supine)
-                    // chest.up roughly points away from the torso; face-down => chest.up ~ Vector3.down
-                    float chestUpDot = Mathf.Clamp(Vector3.Dot(chest.up, Vector3.up), -1f, 1f);
-                    float proneScore = Mathf.Clamp01(-chestUpDot);   // 0..1 higher when face-down
-                    float supineScore = Mathf.Clamp01(chestUpDot);    // 0..1 higher when on-back
-
-                    // Small shaping each step: reward prone, penalize supine
-                    AddReward(proneBonusPerStep * proneScore);
-                    AddReward(-supinePenaltyPerStep * supineScore);
-
-                    // Encourage rolling progression away from supine: reward reduction in chestUpDot while fallen
-                    if (m_FallenSteps > 1)
-                    {
-                        float supineReduction = Mathf.Max(0f, m_LastChestUpDot - chestUpDot);
-                        if (supineReduction > 0f)
-                        {
-                            AddReward(0.02f * supineReduction); // bonus for rolling toward stomach
-                        }
-                    }
-
-                    // Track sustained supine to further discourage
-                    if (supineScore > 0.6f)
-                    {
-                        m_SupineSteps++;
-                        AddReward(-0.01f * Mathf.Min(m_SupineSteps, 50)); // grow penalty for staying on back
-                    }
-                    else
-                    {
-                        m_SupineSteps = 0;
-                    }
-
-                    m_LastChestUpDot = chestUpDot;
-                    m_WasFallen = true;
-                }
-                else if (m_WasFallen)
-                {
-                    // Agent successfully got back up
-                    float baseRecovery = recoveryReward * (1f + Mathf.Min(m_FallenSteps / 25f, 3f));
-                    if (m_FallenSteps <= earlyRecoveryWindow)
-                    {
-                        // Extra bonus for quick recovery (linearly decays within window)
-                        float quickFactor = 1f - (float)m_FallenSteps / Mathf.Max(1, earlyRecoveryWindow);
-                        baseRecovery += earlyRecoveryBonus * quickFactor;
-                    }
-                    AddReward(baseRecovery);
-                    m_WasFallen = false;
-                    m_FallenSteps = 0;
-                    m_SupineSteps = 0;
-                }
-
                 // Anti-dive posture shaping near ball: discourage forward falls
+                // Compute uprightness (hips up vs world up) and penalize if below threshold when close to ball
+                float upDot = Mathf.Clamp01(Vector3.Dot(hips.up, Vector3.up));
                 if (horizDist < 2.0f)
                 {
                     // Small bonus for staying upright near ball
                     if (upDot >= uprightDotThreshold)
                     {
+                        // Slightly stronger upright encouragement near ball
                         AddReward(0.02f);
-                        // Bonus for recovering from a fall (get-up behavior)
-                        if (m_DiveNearBallSteps > 0)
-                        {
-                            AddReward(0.08f); // Reward for getting up
-                        }
-                        m_DiveNearBallSteps = 0;
+                        m_DiveNearBallSteps = 0; // reset dive counter when posture is good
                     }
                     else
                     {
-                        // Light penalty for poor posture near ball (main penalty comes from fall recovery system)
+                        // Penalty scales with how far below threshold the posture is
                         float deficit = Mathf.Clamp01(uprightDotThreshold - upDot);
-                        float downwardVel = Mathf.Max(0f, -GetAvgVelocity().y);
-                        AddReward(-0.01f * (0.5f + deficit + 0.5f * downwardVel));
+                        // Include downward velocity component to penalize active diving
+                        float downwardVel = Mathf.Max(0f, -GetAvgVelocity().y); // positive when falling
+                        AddReward(-0.03f * (0.5f + deficit + 0.5f * downwardVel));
                         // Track sustained dive posture near ball
                         m_DiveNearBallSteps++;
+                        if (m_DiveNearBallSteps >= DIVE_NEAR_BALL_RESET_THRESHOLD)
+                        {
+                            // Early reset promotes standing and kicking behavior
+                            var hipsBp = m_JdController.bodyPartsDict[hips];
+                            hipsBp.rb.transform.position = initialPos;
+                            hipsBp.rb.transform.rotation = Quaternion.Euler(0, rotSign * 90f, 0);
+                            hipsBp.rb.linearVelocity = Vector3.zero;
+                            hipsBp.rb.angularVelocity = Vector3.zero;
+                            AddReward(-0.1f); // small penalty for dive reset
+                            m_DiveNearBallSteps = 0;
+                        }
                     }
                 }
 
@@ -931,17 +843,16 @@ public class WalkerSoccerAgent : Agent
                 }
             }
 
-            // Agent wall stuck detection - penalty only, no respawn (Stage 2 only)
-            if (!m_LocomotionOnly)
+            // Agent wall stuck detection and respawn
+            if (arenaCenter != null)
             {
-                // Check if agent is colliding with wall (via "wall" tag)
-                bool agentNearWall = m_IsCollidingWithWall;
+                float agentDistFromCenter = Vector3.Distance(
+                    new Vector3(hips.position.x, 0, hips.position.z),
+                    new Vector3(arenaCenter.position.x, 0, arenaCenter.position.z)
+                );
 
-                // Penalty for being in contact with wall
-                if (agentNearWall)
-                {
-                    AddReward(-0.05f); // Penalty for wall contact
-                }
+                // Check if agent is near/in wall (> 9m from center)
+                bool agentNearWall = agentDistFromCenter > 9f;
 
                 // Check if agent hasn't moved much
                 float movementDist = Vector3.Distance(hips.position, m_LastAgentPos);
@@ -951,8 +862,20 @@ public class WalkerSoccerAgent : Agent
                 {
                     m_AgentWallStuckSteps++;
 
-                    // Continuous penalty for being stuck - agent must learn to escape
-                    AddReward(-0.08f);
+                    if (m_AgentWallStuckSteps > AGENT_WALL_STUCK_THRESHOLD)
+                    {
+                        // Respawn agent at initial position
+                        var hipsBp = m_JdController.bodyPartsDict[hips];
+                        hipsBp.rb.transform.position = initialPos;
+                        hipsBp.rb.transform.rotation = Quaternion.Euler(0, rotSign * 90f, 0);
+                        hipsBp.rb.linearVelocity = Vector3.zero;
+                        hipsBp.rb.angularVelocity = Vector3.zero;
+
+                        // Small penalty for getting stuck
+                        AddReward(-0.1f);
+
+                        m_AgentWallStuckSteps = 0;
+                    }
                 }
                 else
                 {
@@ -1169,16 +1092,6 @@ public class WalkerSoccerAgent : Agent
         {
             // Small reward for valid touches only - no exploitation
             AddReward(0.2f);
-
-            // In Stage 1 locomotion training, reset ball position (not agent)
-            if (m_LocomotionOnly)
-            {
-                var envController = GetComponentInParent<WalkerSoccerEnvController>();
-                if (envController != null)
-                {
-                    envController.ResetBall();
-                }
-            }
         }
         else
         {
@@ -1212,7 +1125,6 @@ public class WalkerSoccerAgent : Agent
                 }
             }
 
-
             // In Lessons 0-1 (ball_touch = 0.0), ball respawns on touch like original Walker
             // This encourages locomotion learning without soccer complexity
             if (m_BallTouch <= 0.01f)
@@ -1221,7 +1133,6 @@ public class WalkerSoccerAgent : Agent
                 var envController = GetComponentInParent<WalkerSoccerEnvController>();
                 if (envController != null)
                 {
-                    Debug.Log($"[RespawnDebug] Agent {name} triggered ResetBall due to early-stage ball_touch={m_BallTouch}.");
                     envController.ResetBall();
                 }
             }
@@ -1254,32 +1165,9 @@ public class WalkerSoccerAgent : Agent
                 }
             }
         }
-
-        // Track wall collisions by tag
-        if (collision.gameObject.CompareTag("wall"))
-        {
-            m_IsCollidingWithWall = true;
-        }
     }
 
-    void OnCollisionStay(Collision collision)
-    {
-        // Track wall collisions by tag
-        if (collision.gameObject.CompareTag("wall"))
-        {
-            m_IsCollidingWithWall = true;
-        }
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        // Stop tracking wall collision when we leave
-        if (collision.gameObject.CompareTag("wall"))
-        {
-            m_IsCollidingWithWall = false;
-        }
-    }
-
+    /// <summary>
     /// Heuristic for manual control (testing purposes)
     /// </summary>
     public override void Heuristic(in ActionBuffers actionsOut)

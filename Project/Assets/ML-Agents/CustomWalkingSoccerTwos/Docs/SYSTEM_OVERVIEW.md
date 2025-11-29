@@ -22,9 +22,9 @@
 │  ┌────────────────────────────────────────────────────────────────────┐  │
 │  │                    WalkerSoccerAgent                                │  │
 │  │  • 16 body parts (ragdoll)                                         │  │
-│  │  • 250 observations:                                               │  │
+│  │  • 269 observations:                                               │  │
 │  │    - 243 locomotion: velocity, rotations, body parts, target       │  │
-│  │    - 7 soccer (ZEROS): ball pos/vel, team ID                      │  │
+│  │    - 26 soccer (ZEROS): ball, team, role, goals, teammates, opps  │  │
 │  │  • 40 continuous actions (39 joints + kick ignored)                │  │
 │  │  • locomotion_only = 1.0                                           │  │
 │  └────────────────────────────────────────────────────────────────────┘  │
@@ -33,7 +33,7 @@
 │                             ▼                                              │
 │  ┌────────────────────────────────────────────────────────────────────┐  │
 │  │                   Neural Network (PPO)                              │  │
-│  │  - Input: 250 observations (learns to ignore 7 zeros)              │  │
+│  │  - Input: 269 observations (learns to ignore 26 zeros)             │  │
 │  │  - Hidden: 512 units × 3 layers                                    │  │
 │  │  - Output: 40 continuous actions                                   │  │
 │  │  - LR: 0.0003                                                      │  │
@@ -124,12 +124,19 @@
      - Target/ball position (3)
      - 16 body parts × ~14 obs each (228)
    
-   • Soccer Context (7 obs):
+   • Soccer Context (26 obs):
      - Ball position relative to agent (3)
      - Ball velocity (3)
-     - Team identifier (1)
-     - Stage 1: All zeros (Vector3.zero + 0f)
-     - Stage 2: Real soccer data
+     - Team identifier (1: +1 Blue, -1 Purple)
+     - Role identifier (1: +1 Striker, -1 Goalie, 0 Generic)
+     - Own goal position (3)
+     - Opponent goal position (3)
+     - Teammate 1 position (3, zero if no teammate)
+     - Teammate 2 position (3, zero if <2 teammates)
+     - Opponent 1 position (3, zero if no opponent)
+     - Opponent 2 position (3, zero if <2 opponents)
+     - Stage 1: All 26 zeros
+     - Stage 2: Real soccer data (role/goal/team-aware)
    
 2. DECIDE
    ↓
@@ -219,7 +226,7 @@ OrientationCube
             └─ Team identifier (1 float: +1 Blue, -1 Purple)
             └─ Network now uses these 7 inputs for soccer strategy
 
-Total: 243 + 7 = 250 observations (consistent across both stages)
+Total: 243 + 26 = 269 observations (consistent across both stages)
 ```
 
 ## ⚡ Action Flow
@@ -443,12 +450,15 @@ LESSON 3: Kicking Enabled! (ball_touch=0.5, radius=1.8m) [6M-12M steps]
 │  Threshold: 80% mean reward (12M steps)
 │      ↓
 
-LESSON 4: Goal Scoring (ball_touch=1.0, radius=1.4m) [12M-15M steps]
+LESSON 4: Goal Scoring (ball_touch=1.0, radius=1.4m, self_play_weight→1.0) [12M-15M steps]
 │  Goal: Competitive soccer with strategic kicking
 │  ├─ Full ball rewards (100%)
 │  ├─ Ball spawns 1.4m (close, intense play)
-│  ├─ Goal reward: +50× time bonus
-│  └─ Advanced tactics: positioning, passing, defending
+│  ├─ Goal reward: +50× time bonus (scoring)
+│  ├─ **Self-play automation**: self_play_weight 0.0 → 1.0 at 50% progress
+│  │   - 0.0 = cooperative (-0 penalty for conceding)
+│  │   - 1.0 = competitive (-10 × 1.0 penalty for conceding)
+│  └─ Advanced tactics: positioning, passing, defending, role-aware play
 │  Completion: 15M total steps
 │      ↓
    GRADUATION! ⚽🎓
@@ -585,7 +595,7 @@ WalkerSoccerStage2_Soccer.yaml
 
 ---
 
-This two-stage architecture enables efficient transfer learning: agents master locomotion in Stage 1, then apply those skills to soccer in Stage 2. The 250-observation zero-padding strategy ensures perfect weight transfer while allowing different training focuses per stage!
+This two-stage architecture enables efficient transfer learning: agents master locomotion in Stage 1, then apply those skills to soccer in Stage 2. The 269-observation zero-padding strategy ensures perfect weight transfer while allowing different training focuses per stage!
 
 ## 🔄 Training Loop
 

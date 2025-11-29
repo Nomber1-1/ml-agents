@@ -1,4 +1,4 @@
-# Walker Soccer - Stage 1: Locomotion Training (269 obs)
+# Walker Soccer - Stage 1: Locomotion Training (250 obs)
 # Soccer observations set to zero during Stage 1 (network learns to ignore them)
 # Train with PPO for faster learning, then transfer to Stage 2
 
@@ -11,12 +11,12 @@ behaviors:
             learning_rate: 0.0003
             learning_rate_schedule: constant
 
-            # Batch and buffer sizes (smaller batch for quicker posture/fall feedback)
-            batch_size: 4096
-            buffer_size: 40960
+            # Batch and buffer sizes
+            batch_size: 8192
+            buffer_size: 81920
 
             # PPO-specific parameters
-            beta: 0.01 # Higher entropy early to explore recovery strategies
+            beta: 0.005 # Entropy coefficient (exploration)
             epsilon: 0.2 # PPO clipping
             lambd: 0.95 # GAE lambda
             num_epoch: 3 # Number of passes through experience
@@ -35,15 +35,15 @@ behaviors:
                 strength: 1.0
 
         # Training configuration
-        max_steps: 40000000 # 30-40M steps for solid locomotion
-        time_horizon: 256 # Shorter horizon: faster credit assignment for stand-up events
+        max_steps: 15000000 # 15M steps for solid locomotion (3-5 hours)
+        time_horizon: 1000
         summary_freq: 10000
-        keep_checkpoints: 50
-        checkpoint_interval: 1000000
+        keep_checkpoints: 5
+        checkpoint_interval: 500000
 
 # Environment parameters for Stage 1
 environment_parameters:
-    # STAGE 1 MODE: Locomotion only (269 obs with 26 soccer obs zeroed)
+    # STAGE 1 MODE: Locomotion only (250 obs with 7 soccer obs zeroed)
     locomotion_only:
         sampler_type: constant
         sampler_parameters:
@@ -62,8 +62,8 @@ environment_parameters:
         sampler_parameters:
             value: 0.0
 
-    # No ball spawning in Stage 1
+    # Ball spawns far (agents walk to target sphere instead)
     ball_spawn_radius:
         sampler_type: constant
         sampler_parameters:
-            value: 0.0
+            value: 5.0

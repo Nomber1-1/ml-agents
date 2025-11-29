@@ -48,7 +48,7 @@ tensorboard --logdir results
 - ✅ Single WalkerSoccerAgent per arena (10-20 arenas recommended)
 - ✅ Moving target sphere with TargetController
 - ✅ BehaviorParameters:
-  - Vector Observation: **250**
+  - Vector Observation: **269**
   - Continuous Actions: **40**
   - Behavior Name: `WalkerSoccer`
 - ✅ DecisionRequester (Decision Period: 5)
@@ -90,13 +90,13 @@ tensorboard --logdir results
 
 #### Transfer learning fails (Policy not loading):
 1. ✅ Check both stages use Behavior Name: `WalkerSoccer`
-2. ✅ Verify observation space: **250 in both stages**
+2. ✅ Verify observation space: **269 in both stages**
 3. ✅ Confirm `--initialize-from=<correct_stage1_run_id>`
 4. ⚠️ Optimizer warnings are normal (PPO→POCA transition)
 
 #### Agents forgot how to walk:
 1. ❌ Observation space mismatch (check Unity BehaviorParameters)
-2. ✅ Should be 250 in both Stage 1 and Stage 2 builds
+2. ✅ Should be 269 in both Stage 1 and Stage 2 builds
 3. ✅ Policy should transfer successfully (no Policy warning)
 
 #### Agents spawn randomly in Stage 2:
@@ -175,7 +175,7 @@ environment_parameters:
 ```
 Fixed Timestep: 0.02
 Decision Period: 5
-Vector Observation Space: 250
+Vector Observation Space: 269
 Continuous Actions: 40
 ```
 

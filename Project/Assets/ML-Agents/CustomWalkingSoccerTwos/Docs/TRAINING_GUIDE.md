@@ -203,7 +203,7 @@ These are **expected** when transferring PPO→POCA. Policy weights transfer suc
 
 ## Observation Space Architecture
 
-Both stages use **250 observations** for perfect weight transfer:
+Both stages use **269 observations** for perfect weight transfer:
 
 **Base Locomotion (243 obs):**
 - Velocity goals: 4 floats
@@ -377,9 +377,13 @@ Watch for:
 - Verify ball reference is assigned in WalkerSoccerAgent
 - Check ball collision layer settings
 - Ensure `delayBallInfluenceSteps` (50) has passed in episode
-- Current curriculum uses dual parameters:
-  - `ball_touch`: scales ball collision reward (0.0 → 1.0)
-  - `ball_spawn_radius`: ball distance from center (12m → 3m)
+- Current curriculum uses multiple parameters:
+  - `ball_touch`: scales ball collision reward (0.0 → 0.5 → 1.0)
+  - `ball_spawn_radius`: ball distance from center (1.5m → 2.0m → 1.5m)
+  - `locomotion_scale`: scales locomotion reward baseline (0.5 → 0.4 → 0.15)
+  - `self_play_weight`: **NEW - automates competitive pressure (0.0 → 1.0 at 50% progress)**
+    - 0.0 = cooperative (no penalty for conceding)
+    - 1.0 = fully competitive (full -10 penalty for conceding)
 
 #### Issue: Training is unstable (NaN errors)
 **Solutions:**

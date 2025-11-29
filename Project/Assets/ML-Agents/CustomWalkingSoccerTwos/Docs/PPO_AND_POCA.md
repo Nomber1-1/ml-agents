@@ -14,7 +14,7 @@ PPO is a **single-agent, on-policy** reinforcement learning algorithm designed t
 #### 1. **Policy Structure**
 ```csharp
 // Your agent's neural network (3 layers × 512 units)
-// Input: 250-dim locomotion observations (soccer obs = 0)
+// Input: 269-dim locomotion observations (soccer obs = 0)
 // Output: 39 continuous actions (joint torques for walker body)
 ```
 

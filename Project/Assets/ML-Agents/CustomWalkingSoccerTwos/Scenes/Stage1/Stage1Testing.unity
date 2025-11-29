@@ -182,6 +182,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: WalkerStage1Platform
       objectReference: {fileID: 0}
+    - target: {fileID: 5549386471588387290, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386471803412955, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386471873054721, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386472065592899, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386472263853952, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386472343661080, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5549386472356959671, guid: 2b15433e3a6c76843ac14b7f21005087,
         type: 3}
       propertyPath: m_Model
@@ -192,6 +222,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
       value: 269
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386472635951590, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386472671397594, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386472756228563, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386473037829458, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386473123037142, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549386473203432257, guid: 2b15433e3a6c76843ac14b7f21005087,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6696484174527441208, guid: 2b15433e3a6c76843ac14b7f21005087,
         type: 3}

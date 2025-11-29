@@ -7,27 +7,64 @@ This document provides troubleshooting tips, debugging strategies, and suggestio
 ## Table of Contents
 
 1. [Common Issues & Solutions](#common-issues--solutions)
-2. [Debugging Techniques](#debugging-techniques)
-3. [Performance Improvements](#performance-improvements)
-4. [Advanced Features](#advanced-features)
-5. [Code Optimizations](#code-optimizations)
+2. [Anti-Exploit Mechanisms](#anti-exploit-mechanisms)
+3. [Debugging Techniques](#debugging-techniques)
+4. [Performance Improvements](#performance-improvements)
+5. [Advanced Features](#advanced-features)
+6. [Code Optimizations](#code-optimizations)
 
 ---
 
  
 ## Common Issues & Solutions
  
-### Recent Stage 2 Updates (Snapshot)
- - Penalty softening: bunching −0.015 per teammate; goalie penalty strength 0.015; goalie L4 multiplier 1.0.
- - Kick incentives: L4 effective base 0.25 (via phase multiplier 1.25); direction bonus up to +0.15; shot-on-goal +0.3.
- - Locomotion baseline: `locomotion_scale = 0.15` in Lesson 4 to stabilize non-goal episodes.
- - Anti-dive correction: posture gating for kicks (require `uprightDotThreshold`), near-ball posture shaping (bonus for upright, penalty when below threshold within 2m).
+### Latest Updates (Dec 2025)
+ - **Observation Space Expansion**: 250 → 269 observations (added role, goals, teammates, opponents)
+ - **Self-Play Automation**: `self_play_weight` curriculum (0.0 → 1.0 at 50% progress) automates competitive pressure
+ - **Role-Aware Rewards**: Striker aggression near opponent goal, Goalie defensive positioning
+ - **Goal-Aware Penalties**: Strong discouragement of own-goal behavior (4x velocity penalty, position penalties)
+ - **Coordination Incentives**: Spacing penalties (reduce bunching), marking bonuses (cover opponents)
+ - **Anti-Exploit Fixes**: Corner camping, own-goal shooting, goalie wandering (see dedicated section below)
 
  
-### Current Observations (~9.3M steps)
- - Mean Reward mostly −4.9 to −6.6; intermittent positive Group Reward (8–21).
- - Diving behavior reduced post anti-dive changes; more upright approaches observed.
- - Self-play currently disabled; re-enable when Mean Reward > −2 consistently.
+### Behavioral Improvements
+ - Corner camping: Strong penalty (-0.08) for staying near stuck ball, bonus for moving it away
+ - Own-goal shooting: 4x velocity penalty, position-based penalty, progress bonus away from own goal
+ - Goalie wandering: Dynamic leash (1.5-3.2m), doubled penalty, stronger blocking bonus
+
+---
+
+## Anti-Exploit Mechanisms
+
+### Corner Camping Exploit (Fixed)
+**Problem**: Agents learned to push ball into corners and camp nearby, waiting for unstuck respawn to center.
+
+**Solution**:
+```csharp
+// Strong penalty for camping near stuck ball
+if (ballStuckTimer > 2.0f && distToBall < 3.5f && distToCenter > 10f)
+    AddReward(-0.08f);
+
+// Bonus for moving ball away from corners
+if (ballMovingFromCorner)
+    AddReward(0.02f);
+```
+
+### Own-Goal Shooting (Fixed)
+**Problem**: Agents sometimes shot ball into their own goal.
+
+**Solution**:
+- 4x velocity penalty (-0.04 vs -0.01)
+- Position-based penalty (-0.08 scaled by proximity)
+- Progress bonus (+0.01 for moving ball away)
+
+### Goalie Wandering (Fixed)
+**Problem**: Goalies left goal area too frequently.
+
+**Solution**:
+- Dynamic leash (1.5m when ball close, 3.2m when far)
+- Doubled leash penalty strength
+- Stronger blocking position bonus (+0.03-0.07)
 
 
 ### Physics Issues
