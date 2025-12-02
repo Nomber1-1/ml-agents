@@ -1,5 +1,4 @@
-# Walker Soccer Training Configuration V10
-# Simplified training closer to Unity's WalkerAgent baseline
+# Walker Soccer Training Configuration
 # Progressive skill curriculum: Stand → Walk → Chase → Kick → Score
 
 behaviors:
@@ -52,15 +51,13 @@ behaviors:
         checkpoint_interval: 500000 # Save checkpoint every 500k steps
 
 # Environment parameters with multi-phase curriculum learning
-# Lessons 0-1: Extended locomotion mastery (10M steps) - ball respawns on touch like original Walker
-# Lessons 2-4: Progressive soccer skills - ball stays in play for soccer gameplay
 # 1) ball_touch: scales reward influence of ball interaction
 # 2) ball_spawn_radius: controls initial distance of ball from center
 environment_parameters:
     ball_touch:
         curriculum:
             - name: Lesson0_StandAndBalance
-              # Pure balance training - ball is just a touch target (respawns on contact)
+              # Pure balance training; ball acts as a touch target (respawns)
               completion_criteria:
                   measure: progress # progress = total_steps / max_steps
                   behavior: WalkerSoccer
@@ -68,7 +65,7 @@ environment_parameters:
                   threshold: 0.125 # 12.5% of max_steps (5M steps)
               value: 0.0
             - name: Lesson1_WalkToTarget
-              # Walk toward ball target (respawns on touch like Walker)
+              # Walk toward ball target (respawns on touch)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -76,7 +73,7 @@ environment_parameters:
                   threshold: 0.25 # 25% (10M steps total for Lesson 0+1)
               value: 0.0
             - name: Lesson2_ChaseBall
-              # Ball now stays in play - chase actively
+              # Ball stays in play; chase actively
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -84,7 +81,7 @@ environment_parameters:
                   threshold: 0.40 # 40% (16M steps)
               value: 0.35
             - name: Lesson3_KickingEnabled
-              # Kick action unlocked! (ball_touch=0.5, kick action now active)
+              # Kick action enabled (ball_touch=0.5)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -92,12 +89,12 @@ environment_parameters:
                   threshold: 0.625 # 62.5% (25M steps)
               value: 0.5
             - name: Lesson4_GoalScoring
-              # Full ball interaction + goal focus (ball_touch=1.0)
+              # Full ball interaction with goal focus (ball_touch=1.0)
               value: 1.0
     ball_spawn_radius:
         curriculum:
             - name: Lesson0_StandAndBalance
-              # Ball far away - just a target to walk toward
+              # Ball far away; serves as a walking target
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -105,7 +102,7 @@ environment_parameters:
                   threshold: 0.125
               value: 3.0
             - name: Lesson1_WalkToTarget
-              # Ball medium distance - walk and touch (respawns)
+              # Ball medium distance; walk and touch (respawns)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -113,7 +110,7 @@ environment_parameters:
                   threshold: 0.25
               value: 2.5
             - name: Lesson2_ChaseBall
-              # Ball closer - soccer gameplay begins (no respawn on touch)
+              # Ball closer; soccer gameplay begins (no respawn on touch)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer

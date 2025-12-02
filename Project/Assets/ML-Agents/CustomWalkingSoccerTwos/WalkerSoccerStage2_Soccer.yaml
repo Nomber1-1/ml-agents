@@ -1,9 +1,9 @@
 # Walker Soccer - Stage 2: Soccer with Transfer Learning (269 obs)
-# Soccer observations now contain real data (ball position, velocity, team)
-# Transfer locomotion skills from Stage 1, then learn multi-agent soccer
+# Soccer observations contain real data (ball position, velocity, team)
+# Uses transferred locomotion skills and learns multi-agent soccer
 
 behaviors:
-    WalkerSoccer: # Same behavior name for transfer learning
+    WalkerSoccer: # Behavior name used for transfer learning
         trainer_type: poca # Multi-agent POCA
 
         hyperparameters:
@@ -21,7 +21,7 @@ behaviors:
             lambd: 0.95 # GAE lambda
             num_epoch: 3
 
-        # Neural network architecture (matches Stage 1)
+        # Neural network architecture
         network_settings:
             normalize: true
             hidden_units: 512
@@ -35,7 +35,6 @@ behaviors:
                 strength: 1.0
 
         # Self-play for competitive training
-        # Disabled until Lesson 4 to stabilize ELO; re-enable after goals are frequent
         self_play:
             save_steps: 50000 # Save snapshot every 50K steps
             team_change: 200000 # Swap teams every 200K steps
@@ -45,7 +44,7 @@ behaviors:
             initial_elo: 1200.0
 
         # Training configuration
-        max_steps: 20000000 # 20M additional steps
+        max_steps: 20000000 # 20M steps for Stage 2 soccer training
         time_horizon: 1000
         summary_freq: 10000
         keep_checkpoints: 40
@@ -53,7 +52,7 @@ behaviors:
 
 # Environment parameters for Stage 2
 environment_parameters:
-    # STAGE 2 MODE: Full soccer (269 obs with real soccer data)
+    # MODE: Full soccer (269 obs with real soccer data)
     locomotion_only:
         sampler_type: constant
         sampler_parameters:
@@ -66,11 +65,11 @@ environment_parameters:
             min_value: 0.6
             max_value: 6.0
 
-    # Progressive curriculum (V10 - starting from transferred locomotion)
+        # Progressive curriculum starting from transferred locomotion
     ball_touch:
         curriculum:
-            - name: Lesson 2 - Chase Ball (No Kicking)
-              # Pure chase: learn movement and ball pursuit in soccer space
+                        - name: Lesson 2 - Chase Ball (No Kicking)
+                            # Pure chase: movement and ball pursuit in soccer space
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -79,8 +78,8 @@ environment_parameters:
                   threshold: 0.133
               value: 0.35
 
-            - name: Lesson 3 - Enable Kicking
-              # Kicking enabled with stronger rewards for shooting (handled in code)
+                        - name: Lesson 3 - Enable Kicking
+                            # Kicking enabled; rewards encourage shooting (handled in code)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -94,7 +93,7 @@ environment_parameters:
 
     ball_spawn_radius:
         curriculum:
-            - name: Lesson 2 - Chase Ball (Aligned with no-kick)
+                        - name: Lesson 2 - Chase Ball (Aligned with no-kick)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -103,7 +102,7 @@ environment_parameters:
                   threshold: 0.133
               value: 1.5
 
-            - name: Lesson 3 - Wider Spawn (kicking enabled)
+                        - name: Lesson 3 - Wider Spawn (kicking enabled)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -112,11 +111,10 @@ environment_parameters:
                   threshold: 0.4667
               value: 2.0
 
-            - name: Lesson 4 - Full Soccer (Center spawn for focused play)
+                        - name: Lesson 4 - Full Soccer (center-focused spawn)
               value: 1.5
 
-        # Fade locomotion reward so soccer signals dominate in Stage 2
-        # Starts at 0.4, drops to 0.25 by 5M, then 0.15 for full soccer
+                # Fade locomotion reward so soccer signals dominate
     locomotion_scale:
         curriculum:
             - name: Stage2_FadeStart
@@ -141,8 +139,8 @@ environment_parameters:
             - name: Stage2_FullSoccer
               value: 0.15
 
-    # Self-play weight: gradually enable competitive self-play
-    # 0.0 = cooperative (no ELO penalty early), 1.0 = full competitive
+        # Self-play weight: gradually enable competitive self-play
+        # 0.0 = cooperative start, 1.0 = fully competitive
     self_play_weight:
         curriculum:
             - name: Stage2_CooperativePhase
@@ -151,7 +149,7 @@ environment_parameters:
                   behavior: WalkerSoccer
                   signal_smoothing: true
                   min_lesson_length: 1000
-                  threshold: 0.50 # Enable at 50% (~10M steps)
+                                    threshold: 0.50 # Enable at 50%
               value: 0.0
 
             - name: Stage2_CompetitivePhase

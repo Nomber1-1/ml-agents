@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
-using Unity.MLAgentsExamples; // Added for JointDriveController
+using Unity.MLAgentsExamples; // Required for JointDriveController
 
 // Inspired by Unity ML-Agents Examples
 public class WalkerSoccerEnvController : MonoBehaviour

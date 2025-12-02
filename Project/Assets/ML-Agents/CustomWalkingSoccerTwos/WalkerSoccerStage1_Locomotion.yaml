@@ -1,9 +1,9 @@
-# Walker Soccer - Stage 1: Locomotion Training (250 obs)
-# Soccer observations set to zero during Stage 1 (network learns to ignore them)
-# Train with PPO for faster learning, then transfer to Stage 2
+# Walker Soccer - Stage 1: Locomotion Training (269 obs)
+# Soccer observations are zero-filled during Stage 1 (network learns to ignore them)
+# Train with PPO, then transfer to Stage 2
 
 behaviors:
-    WalkerSoccer: # Same behavior name for transfer learning
+    WalkerSoccer: # Behavior name used for transfer learning
         trainer_type: ppo # Single-agent PPO (not POCA)
 
         hyperparameters:
@@ -35,7 +35,7 @@ behaviors:
                 strength: 1.0
 
         # Training configuration
-        max_steps: 15000000 # 15M steps for solid locomotion (3-5 hours)
+        max_steps: 15000000 # 15M steps for Stage 1 locomotion training
         time_horizon: 1000
         summary_freq: 10000
         keep_checkpoints: 5
@@ -43,7 +43,7 @@ behaviors:
 
 # Environment parameters for Stage 1
 environment_parameters:
-    # STAGE 1 MODE: Locomotion only (250 obs with 7 soccer obs zeroed)
+    # MODE: Locomotion only (269 obs with soccer features zeroed)
     locomotion_only:
         sampler_type: constant
         sampler_parameters:

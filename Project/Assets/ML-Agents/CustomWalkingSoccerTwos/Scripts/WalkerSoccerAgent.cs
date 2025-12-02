@@ -107,7 +107,7 @@ public class WalkerSoccerAgent : Agent
     //If false, the goal velocity will be walkingSpeed
     public bool randomizeWalkSpeedEachEpisode;
 
-    //The direction an agent will walk during training - now influenced by soccer ball position
+    //The direction an agent will walk during training - influenced by soccer ball position
     private Vector3 m_WorldDirToWalk = Vector3.right;
 
     [Header("Soccer Ball Target")]
@@ -218,10 +218,10 @@ public class WalkerSoccerAgent : Agent
         m_AgentWallStuckSteps = 0;
         m_LastAgentPos = transform.position;
 
-        // Detect team size for dynamic threshold adjustment -> For Testing 2v2 / 3v3 / etc
+        // Detect team size for dynamic threshold adjustment -> For Testing 1v1 / 2v2 / 3v3 / etc
         var allAgents = GameObject.FindGameObjectsWithTag("agent");
         m_TotalAgentCount = allAgents.Length;
-        m_AgentsPerTeam = m_TotalAgentCount / 2; // Assuming equal teams
+        m_AgentsPerTeam = m_TotalAgentCount / 2; // Assuming always equal teams
 
         // Build teammate/opponent caches
         m_Teammates.Clear();
@@ -340,9 +340,7 @@ public class WalkerSoccerAgent : Agent
 
     /// <summary>
     /// Loop over body parts to add them to observation.
-    /// Always 269 observations for proper transfer learning between stages.
-    /// Stage 1 (locomotion_only=1): Soccer observations set to zero (ignored during training)
-    /// Stage 2 (locomotion_only=0): Soccer observations contain real data
+    /// Always 269 observations. When locomotion_only=1, soccer observations are zero-filled; when 0, soccer observations contain data.
     /// </summary>
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -365,8 +363,8 @@ public class WalkerSoccerAgent : Agent
         sensor.AddObservation(Quaternion.FromToRotation(head.forward, cubeForward));
 
         // Target position observation:
-        // Stage 1 (locomotion_only): keep target position (locomotion objective).
-        // Stage 2 (soccer): target == ball; omit duplicate by supplying zero placeholder to preserve observation count.
+        // When locomotion_only=1, include target position for locomotion.
+        // When locomotion_only=0, target equals ball; provide a zero placeholder to avoid redundancy while preserving shape.
         if (m_LocomotionOnly)
         {
             sensor.AddObservation(m_OrientationCube.transform.InverseTransformPoint(target.transform.position));
@@ -376,10 +374,9 @@ public class WalkerSoccerAgent : Agent
             sensor.AddObservation(Vector3.zero); // placeholder (removed redundancy)
         }
 
-        // Soccer-specific observations
-        // Previous: 7 floats (ball pos 3 + ball vel 3 + team 1)
-        // Added: role (1), myGoal pos (3), oppGoal pos (3), up to 2 teammate positions (2x3), up to 2 opponent positions (2x3)
-        // Total added = 19; new soccer obs total = 26
+        // Soccer observations (26 floats total):
+        // ball pos (3), ball vel (3), team id (1), role (1), myGoal pos (3), oppGoal pos (3),
+        // up to 2 teammate positions (2x3), up to 2 opponent positions (2x3)
         if (m_LocomotionOnly)
         {
             // Stage 1: Dummy soccer observations (all zeros)
@@ -499,12 +496,11 @@ public class WalkerSoccerAgent : Agent
         bpDict[forearmR].SetJointStrength(continuousActions[++i]);
 
         // Optional kick action (additional continuous action at end if present)
-        // Stage 1 (locomotion_only): Kick action ignored
-        // Stage 2 (soccer): Kick enabled in Lesson 3+ (ball_touch >= 0.5)
+        // locomotion_only=1: kick ignored; locomotion_only=0: kick enabled when ball_touch >= 0.5
         if (continuousActions.Length > i + 1)
         {
             float kickIntensity = continuousActions[++i]; // Expect value in [0,1]
-            // Only attempt kick in Stage 2 + Lesson 3+
+            // Only attempt kick in soccer mode when curriculum phase allows
             if (!m_LocomotionOnly && m_BallTouch >= 0.5f)
             {
                 TryKickBall(kickIntensity);
@@ -792,7 +788,7 @@ public class WalkerSoccerAgent : Agent
                         new Vector3(arenaCenter.position.x, 0, arenaCenter.position.z)
                     );
 
-                    // Assuming arena radius is around 10-12m, wall contact is when ball is > 9m from center
+                    // Arena edge heuristic: treat ball as near wall beyond this distance from center
                     bool nearWall = ballDistFromCenter > 6f;
                     bool ballSlowOrStuck = ballRbWall.linearVelocity.magnitude < 0.5f;
 
@@ -1013,7 +1009,7 @@ public class WalkerSoccerAgent : Agent
             AddReward(markingBonus);
         }
 
-        // Stage 1 only: Encourage turning toward off-angle targets to prevent "forward-only" exploitation
+        // Stage 1 only: Encourage turning toward off-angle targets to prevent "forward-only" behavior
         if (m_LocomotionOnly && target != null)
         {
             Vector3 toTarget = (target.position - hips.position);
@@ -1077,7 +1073,7 @@ public class WalkerSoccerAgent : Agent
     /// </summary>
     public void TouchedTarget()
     {
-        // Harsh dive suppression: only reward proper upright walking touches
+        // Only reward proper upright walking touches; suppress dives
         var hipsBp = m_JdController.bodyPartsDict[hips];
         float upDot = Mathf.Clamp01(Vector3.Dot(hips.up, Vector3.up));
         Vector3 hipVel = hipsBp.rb.linearVelocity;
@@ -1112,21 +1108,19 @@ public class WalkerSoccerAgent : Agent
         if (collision.gameObject.CompareTag("ball"))
         {
             // Reward for touching the ball with cooldown to prevent farming
-            // Scale inversely with ball_touch: high in early lessons (learning chase), low in full soccer
+            // Scales inversely with ball_touch to emphasize goals as curriculum advances
             if (m_BallTouch > 0f)
             {
                 if (m_LastBallTouchStep < 0 || StepCount - m_LastBallTouchStep >= 20)
                 {
-                    // Inverse scaling: 0.35→full reward, 1.0→minimal reward
-                    // This encourages ball engagement early, then prioritizes goals in full soccer
+                    // Inverse scaling encourages early ball engagement, then prioritizes goals later
                     float touchScale = Mathf.Lerp(1.0f, 0.1f, (m_BallTouch - 0.35f) / 0.65f);
                     AddReward(0.1f * m_BallTouch * touchScale);
                     m_LastBallTouchStep = StepCount;
                 }
             }
 
-            // In Lessons 0-1 (ball_touch = 0.0), ball respawns on touch like original Walker
-            // This encourages locomotion learning without soccer complexity
+            // When ball_touch is near zero, respawn ball on touch (focus on locomotion)
             if (m_BallTouch <= 0.01f)
             {
                 // Ball respawn behavior (like Walker's target touch)
@@ -1138,8 +1132,7 @@ public class WalkerSoccerAgent : Agent
             }
             else
             {
-                // In Lessons 2+ (ball_touch > 0.0), ball stays in play for soccer
-                // Apply kick force based on collision
+                // When ball_touch > 0.0, keep ball in play and apply kick force
                 var force = k_KickPower;
                 if (position == Position.Goalie)
                 {
@@ -1239,7 +1232,7 @@ public class WalkerSoccerAgent : Agent
     }
 
     // Triggered kick: applies impulse to ball without requiring precise leg contact
-    // Note: This method is only called when ball_touch >= 0.5 (Lesson 3+)
+    // This method is only called when ball_touch >= 0.5
     void TryKickBall(float intensity)
     {
         if (ball == null) return;
@@ -1268,10 +1261,7 @@ public class WalkerSoccerAgent : Agent
 
             // Base kick reward, scaled by curriculum phase
             float baseKick = kickReward * Mathf.Clamp01(intensity);
-            // Lesson 3 (ball_touch==0.5): boost kick rewards to learn shooting
-            // Lesson 4 (ball_touch==1.0): reduce kick rewards to prioritize scoring strategy
-            // Boost kick rewards in L4 (full soccer) to strengthen goal-directed behavior
-            // Stronger phase multipliers to make purposeful kicks matter more
+            // Phase-based scaling using m_BallTouch (intermediate vs full); strengthen purposeful kicks
             float phaseMultiplier = (m_BallTouch >= 0.5f && m_BallTouch < 1.0f) ? 1.8f : 2.0f;
             float reward = baseKick * phaseMultiplier;
 
