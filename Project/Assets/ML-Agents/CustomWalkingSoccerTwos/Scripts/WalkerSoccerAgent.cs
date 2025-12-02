@@ -340,7 +340,7 @@ public class WalkerSoccerAgent : Agent
 
     /// <summary>
     /// Loop over body parts to add them to observation.
-    /// Always 250 observations for proper transfer learning between stages.
+    /// Always 269 observations for proper transfer learning between stages.
     /// Stage 1 (locomotion_only=1): Soccer observations set to zero (ignored during training)
     /// Stage 2 (locomotion_only=0): Soccer observations contain real data
     /// </summary>

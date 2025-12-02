@@ -111,12 +111,19 @@ Rationale:
 - Locomotion reward fading forces policy to attend to new soccer-specific features
 
 ### 2.5 Reward Structure (Design & Justification)
+
+#### Stage 1 (Locomotion)
 | Component | Value(s) | Purpose |
 |----------|----------|---------|
 | Valid touch | +0.2 | Reinforces upright, controlled gait rather than diving |
 | Dive penalties | -0.15 to -1.35 | Suppresses exploit of falling toward target for reset cycles |
-| Turn encouragement | +0.05 × progress | Ensures omnidirectional capability (critical for soccer pursuit) |
+| Turn encouragement | +0.05 × progress | Ensures omnidirectional capability (critical for later soccer pursuit) |
 | Standing penalty | -0.02 × angle frac | Discourages inertia lock when target moves laterally |
+| Upright bonus | +0.03 | Maintains stable posture during locomotion learning |
+
+#### Stage 2 (Soccer)
+| Component | Value(s) | Purpose |
+|----------|----------|---------|
 | Goals (score) | +50 × time_bonus | Dominant sparse objective for team success |
 | Goals (concede) | -10 × `self_play_weight` | Scales competitive pressure safely via curriculum |
 | Ball touches | +0.2 × curriculum | Progressively increases salience of ball interaction |
