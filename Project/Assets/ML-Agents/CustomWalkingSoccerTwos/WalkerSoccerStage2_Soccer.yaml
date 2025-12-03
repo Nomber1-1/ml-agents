@@ -68,8 +68,8 @@ environment_parameters:
         # Progressive curriculum starting from transferred locomotion
     ball_touch:
         curriculum:
-                        - name: Lesson 2 - Chase Ball (No Kicking)
-                            # Pure chase: movement and ball pursuit in soccer space
+            - name: Lesson 2 - Chase Ball (No Kicking)
+              # Pure chase: movement and ball pursuit in soccer space
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -78,8 +78,8 @@ environment_parameters:
                   threshold: 0.133
               value: 0.35
 
-                        - name: Lesson 3 - Enable Kicking
-                            # Kicking enabled; rewards encourage shooting (handled in code)
+            - name: Lesson 3 - Enable Kicking
+              # Kicking enabled; rewards encourage shooting (handled in code)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -93,7 +93,7 @@ environment_parameters:
 
     ball_spawn_radius:
         curriculum:
-                        - name: Lesson 2 - Chase Ball (Aligned with no-kick)
+            - name: Lesson 2 - Chase Ball (Aligned with no-kick)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -102,7 +102,7 @@ environment_parameters:
                   threshold: 0.133
               value: 1.5
 
-                        - name: Lesson 3 - Wider Spawn (kicking enabled)
+            - name: Lesson 3 - Wider Spawn (kicking enabled)
               completion_criteria:
                   measure: progress
                   behavior: WalkerSoccer
@@ -111,10 +111,11 @@ environment_parameters:
                   threshold: 0.4667
               value: 2.0
 
-                        - name: Lesson 4 - Full Soccer (center-focused spawn)
-              value: 1.5
+            - name: Lesson 4 - Full Soccer (center-focused spawn)
+              value:
+                  1.5
 
-                # Fade locomotion reward so soccer signals dominate
+                  # Fade locomotion reward so soccer signals dominate
     locomotion_scale:
         curriculum:
             - name: Stage2_FadeStart
@@ -139,8 +140,8 @@ environment_parameters:
             - name: Stage2_FullSoccer
               value: 0.15
 
-        # Self-play weight: gradually enable competitive self-play
-        # 0.0 = cooperative start, 1.0 = fully competitive
+    # Self-play weight: gradually enable competitive self-play
+    # 0.0 = cooperative start, 1.0 = fully competitive
     self_play_weight:
         curriculum:
             - name: Stage2_CooperativePhase
@@ -149,7 +150,7 @@ environment_parameters:
                   behavior: WalkerSoccer
                   signal_smoothing: true
                   min_lesson_length: 1000
-                                    threshold: 0.50 # Enable at 50%
+                  threshold: 0.50 # Enable at 50%
               value: 0.0
 
             - name: Stage2_CompetitivePhase

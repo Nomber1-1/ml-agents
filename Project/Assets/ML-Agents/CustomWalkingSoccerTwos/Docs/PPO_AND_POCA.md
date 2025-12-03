@@ -1,6 +1,6 @@
-# PPO and POCA in Walker Soccer: Deep Dive
+# PPO and MA-POCA in Walker Soccer: Deep Dive
 
-This document explains how Proximal Policy Optimization (PPO) and POsthumous Credit Assignment (POCA) work specifically in the Walker Soccer two-stage training pipeline.
+This document explains how Proximal Policy Optimization (PPO) and Multi-Agent POsthumous Credit Assignment (MA-POCA) work specifically in our project's two-stage training pipeline.
 
 ---
 
@@ -13,7 +13,7 @@ PPO is a **single-agent, on-policy** reinforcement learning algorithm designed t
 
 #### 1. **Policy Structure**
 ```csharp
-// Your agent's neural network (3 layers × 512 units)
+// Our agent's neural network (3 layers × 512 units)
 // Input: 269-dim locomotion observations (soccer obs = 0)
 // Output: 39 continuous actions (joint torques for walker body)
 ```
@@ -25,7 +25,7 @@ PPO is a **single-agent, on-policy** reinforcement learning algorithm designed t
 
 #### 3. **Policy Update (PPO Clipping)**
 ```python
-# Simplified PPO objective from your config:
+# Simplified PPO objective from our config:
 # hyperparameters:
 #   epsilon: 0.2      # Clipping range
 #   batch_size: 8192
@@ -39,11 +39,11 @@ L_clip = min(ratio * advantage, clipped_ratio * advantage)
 **Key Insight**: PPO prevents the policy from changing too drastically by clipping the probability ratio. This ensures:
 - Stable locomotion learning (walker doesn't "forget" how to stand)
 - Conservative updates when `ratio > 1.2` or `ratio < 0.8`
-- Your `beta=0.005` adds entropy bonus to encourage exploration of gaits
+- Our `beta=0.005` adds entropy bonus to encourage exploration of gaits
 
 #### 4. **Advantage Estimation (GAE)**
 ```python
-# Your config: lambd=0.95, gamma=0.99
+# Our config: lambd=0.95, gamma=0.99
 # GAE smooths advantage estimates across timesteps
 
 A_t = δ_t + (γλ)δ_{t+1} + (γλ)²δ_{t+2} + ...
@@ -70,7 +70,7 @@ POCA is a **multi-agent cooperative** RL algorithm that solves the **credit assi
 
 #### 1. **Team-Based Learning**
 ```csharp
-// Your setup: 2 teams × 3 agents = 6 agents learning simultaneously
+// Example setup: 2 teams × 2 agents = 4 agents learning simultaneously
 // Team 0 (Blue): 3 agents (share policy weights)
 // Team 1 (Purple): 3 agents (separate policy weights)
 ```
@@ -78,7 +78,7 @@ POCA is a **multi-agent cooperative** RL algorithm that solves the **credit assi
 #### 2. **Centralized Critic, Decentralized Actors**
 ```
 Actor (each agent):
-  Input: 250-dim obs (243 locomotion + 7 soccer)
+  Input: 269-dim obs (243 locomotion + 26 soccer)
   Output: 40 actions (39 joints + 1 kick trigger)
   
 Critic (team-wide):
@@ -86,7 +86,7 @@ Critic (team-wide):
   Output: Value estimate for team return
 ```
 
-**Your config:**
+**Our config:**
 ```yaml
 network_settings:
   hidden_units: 512
@@ -116,7 +116,7 @@ V_team^{-i}(s)  # Value if agent i is replaced by average policy
 advantage_i = V_team(s) - V_team^{-i}(s)
 ```
 
-**Example from your training:**
+**Example from our training:**
 ```
 Goal scored at Step 12060000 (Group Reward: 8.846)
 
@@ -146,7 +146,7 @@ L_POCA = min(
 )
 ```
 
-#### 6. **Your Stage 2 Config Details**
+#### 6. **Our Stage 2 Config Details**
 ```yaml
 hyperparameters:
   batch_size: 8192    # Same as Stage 1 for consistency
@@ -160,14 +160,14 @@ reward_signals:
 
 ---
 
-## Key Differences in Your Project
+## Key Differences in our project
 
 | Aspect | Stage 1 (PPO) | Stage 2 (POCA) |
 |--------|---------------|----------------|
-| **Agent count** | 1 walker per arena | 6 walkers (2 teams of 3) |
+| **Agent count** | 1 walker per arena | 4 walkers (2 teams of 2) |
 | **Critic** | Individual V(s) | Team V(s_team) |
 | **Credit** | Direct (agent's own actions) | Counterfactual (team contribution) |
-| **Observations** | 250 (243 locomotion + 7 zeros) | 250 (243 locomotion + 7 soccer) |
+| **Observations** | 269 (243 locomotion + 26 zeros) | 269 (243 locomotion + 26 soccer) |
 | **Actions** | 40 continuous (kick ignored) | 40 continuous (kick active Lesson 3+) |
 | **Gamma** | 0.99 | 0.995 (longer horizons for team plays) |
 | **Learning rate** | 0.0003 | 0.0001 (fine-tuning) |
@@ -175,7 +175,7 @@ reward_signals:
 
 ---
 
-## How They Work Together in Your Training
+## How They Work Together in our training
 
 ### Transfer Learning Flow
 ```
@@ -201,7 +201,7 @@ Stage 2 (POCA):
    - Counterfactuals prevent "credit stealing" (all agents rushing ball)
    - Your curriculum gradually enables soccer skills on top of locomotion
 
-### Evidence in Your Logs
+### Evidence in our logs
 ```
 Step 12010000: Mean Reward: 2.050 (positive after anti-dive fixes)
 Step 12060000: Group Reward: 8.846 (goal scored, credit distributed)
@@ -215,7 +215,7 @@ POCA is successfully:
 
 ---
 
-## Challenges You Overcame
+## Challenges we overcame
 
 ### 1. **Diving Problem (Steps 10M-12M)**
 **Issue**: Agents learned "dive at ball" → high contact reward, low skill
@@ -227,7 +227,7 @@ if upDot < 0.85 and near_ball:
         EndEpisode()  # Early reset
 ```
 
-**Why POCA struggled here**: Counterfactual baseline didn't distinguish "good contact" (upright kick) from "bad contact" (dive scrum). Your reward shaping fixed this.
+**Why MA-POCA struggled here**: Counterfactual baseline didn't distinguish "good contact" (upright kick) from "bad contact" (dive scrum). Our reward shaping fixed this.
 
 ### 2. **Bunching/Wall Formation**
 **Issue**: Defensive agents learned to cluster → block shots
@@ -236,7 +236,7 @@ if upDot < 0.85 and near_ball:
 bunching_penalty = -0.02 * nearby_teammates  # Was -0.012
 ```
 
-**Why POCA struggled**: Team value function rewarded "prevent opponent goals" → defensive wall was locally optimal. Your penalty broke this local minimum.
+**Why MA-POCA struggled**: Team value function rewarded "prevent opponent goals" → defensive wall was locally optimal. Our penalty broke this local minimum.
 
 ### 3. **Low Goal Frequency**
 **Issue**: Mean Reward ~2-3, but Group Reward (goals) rare
@@ -246,7 +246,7 @@ kick_reward = 0.3 * phase_multiplier * (1 + 0.35*alignment + 0.6*shot_bonus)
 kick_cost = -0.03  # Spam prevention
 ```
 
-**Why this works with POCA**: Higher kick rewards → counterfactual advantage for kickers increases → more agents learn "kick when aligned" → goals become more frequent.
+**Why this works with MA-POCA**: Higher kick rewards → counterfactual advantage for kickers increases → more agents learn "kick when aligned" → goals become more frequent.
 
 ---
 

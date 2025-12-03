@@ -1,8 +1,8 @@
-# Walker Soccer Two-Stage Training - Complete Project History
+# Walker Soccer Two-Stage Training - Complete Project History (Final)
 
 ## Overview
 
-This document chronicles the complete 50+ hour training journey of humanoid ragdoll agents learning locomotion and then soccer through two-stage transfer learning. It captures key challenges, solutions, and lessons learned throughout the process.
+This document chronicles our complete ~50+ hour training journey of humanoid ragdoll agents learning locomotion and then soccer through two-stage transfer learning. It captures key challenges, solutions, and lessons learned throughout the process and reflects the final configuration: 269 observations and MA-POCA for Stage 2.
 
 ---
 
@@ -14,7 +14,7 @@ Master bipedal locomotion with full 360° turning capability before introducing 
 ### Training Configuration
 - **Trainer**: PPO (single-agent)
 - **Learning Rate**: 0.0003
-- **Observation Space**: 250 (243 locomotion + 7 zeros for Stage 2 compatibility)
+- **Observation Space**: 269 (243 locomotion + 26 soccer; soccer dims zero-filled in Stage 1 for transfer consistency)
 - **Actions**: 40 continuous (39 joints + 1 kick ignored)
 - **Environment**: 10-20 parallel arenas with moving targets
 - **Training Time**: ~12 hours
@@ -119,17 +119,17 @@ if (angleToTarget > 15f) // Only when target significantly off-axis
 
 ---
 
-## Stage 2: Soccer Training (15M Target - IN PROGRESS at ~9.33M)
+## Stage 2: Soccer Training (15M Steps - COMPLETED)
 
 ### Goal
 Transfer locomotion skills and learn multi-agent soccer: ball chasing, kicking, team coordination, goal scoring.
 
 ### Training Configuration
-- **Trainer**: POCA (multi-agent)
+- **Trainer**: MA-POCA (multi-agent)
 - **Learning Rate**: 0.0001 (lower for fine-tuning)
-- **Observation Space**: 250 (same as Stage 1, but soccer obs now contain real data)
+- **Observation Space**: 269 (same as Stage 1; soccer obs populated with real role/goal/teammate/opponent context)
 - **Actions**: 40 continuous (same as Stage 1, kick now active in Lesson 3+)
-- **Environment**: 3v3 soccer (6 agents, ball, goals)
+- **Environment**: 2v2 soccer (4 agents, ball, goals)
 - **Transfer Method**: `--initialize-from=WalkerStage1`
 
 ### Phase 2.1: Initial Transfer (0-530k steps)
@@ -139,7 +139,7 @@ Transfer locomotion skills and learn multi-agent soccer: ball chasing, kicking, 
 - Optimizer warnings normal (PPO→POCA transition, expected)
 - Locomotion skills immediately retained - agents walked from step 0
 
-**Critical Issue Discovered:**
+**Critical Issue Discovered (early Stage 2):**
 | Metric | Value | Expected | Status |
 |--------|-------|----------|--------|
 | Mean Reward | 60-100 | 5-20 | ❌ Too high |
@@ -147,7 +147,7 @@ Transfer locomotion skills and learn multi-agent soccer: ball chasing, kicking, 
 | ELO | 1052→676 | Stable | ❌ Declining |
 
 **Problem Diagnosis:**
-- Locomotion rewards completely dominating (+80-100 per episode)
+- Locomotion rewards initially dominated (+80-100 per episode)
 - Soccer rewards negligible (+0-2 per episode)
 - No goals scored in 530k steps
 - Agents optimizing locomotion, ignoring ball/soccer
@@ -332,7 +332,7 @@ int spacingThreshold = (m_AgentsPerTeam <= 2) ? 1 : 2;
 // Larger teams: Triggers at 2+ nearby teammates
 ```
 
-**Result**: System now works for 2v2, 3v3, 4v4, or larger team sizes
+**Result**: System now works for 2v2 and scales to 3v3+ if configured
 
 ### Phase 2.5: Kick Enabling Issues (2.3M steps)
 
@@ -863,7 +863,7 @@ locomotion_scale:
 
 ### 1. Transfer Learning is Powerful But Requires Care
 - ✅ **Success**: Locomotion skills transferred perfectly from Stage 1 to Stage 2
-- ✅ **Key**: Matching observation space (250) with zero-padding for unused dimensions
+- ✅ **Key**: Matching observation space (269) with zero-padding for unused dimensions in Stage 1
 - ⚠️ **Caution**: Transferred rewards can dominate - need explicit fading mechanism
 
 ### 2. Curriculum Design is Critical
@@ -921,7 +921,7 @@ locomotion_scale:
 
 ## Conclusion
 
-This project demonstrates that successful reinforcement learning requires:
+Our project demonstrates that successful reinforcement learning requires:
 
 1. **Proper Curriculum Design**: Progressive skill building from simple to complex
 2. **Balanced Rewards and Penalties**: Guide exploration, don't crush it
@@ -931,10 +931,10 @@ This project demonstrates that successful reinforcement learning requires:
 
 The training collapse at 4M steps, while frustrating, provided invaluable insights into penalty balancing and the importance of allowing natural curriculum progression. This recovery process is itself a learning opportunity.
 
-**Final State**: Training completed successfully at 15M+ steps. Final model saved as `WalkerStage2_20_V3` in `results/` directory. Mean Reward stabilized in positive range with consistent goal-scoring behavior. Anti-dive mechanisms, kick reward restructuring, and penalty softening successfully implemented. Locomotion skills retained throughout Stage 2.
+**Final State**: Training completed successfully at 15M steps. Final model saved as `WalkerStage2_20_V3` in `results/` directory. Mean Reward stabilized in positive range with consistent goal-scoring behavior. Anti-dive mechanisms, kick reward restructuring, and penalty softening successfully implemented. Locomotion skills retained throughout Stage 2.
 
 **Achieved Features**:
-- ✅ Two-stage transfer learning (PPO → POCA)
+- ✅ Two-stage transfer learning (PPO → MA-POCA)
 - ✅ Full 360° locomotion with anti-dive shaping
 - ✅ Goal-directed kicking with directional bonuses
 - ✅ Team coordination and positioning

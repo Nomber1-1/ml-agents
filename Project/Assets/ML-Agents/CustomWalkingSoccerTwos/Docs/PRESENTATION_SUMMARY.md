@@ -1,3 +1,6 @@
+# Presentation Summary (previous version)
+
+Note: This document summarizes results and design decisions from a previous iteration of our project. It is intentionally kept for historical context and may not reflect the final 269‑observation, MA‑POCA stage configuration. For the latest details, see `FINAL_PROJECT_OVERVIEW.md` and `PPO_AND_POCA.md`.
 # Walker Soccer Two-Stage Training - Presentation Summary
 
 ## Executive Summary

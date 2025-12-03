@@ -1,6 +1,6 @@
 # Walker Soccer Twos - Final Project Overview (269 Observation Version)
 
-Comprehensive documentation of the final architecture, training strategy, experimentation history, emergent behaviors, and future improvement directions for the Walker Soccer Twos project.
+Comprehensive documentation of the final architecture, training strategy, experimentation history, emergent behaviors, and future improvement directions for our project.
 
 ---
 ## 1. Agent Design

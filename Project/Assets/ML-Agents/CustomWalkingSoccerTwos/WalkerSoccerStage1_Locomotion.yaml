@@ -4,7 +4,7 @@
 
 behaviors:
     WalkerSoccer: # Behavior name used for transfer learning
-        trainer_type: ppo # Single-agent PPO (not POCA)
+        trainer_type: ppo # Single-agent PPO
 
         hyperparameters:
             # Learning rate schedule
@@ -35,7 +35,7 @@ behaviors:
                 strength: 1.0
 
         # Training configuration
-        max_steps: 15000000 # 15M steps for Stage 1 locomotion training
+        max_steps: 30000000 # 30M steps for Stage 1 locomotion training
         time_horizon: 1000
         summary_freq: 10000
         keep_checkpoints: 5
