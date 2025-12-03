@@ -67,4 +67,8 @@
 # VSCode hidden files
 *.vscode/
 
+# Video files
+*.mp4
+*.mp4.meta
+
 .DS_Store
