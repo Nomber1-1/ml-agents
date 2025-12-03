@@ -150,6 +150,8 @@ Open your browser and navigate to `http://localhost:6006` to view training graph
 
 ## Best Results
 
+The best results we got can be seen using the following:
+
 ```powershell
 tensorboard --logdir_spec Stage1_best:results\WalkerStage1_48_269obs,Stage2_best:results\WalkerStage2_20_269obs
 ```
