@@ -1,518 +1,174 @@
-# Walker Soccer Twos - Two-Stage Transfer Learning Project
+# Walker Soccer - Setup Guide
 
-A Unity ML-Agents project featuring humanoid ragdoll walkers that learn locomotion first, then apply those skills to competitive 3v3 soccer through transfer learning.
+This guide walks you through setting up the Walker Soccer project for training multi-agent soccer with Unity ML-Agents.
 
-![Walker Soccer Banner](https://via.placeholder.com/800x200.png?text=Walker+Soccer+Twos)
+## Prerequisites
 
-## 🎮 Overview
+- **Unity Editor**: Version 2022.3+ (the project was built with this version).
+- **Python**: 3.10.12 recommended (ML-Agents requires Python 3.9–3.10).
+- **Git**: For cloning the ML-Agents repository.
+- **Conda** (optional but recommended): For managing Python environments.
 
-Walker Soccer Twos uses a **two-stage training architecture** where humanoid walker agents with full ragdoll physics progressively learn to:
-1. **Stage 1 (PPO)**: Master bipedal locomotion with 360° turning capability
-2. **Stage 2 (POCA)**: Transfer locomotion skills to competitive 3v3 soccer gameplay
-3. **Cooperate** with teammates (strikers and goalies)
-4. **Compete** against opposing teams using self-play
+## Project Structure
 
-This approach dramatically improves training efficiency by separating locomotion learning from soccer strategy.
-
-**✅ Training Completed**: Final trained model available at `results/WalkerStage2_20_V3` (33M total steps)
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Unity 2022.3+ with ML-Agents package
-- Python 3.8-3.10
-- ML-Agents Python package (`pip install mlagents`)
-
-### Two-Stage Training Workflow
-
-1. **Stage 1 Setup** - Build locomotion training scene (10-20 arenas, single agents, moving targets)
-2. **Stage 1 Training** - Train 10-20M steps until agents walk confidently in all directions
-3. **Stage 2 Setup** - Build 3v3 soccer scene (6 agents, ball, goals)
-4. **Stage 2 Training** - Transfer Stage 1 weights and train 15M additional steps
-5. **Evaluation** - Watch trained agents play soccer!
-
-See `TRAINING_GUIDE.md` for complete step-by-step instructions.
-
-## 📁 Project Structure
-
+You should have the `Project` folder containing:
 ```
-CustomWalkingSoccerTwos/
-├── Scripts/
-│   ├── WalkerSoccerAgent.cs          # Unified agent (both stages)
-│   ├── WalkerSoccerEnvController.cs  # Environment management (Stage 2)
-│   ├── WalkerSoccerBallController.cs # Ball physics and scoring (Stage 2)
-│   ├── TargetController.cs           # Moving target (Stage 1)
-│   └── SoccerSettings.cs             # Configuration settings
-├── Configs/
-│   ├── WalkerSoccerStage1_Locomotion.yaml  # Stage 1 PPO config
-│   └── WalkerSoccerStage2_Soccer.yaml      # Stage 2 POCA config
-├── Docs/
-│   ├── TRAINING_GUIDE.md             # Complete two-stage training guide
-│   ├── QUICK_REFERENCE.md            # Commands and checklists
-│   ├── SYSTEM_OVERVIEW.md            # Architecture documentation
-│   ├── UNITY_SETUP_GUIDE.md          # Scene setup instructions
-│   └── DEBUG_AND_IMPROVEMENTS.md     # Troubleshooting
-└── README.md                         # This file
+Project/
+├── Assets/
+│   └── ML-Agents/
+│       └── CustomWalkingSoccerTwos/
+│           ├── Scripts/
+│           ├── Prefabs/
+│           ├── Scenes/
+│           ├── WalkerSoccerStage1_Locomotion.yaml
+│           ├── WalkerSoccerStage2_Soccer.yaml
+│           └── Docs/
+├── Builds/
+├── Library/
+├── Packages/
+└── ProjectSettings/
 ```
 
-## 🎯 Key Features
+## Step 1: Install Unity ML-Agents Package
 
-### Two-Stage Transfer Learning
-- **Stage 1 (PPO)**: Single-agent locomotion training (10-20M steps)
-  - Random spawns (±6m, 0-360° rotation) to prevent exploitation
-  - Turn encouragement to learn full 360° locomotion
-  - Touch validation to prevent dive-to-respawn exploits
-  
-- **Stage 2 (POCA)**: Multi-agent soccer with transferred weights (15M steps)
-  - `--initialize-from` transfers Policy weights from Stage 1
-  - Locomotion skills retained, agents learn soccer strategy
-  - Curriculum: Chase → Kicking → Goal Scoring
-  - Self-play for competitive skill development
+Follow the official Unity ML-Agents installation instructions:  
+**[Unity ML-Agents Installation Guide](https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/Installation.html)**
 
-### Unified Agent Architecture
-- **Single agent script** with conditional behavior (`locomotion_only` flag)
-- **269 observations** consistent across both stages:
-  - 243 locomotion observations (always active)
-  - 26 soccer observations (zeros in Stage 1, real data in Stage 2)
-- **40 continuous actions**: 39 joints + 1 kick (gated by curriculum)
+### Quick Summary
+1. Open the Unity project (`Project` folder) in Unity Editor (version: 6000.0.40f1).
+2. In Unity, go to **Window > Package Manager**.
+3. Click the **+** button and select **Add package from git URL**.
+4. Enter: `com.unity.ml-agents`
+5. Unity will install the ML-Agents package (version 4.0 or latest).
 
-### Anti-Exploit Mechanisms
-- **Touch validation**: Rewards proper walking, penalizes diving (-0.15 to -1.35)
-- **Turn encouragement**: Rewards angle reduction, penalizes standing still when target off-center
-- **Random spawns (Stage 1)**: Prevents forward-only policy exploitation
-- **Fixed spawns (Stage 2)**: Maintains team positioning for soccer
+## Step 2: Install ML-Agents Python Library
 
-## 🧠 Agent Design
+The Python library is required to train agents from the command line.
 
-### Observation Space (269 dimensions)
-**Locomotion Observations (243, both stages):**
-- Velocity goals (4): Current vs target speeds
-- Rotations (8): Body orientation deltas
-- Target position (3): Direction to goal (Stage 1) / zero placeholder (Stage 2)
-- Body parts (228): 16 parts × ~14 obs each (positions, velocities, rotations, contacts)
+### Option A: Using Conda (Recommended)
 
-**Soccer Context Observations (26, conditional):**
-- Ball position relative to agent (3)
-- Ball velocity (3)
-- Team identifier (1: +1 Blue, -1 Purple)
-- Role identifier (1: +1 Striker, -1 Goalie, 0 Generic)
-- Own goal position (3)
-- Opponent goal position (3)
-- Teammate 1 position (3)
-- Teammate 2 position (3)
-- Opponent 1 position (3)
-- Opponent 2 position (3)
-- **Stage 1**: All zeros (26 floats = 0)
-- **Stage 2**: Real soccer data (role-aware, goal-aware, team-aware)
+1. **Create a new conda environment** with Python 3.10.12:
+   ```bash
+   conda create -n mlagents python=3.10.12
+   conda activate mlagents
+   ```
 
-### Action Space (40 continuous)
-- **Joint rotations (26)**: chest (3), spine (3), head (2), limbs (18)
-- **Joint strengths (13)**: torso (3), legs (6), arms (4)
-- **Kick action (1)**: [0,1] intensity
-  - Stage 1: Ignored (locomotion only)
-  - Stage 2: Active in Lesson 3+ (ball_touch >= 0.5)
+2. **Install PyTorch** (GPU-accelerated version for faster training):
+   ```bash
+   pip install torch==2.8.0 torchvision==0.23.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu129
+   ```
+   > **Note**: This installs CUDA 12.9 compatible PyTorch. If you don't have an NVIDIA GPU, use the CPU version:
+   > ```bash
+   > pip install torch==2.8.0 torchvision==0.23.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+   > ```
 
-### Reward Structure
+3. **Clone the ML-Agents repository** (if you haven't already):
+   ```bash
+   git clone https://github.com/Unity-Technologies/ml-agents.git C:\Documents\GitHub\ml-agents
+   ```
 
-**Stage 1 (Locomotion Focus):**
-- Valid touch: +0.2 (upright, reasonable speed, not diving)
-- Invalid touch: -0.15 to -1.35 (scaled by violation severity)
-- Turn encouragement: +0.05 × turnProgress (when target >15° off)
-- Standing penalty: -0.02 × angleToTarget/180 (when speed < 0.5 m/s)
-- Stability penalties: Forward tip, sideways lean, angular velocity
+4. **Install ML-Agents packages in editable mode**:
+   ```bash
+   cd C:\Documents\GitHub\ml-agents
+   pip install -e ./ml-agents-envs
+   pip install -e ./ml-agents
+   ```
 
-**Stage 2 (Soccer Focus):**
-- Goals: +50 × time_bonus (scoring), -10 × self_play_weight (conceding, auto-scaled by curriculum)
-- Ball touches: +0.2 × curriculum (delayed 50 steps)
-- Kick reward: +0.1 per intentional kick (Lesson 3+)
-- Locomotion rewards: Retained from Stage 1
-- Upright bonus: +0.03 per step (height-scaled)
-- **Role-Aware Rewards:**
-  - Striker: +0.015 per step near opponent goal
-  - Goalie: +0.015 per step aligned with ball (defensive positioning)
-- **Goal-Aware Penalties:**
-  - Own-goal velocity: -0.04 × speedTowardOwn (4x base penalty)
-  - Own-goal proximity: -0.08 × proximity to own goal when moving ball toward it
-  - Progress bonus: +0.01 for moving ball away from own goal
-- **Coordination Incentives:**
-  - Spacing penalty: -0.005 per teammate within 2m (reduce bunching)
-  - Marking bonus: +0.005 per opponent marked (within 3m)
-- **Anti-Exploit Penalties:**
-  - Corner camping: -0.08 for staying near stuck ball + 0.02 for moving it
-  - Goalie leash: dynamic penalty (doubled strength) for leaving goal area
+5. **Verify installation**:
+   ```bash
+   mlagents-learn --help
+   ```
+   You should see the ML-Agents command-line options.
 
-## 📊 Training Results
+### Option B: Using pip (Without Conda)
 
-### Stage 1 Expected Progress (PPO, 10-20M steps)
-| Steps | Mean Reward | Behavior |
-|-------|-------------|----------|
-| 0-2M | -10 → +5 | Learning to stand |
-| 2M-5M | +5 → +15 | Stable forward walking |
-| 5M-10M | +15 → +25 | Beginning to turn |
-| 10M-20M | +25 → +35 | Full 360° locomotion |
+1. **Create a virtual environment**:
+   ```bash
+   python -m venv mlagents-env
+   # On Windows:
+   mlagents-env\Scripts\activate
+   # On macOS/Linux:
+   source mlagents-env/bin/activate
+   ```
 
-**Goal**: Agents confidently turn toward targets >30° off-center
+2. Follow steps 2–5 from Option A above.
 
-### Stage 2 Expected Progress (POCA, 15M steps)
-| Steps | Lesson | Mean Reward | Kick? | Ball Radius |
-|-------|--------|-------------|-------|-------------|
-| 0-2M | L2: Chase | -5 → +5 | ❌ | 2.3m |
-| 2M-6M | L2: Chase | +5 → +20 | ❌ | 2.3m |
-| 6M-12M | L3: Kicking | +20 → +40 | ✅ | 1.8m |
-| 12M-15M | L4: Full Soccer | +40 → +60+ | ✅ | 1.4m |
+## Step 3: Build the Unity Environment (Optional for Training)
 
-**Goal**: Goals scored, coordinated team play, ELO ratings stable
+You can train directly in the Unity Editor or build a standalone executable for faster training.
 
-Training time: 
-- Stage 1: 6-12 hours (10-20M steps)
-- Stage 2: 8-15 hours (15M steps)
-- Total: 14-27 hours depending on hardware
+### To Build:
+1. Open the project in Unity Editor.
+2. Go to **File > Build Settings**.
+3. Select your platform (Windows, macOS, Linux).
+4. Click **Build** and save to `Project/Builds/WalkerStage2_20_V2.exe` (or your preferred name).
 
-## 🛠️ Configuration
-
-### Stage 1: WalkerSoccerStage1_Locomotion.yaml
-```yaml
-trainer_type: ppo
-learning_rate: 0.0003
-batch_size: 2048
-hidden_units: 512
-num_layers: 3
-max_steps: 10000000  # 10M minimum, 20M recommended
-
-environment_parameters:
-  locomotion_only: 1.0  # Stage 1 mode
-  target_walking_speed:
-    min_value: 0.8
-    max_value: 4.0
-```
-
-### Stage 2: WalkerSoccerStage2_Soccer.yaml
-```yaml
-trainer_type: poca  # Multi-agent
-learning_rate: 0.0001  # Lower for fine-tuning
-max_steps: 15000000
-
-self_play:
-  save_steps: 50000
-  team_change: 200000
-  window: 5
-
-environment_parameters:
-  locomotion_only: 0.0  # Stage 2 mode
-  ball_touch:  # Curriculum: kick enablement
-    - 0.35 (Lesson 2, 0-6M)
-    - 0.5 (Lesson 3, 6M-12M, kick enabled)
-    - 1.0 (Lesson 4, 12M-15M)
-  self_play_weight:  # NEW - Automated competitive pressure
-    - 0.0 (start, cooperative learning)
-    - 1.0 (50% progress, fully competitive)
-```
-```
-
-## 📖 Documentation
-
-### Essential Guides (In Order)
-1. **[Training Guide](TRAINING_GUIDE.md)** - Complete two-stage training workflow
-2. **[Quick Reference](QUICK_REFERENCE.md)** - Commands, checklists, troubleshooting
-3. **[System Overview](SYSTEM_OVERVIEW.md)** - Architecture and reward details
-4. **[Unity Setup Guide](UNITY_SETUP_GUIDE.md)** - Scene construction
-5. **[Debug & Improvements](DEBUG_AND_IMPROVEMENTS.md)** - Advanced troubleshooting
-
-## 🔧 Common Issues
-
-### Stage 1: Agents dive toward target instead of walking
-→ Touch validation active, harsh dive penalties implemented
-
-### Stage 1: Agents won't turn (forward-only policy at 16M steps)
-→ Turn encouragement added in FixedUpdate, rebuild and continue training
-
-### Stage 2: Transfer learning fails (Policy not loading)
-→ Verify observation space is **250 in both Stage 1 and Stage 2 builds**
-
-### Stage 2: Agents forgot how to walk
-→ Check observation space mismatch, Policy should transfer without warnings
-
-See `TRAINING_GUIDE.md` and `QUICK_REFERENCE.md` for detailed solutions.
-
-## 🎓 Learning Resources
-
-- [ML-Agents Documentation](https://github.com/Unity-Technologies/ml-agents)
-- [Transfer Learning in ML-Agents](https://github.com/Unity-Technologies/ml-agents/blob/main/docs/Training-ML-Agents.md#training-using-concurrent-unity-instances)
-- [Walker Example](https://github.com/Unity-Technologies/ml-agents/blob/main/docs/Learning-Environment-Examples.md#walker)
-- [Soccer Twos Example](https://github.com/Unity-Technologies/ml-agents/blob/main/docs/Learning-Environment-Examples.md#soccer-twos)
-- [MA-POCA Paper](https://arxiv.org/abs/2111.05992)
-
-## 🚀 Advanced Features
-
-### Current Implementation
-- ✅ Two-stage transfer learning (PPO → POCA)
-- ✅ 269-observation zero-padding for perfect weight transfer
-- ✅ Turn encouragement to prevent forward-only policies
-- ✅ Touch validation to prevent dive exploits
-- ✅ Conditional spawning (random Stage 1, fixed Stage 2)
-- ✅ Curriculum learning (chase → kick → score)
-- ✅ Automated self-play enablement via curriculum
-- ✅ Role-aware and goal-aware reward shaping
-- ✅ Anti-exploit penalties (corner camping, own-goal, goalie wandering)
-
-### Planned Enhancements
-- [ ] LSTM memory for temporal reasoning
-- [ ] Communication between agents
-- [ ] Advanced reward shaping (passing, positioning)
-- [ ] Dynamic difficulty scaling
-- [ ] Visual observations (camera input)
-
-### Customization Ideas
-- Train Stage 1 with obstacles or varied terrain
-- Experiment with Stage 1 target speeds (currently 0.8-4.0 m/s)
-- Add Stage 3: Advanced tactics training
-- Different field sizes/shapes in Stage 2
-- Variable team sizes (4v4, 5v5)
-
-## 📝 Training Commands
-
-### Stage 1: Locomotion
+### To Train with a Build:
 ```bash
-# Start Stage 1 training
-mlagents-learn WalkerSoccerStage1_Locomotion.yaml --run-id=WalkerStage1 \
-  --env=Builds/WalkerStage1.exe --num-envs=4 --no-graphics
-
-# Monitor progress
-tensorboard --logdir results
+mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccerStage2_Soccer.yaml --env="C:\Documents\GitHub\ml-agents\Project\Builds\WalkerStage2_20_V2.exe" --num-envs=8 --run-id=MyTrainingRun
 ```
 
-### Stage 2: Soccer (Transfer)
+### To Train in Editor:
+1. Open the scene: `Assets/ML-Agents/CustomWalkingSoccerTwos/Scenes/WalkerSoccerStage2.unity`
+2. Run the training command (without `--env` flag):
+   ```bash
+   mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccerStage2_Soccer.yaml --run-id=MyTrainingRun
+   ```
+3. Press **Play** in Unity Editor when prompted.
+
+## Step 4: Start Training
+
+### Stage 1: Locomotion Training (Optional - Pre-trained Model Available)
+Stage 1 trains basic walking skills. If you have a pre-trained Stage 1 model, skip to Stage 2.
+
 ```bash
-# Start Stage 2 with transferred weights
-mlagents-learn WalkerSoccerStage2_Soccer.yaml --run-id=WalkerStage2 \
-  --env=Builds/WalkerStage2.exe --num-envs=3 --no-graphics \
-  --initialize-from=WalkerStage1
-
-# Monitor progress (locomotion should be retained!)
-tensorboard --logdir results
+mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccerStage1_Locomotion.yaml --run-id=WalkerStage1
 ```
 
-### Using the Pre-Trained Model
+### Stage 2: Soccer Training (Transfer Learning)
+Transfer locomotion skills and learn soccer tactics:
+
 ```bash
-# The final trained model is available in the results directory:
-# results/WalkerStage2_20_V3/WalkerSoccer.onnx
-
-# To use in Unity:
-# 1. Locate the .onnx file in results/WalkerStage2_20_V3/
-# 2. In Unity, select your WalkerSoccerAgent
-# 3. In Behavior Parameters component, drag the .onnx file to the Model field
-# 4. Set Behavior Type to "Inference Only"
-# 5. Press Play to watch the trained agents!
+mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccerStage2_Soccer.yaml --initialize-from=WalkerStage1 --run-id=WalkerStage2
 ```
 
-## 🤝 Contributing
-
-Improvements welcome! Consider:
-- Optimizing Stage 1 turn encouragement parameters
-- Improving Stage 2 curriculum thresholds
-- Adding intermediate transfer checkpoints
-- Creating better visualization tools
-
-## 📄 License
-
-This project uses Unity ML-Agents (Apache 2.0 License).
-Your custom code and configurations can be licensed as you prefer.
-
-## 🙏 Acknowledgments
-
-- Unity ML-Agents team for the excellent framework and transfer learning support
-- Walker and Soccer Twos example environments for inspiration
-- Community contributors for best practices and debugging tips
-
----
-
-**Ready to train?** 
-
-1. Read `TRAINING_GUIDE.md` for complete setup
-2. Build Stage 1 scene with locomotion arenas
-3. Train Stage 1 to 10-20M steps
-4. Build Stage 2 scene with 3v3 soccer
-5. Transfer weights and train Stage 2 to completion
-6. Watch your agents play soccer! ⚽🤖
-
-For questions or issues, consult `QUICK_REFERENCE.md` or open an issue.
-
-## 📁 Project Structure
-
-```
-CustomWalkingSoccerTwos/
-├── Scripts/
-│   ├── WalkerSoccerAgent.cs          # Main agent (locomotion + soccer)
-│   ├── WalkerSoccerEnvController.cs  # Environment management
-│   ├── WalkerSoccerBallController.cs # Ball physics and scoring
-│   └── SoccerSettings.cs             # Configuration settings
-├── WalkerSoccer.yaml                 # ML-Agents training config
-├── UNITY_SETUP_GUIDE.md              # Complete scene setup instructions
-├── TRAINING_GUIDE.md                 # Training walkthrough & tips
-├── DEBUG_AND_IMPROVEMENTS.md         # Troubleshooting & optimization
-└── README.md                         # This file
-```
-
-## 🎯 Key Features
-
-### Unified Agent Architecture
-- **Single agent script** combining walker locomotion with soccer gameplay
-- **39 continuous actions** controlling joint rotations and strengths
-- **Rich observations** including body positions, velocities, ball state, and team info
-- **Position-based roles**: Strikers, Goalies, and Generic players
-
-### Advanced Training
-- **MA-POCA** (Multi-Agent POsthumous Credit Assignment) for team learning
-- **Self-play** for competitive skill development
-- **Start pose stabilization** to prevent early episode collapse
-- **Multi-GPU support** for faster parallel training
-
-### Soccer Gameplay
-- **Team-based rewards** for goals, ball touches, and positioning
-- **Physics-based kicking** using collision forces
-- **Dynamic targeting** - agents prioritize ball over static targets
-- **Goalie/Striker behaviors** with role-specific rewards
-
-## 🧠 Agent Design
-
-### Observation Space (~150-200 dimensions)
-- Walker locomotion: body part positions, velocities, rotations, ground contact
-- Soccer context: ball position/velocity, team ID, role, goal locations
-- Orientation cube: stabilized reference frame for observations
-
-### Action Space (40 continuous)
-- **Joint rotations**: chest (3), spine (3), head (2), thighs (4), shins (2), feet (6), arms (4), forearms (2)
-- **Joint strengths**: 13 configurable strength values
-- **Kick action**: 1 continuous trigger (enabled only in Lesson 3+)
-
-### Reward Structure
-- **Goals**: +50 × time_bonus (scoring team), -10 (conceding team) — massively increased in V10!
-- **Ball touches**: +0.2 (scaled by curriculum, delayed first 50 steps)
-- **Kick reward**: +0.1 per intentional kick (Lesson 3+ only)
-- **Locomotion**: Speed matching + direction alignment (dynamic 1.0x-2.0x weight with speed ramp)
-- **Upright bonus**: +0.03 per step with height scaling (0.85-1.3m optimal)
-- **Anti-forward-tip penalty**: -0.02 when tilting forward (upright dot < 0.7)
-- **Sideways lean penalty**: -0.02 scaled by lateral tilt
-- **Angular velocity penalty**: -0.002 per rad/s (damps flailing)
-- **Collapse penalty**: -0.01 when hips < 0.3m
-- **Existential**: ±0.25 based on role (reduced, delayed first 50 steps)
-
-## 📊 Training Results
-
-Expected progression (V10 progressive skill curriculum):
-- **0-2M steps** (Lesson 0): Standing and balance — no ball influence, kick disabled
-- **2M-6M steps** (Lesson 1): Walking toward ball — minimal ball rewards (0.15), kick disabled
-- **6M-12M steps** (Lesson 2): Chasing ball actively — moderate rewards (0.35), kick disabled
-- **12M-20M steps** (Lesson 3): **Kicking enabled!** — ball_touch 0.5, intentional kick mechanic unlocked
-- **20M+ steps** (Lesson 4): Goal-scoring & strategy — full rewards (1.0), competitive play
-
-Training time: 12-72 hours depending on hardware and parallel environments.
-
-## 🛠️ Configuration
-
-### Key Hyperparameters
-```yaml
-learning_rate: 0.0003
-batch_size: 2048
-hidden_units: 512
-num_layers: 3
-gamma: 0.99
-max_steps: 30M
-```
-
-### Stabilization Features
-- **Start pose hold**: Agents hold stable stance for first 50 steps (increased from 10)
-- **Progressive speed ramp**: Speed increases from 0.5 → 3.0 m/s over 400 steps
-- **Neutral orientation**: Agents start facing forward (±10°) instead of toward ball
-- **Increased solver iterations**: Better joint constraint solving (12 iterations)
-- **Configurable via WalkerSoccerSettings**: Toggle and tune all stabilization parameters
-
-## 📖 Documentation
-
-### Essential Guides
-- **[Unity Setup Guide](UNITY_SETUP_GUIDE.md)** - Complete scene construction walkthrough
-- **[Training Guide](TRAINING_GUIDE.md)** - Training commands, monitoring, and tips
-- **[Debug & Improvements](DEBUG_AND_IMPROVEMENTS.md)** - Troubleshooting and optimization
-
-### Quick References
-- ML-Agents config: `WalkerSoccer.yaml`
-- Main agent: `WalkerSoccerAgent.cs`
-- Environment controller: `WalkerSoccerEnvController.cs`
-
-## 🔧 Common Issues
-
-### Agents fall through floor?
-→ Check collision layers and Rigidbody settings
-
-### Training not improving?
-→ Enable observation normalization, verify rewards with Heuristic mode
-
-### Physics too unstable?
-→ Reduce `max_joint_force_limit`, increase solver iterations
-
-See `DEBUG_AND_IMPROVEMENTS.md` for detailed solutions.
-
-## 🎓 Learning Resources
-
-- [ML-Agents Documentation](https://github.com/Unity-Technologies/ml-agents)
-- [Walker Example](https://github.com/Unity-Technologies/ml-agents/blob/main/docs/Learning-Environment-Examples.md#walker)
-- [Soccer Twos Example](https://github.com/Unity-Technologies/ml-agents/blob/main/docs/Learning-Environment-Examples.md#soccer-twos)
-- [MA-POCA Paper](https://arxiv.org/abs/2111.05992)
-
-## 🚀 Advanced Features
-
-### Planned Enhancements
-- [ ] LSTM memory for temporal reasoning
-- [ ] Communication between agents
-- [ ] Advanced reward shaping (passing, positioning)
-- [ ] Dynamic difficulty scaling
-- [ ] Visual observations (camera input)
-
-### Customization Ideas
-- Add obstacles or power-ups
-- Increase team size (4v4, 5v5)
-- Multiple ball variants
-- Different field sizes/shapes
-
-## 📝 Code Examples
-
-### Testing in Heuristic Mode
-```csharp
-// In WalkerSoccerAgent.cs, Heuristic() is already implemented
-// Set Behavior Type to "Heuristic Only" and use WASD to control
-```
-
-### Training Command
+### Resume Training
+To resume an interrupted training session:
 ```bash
-mlagents-learn WalkerSoccer.yaml --run-id=MySoccerRun_v1
+mlagents-learn Assets/ML-Agents/CustomWalkingSoccerTwos/WalkerSoccerStage2_Soccer.yaml --run-id=WalkerStage2 --resume
 ```
 
-### TensorBoard Monitoring
+## Step 5: Monitor Training
+
+Training progress is saved in the `results` folder. You can monitor with TensorBoard:
+
 ```bash
-tensorboard --logdir results
+tensorboard --logdir=results
 ```
 
-## 🤝 Contributing
+Open your browser and navigate to `http://localhost:6006` to view training graphs.
 
-Improvements welcome! Consider:
-- Optimizing reward structures
-- Adding new agent behaviors
-- Improving training stability
-- Creating better visualizations
+## Common Issues
 
-## 📄 License
+### Issue: `torch.load` pickle error with PyTorch 2.6+
+**Solution**: Use ONNX exports for initialization instead of `.pt` checkpoints, or patch `torch_model_saver.py` to add `weights_only=False`.
 
-This project uses Unity ML-Agents (Apache 2.0 License).
-Your custom code and configurations can be licensed as you prefer.
+### Issue: Training is very slow
+**Solution**: 
+- Build a standalone executable instead of training in-editor.
+- Use `--num-envs=4` or higher to run multiple environments in parallel.
+- Ensure GPU acceleration is enabled (check PyTorch CUDA installation).
 
-## 🙏 Acknowledgments
+### Issue: Mean Reward stays negative
+**Solution**: 
+- Check curriculum thresholds in the YAML file.
+- Review reward/penalty balance in `WalkerSoccerAgent.cs`.
+- Ensure anti-dive and anti-bunching parameters are tuned correctly.
 
-- Unity ML-Agents team for the excellent framework
-- Walker and Soccer Twos example environments for inspiration
-- Community contributors for best practices and debugging tips
+## Next Steps
 
----
+- Review training hyperparameters in the YAML files.
+- Experiment with reward shaping in `WalkerSoccerAgent.cs`.
+- Enable self-play in Stage 2 YAML once rewards stabilize.
 
-**Ready to train?** Start with `UNITY_SETUP_GUIDE.md` → `TRAINING_GUIDE.md` → Train amazing soccer agents! ⚽🤖
-
-For questions or issues, consult `DEBUG_AND_IMPROVEMENTS.md` or open an issue.
+For more details, see the [ML-Agents documentation](https://github.com/Unity-Technologies/ml-agents/blob/main/docs/Readme.md).
