@@ -4,10 +4,10 @@
   <Project Path="Unity.ML-Agents.Editor.Tests.csproj" />
   <Project Path="Unity.ML-Agents.Editor.Input.csproj" />
   <Project Path="Unity.ML-Agents.CommunicatorObjects.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.ML-Agents.Runtime.Input.Tests.csproj" />
   <Project Path="Unity.ML-Agents.Editor.csproj" />
   <Project Path="Unity.ML-Agents.Runtime.Sensor.Tests.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.ML-Agents.Input.csproj" />
   <Project Path="Unity.ML-Agents.Runtime.Utils.Tests.csproj" />
   <Project Path="Unity.ML-Agents.Runtime.Tests.csproj" />
