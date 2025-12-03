@@ -269,6 +269,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3941553821197256033, guid: bc841be5063db714faf58b0cdd5b7dae,
+        type: 3}
+      propertyPath: agentDoneOnGroundContact
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3941553822029048727, guid: bc841be5063db714faf58b0cdd5b7dae,
         type: 3}
       propertyPath: m_Model

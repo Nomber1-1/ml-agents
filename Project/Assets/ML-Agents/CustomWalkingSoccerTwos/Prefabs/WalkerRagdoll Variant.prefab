@@ -21,47 +21,47 @@ PrefabInstance:
     - target: {fileID: 3599283674160848331, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283674258174711, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283674353725471, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283674701520976, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283674879403207, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283674929991235, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283675061353162, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283675242808011, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283675594846473, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283675615088294, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
@@ -91,17 +91,17 @@ PrefabInstance:
     - target: {fileID: 3599283675835168082, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283675894408087, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599283676062257936, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
       propertyPath: agentDoneOnGroundContact
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3925309372585159072, guid: dd62a2a5a838943fba3d2cbb377a75b3,
         type: 3}
@@ -273,9 +273,6 @@ MonoBehaviour:
   cornerPenaltyRadius: 8
   cornerPenaltyStrength: 0.01
   arenaCenter: {fileID: 0}
-  fallenThreshold: 0.5
-  fallenPenaltyPerStep: 0.02
-  recoveryReward: 0.5
   goalieMaxDistance: 2.5
   goaliePenaltyStrength: 0.012
   m_TargetWalkingSpeed: 10
