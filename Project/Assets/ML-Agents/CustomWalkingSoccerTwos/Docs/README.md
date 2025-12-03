@@ -178,5 +178,6 @@ tensorboard --logdir_spec Stage1_best:results\WalkerStage1_48_269obs,Stage2_best
 - Review training hyperparameters in the YAML files.
 - Experiment with reward shaping in `WalkerSoccerAgent.cs`.
 - Enable self-play in Stage 2 YAML once rewards stabilize.
+- Experiment with 2v2 and bigger teams
 
 For more details, see the [ML-Agents documentation](https://github.com/Unity-Technologies/ml-agents/blob/main/docs/Readme.md). Also see `Docs/PROJECT_HISTORY.md` and `Docs/PPO_AND_POCA.md` for our project’s design and training notes.
